@@ -1,0 +1,4 @@
+f93726a0a6e57af2bf1173998fbeb546  assets/ref_genomes/Mycobacterium_tuberculosis_GCF_000195955.2_ASM19595v2.fna.gz
+d5ca66f37a3e464d1fa922748cfb87ff  assets/ref_genomes/Klebsiella_pneumoniae_GCF_000240185.1_ASM24018v2.fna.gz
+b086eb1020e7df022afa545dc6d93297  assets/ref_genomes/Staphylococcus_aureus_GCF_000013425.1_ASM1342v1.fna.gz
+08ea19fe6ae49db6785930bf69f8f753  assets/ref_genomes/Escherichia_coli_GCF_000008865.2_ASM886v2.fna.gz
