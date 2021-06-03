@@ -1,0 +1,3 @@
+[submodule "assets/var-genes-ro"]
+	path = assets/var-genes-ro
+	url = https://github.com/Genomic-Medicine-Linkoping/var-genes-ro.git
