@@ -100,8 +100,26 @@ process ariba_db_download{
     touch database.rdy
   fi
   """
-
 }
+
+process ariba_prepare_localdb{
+  label 'modest_allocation'
+ 
+  output:
+  file 'database_local.rdy' into ariba_init_local
+
+  """
+  if  ${params.ariba_db_download} ; then
+    ariba prepareref --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/diagnostic_genes.fa --threads ${task.cpus} ${params.aribadb_local}
+    cp ${params.local_ariba_db_dir}/diagnostic_genes.fa ${params.aribadb_local}
+    touch database_local.rdy
+  else
+    touch database_local.rdy
+  fi
+  """
+}
+
+
 
 samples = Channel.fromPath("${params.input}/*.{fastq.gz,fsa.gz,fa.gz,fastq,fsa,fa}")
 
@@ -151,7 +169,7 @@ process trimmomatic_trimming{
   tuple forward, reverse from lane_concat
 
   output:
-  tuple "trim_front_pair.fastq.gz", "trim_rev_pair.fastq.gz", "trim_unpair.fastq.gz" into (trimmed_sample_1, trimmed_sample_2, trimmed_sample_3, trimmed_sample_4)
+  tuple "trim_front_pair.fastq.gz", "trim_rev_pair.fastq.gz", "trim_unpair.fastq.gz" into (trimmed_sample_1, trimmed_sample_2, trimmed_sample_3, trimmed_sample_4, trimmed_sample_5)
 
   """
   trimmomatic PE -threads ${task.cpus} -phred33 ${forward} ${reverse} trim_front_pair.fastq.gz trim_front_unpair.fastq.gz  trim_rev_pair.fastq.gz trim_rev_unpair.fastq.gz ILLUMINACLIP:${params.adapters}:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
@@ -170,12 +188,30 @@ process ariba_resistancefind{
   file(database_initalization) from ariba_init
 
   output:
+  //tuple 'motif_report_resfinder.tsv', 'motif_report_local.tsv' into ariba_output
   file 'motif_report.tsv' into ariba_output
 
+  """
+  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 100 --verbose --force --threads ${task.cpus} ${params.aribadb} ${forward} ${reverse} outdir
+  cp outdir/report.tsv motif_report.tsv
+  """
+}
+
+process ariba_resistancefind_local{
+  label 'modest_allocation'
+
+  publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report_local.tsv'
+
+  input:
+  tuple forward, reverse, unpaired from trimmed_sample_5
+  file(database_initalization) from ariba_init_local
+
+  output:
+  file 'motif_report_local.tsv' into ariba_output_local
 
   """
-  ariba run --spades_options careful --force --threads ${task.cpus} ${params.aribadb} ${forward} ${reverse} outdir
-  mv outdir/report.tsv motif_report.tsv
+  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 100 --verbose --force --threads ${task.cpus} ${params.aribadb_local} ${forward} ${reverse} outdir
+  cp outdir/report.tsv motif_report_local.tsv
   """
 }
 
@@ -186,14 +222,20 @@ process ariba_stats{
   cpus 1
 
   input:
+  file(report_local) from ariba_output_local
   file(report) from ariba_output
 
   output:
-  tuple 'summary.csv', 'motif_report.json' into ariba_summary_output
+  //tuple 'summary.csv', 'motif_report_resfinder.json', 'motif_report_local.json' into ariba_summary_output
+  tuple 'summary.csv', 'motif_report.json', 'motif_report_local.json' into ariba_summary_output
+  // ariba summary --col_filter n --row_filter n summary ${report_resf} ${report_loc}
+  // python3 $baseDir/bin/tsv_to_json.py ${report_resf} motif_report_resfinder.json
+  // python3 $baseDir/bin/tsv_to_json.py ${report_loc} motif_report_local.json
 
   """
-  ariba summary --col_filter n --row_filter n summary ${report} 
-  python3 $baseDir/bin/tsv_to_json.py ${report} motif_report.json 
+  ariba summary --col_filter n --row_filter n summary ${report} ${report_local}
+  python3 $baseDir/bin/tsv_to_json.py ${report} motif_report.json
+  python3 $baseDir/bin/tsv_to_json.py ${report_local} motif_report_local.json
   """
 }
 
@@ -529,23 +571,25 @@ process json_collection{
   input:
   file (mlstjson) from mlst_output
   file (multiqcjson) from multiqc_json
-  file (aribajson) from ariba_summary_output
+  //file (aribajson) from ariba_summary_output
+  tuple summary, motif_report_resfinder, motif_report_local from ariba_summary_output
   file (quastjson) from quast_result_json
   file (snpreport) from snp_json_output
   tuple (cgmlst_res, cgmlst_stats) from cgmlst_results
-  
+
   output:
-  tuple 'merged_report.json', mlstjson, multiqcjson, aribajson, quastjson, snpreport, cgmlst_res into json_collection
+  // tuple 'merged_report.json', mlstjson, multiqcjson, aribajson, quastjson, snpreport, cgmlst_res into json_collection
+  tuple 'merged_report.json', mlstjson, multiqcjson, motif_report_resfinder, motif_report_local, quastjson, snpreport, cgmlst_res into json_collection
+  // cat ${aribajson} >> merged_report.json
 
   """
   touch merged_reports.json
   cat ${mlstjson} >> merged_report.json
-  cat ${aribajson} >> merged_report.json
+  cat ${motif_report_resfinder} >> merged_report.json
+  cat ${motif_report_local} >> merged_report.json
   cat ${quastjson} >> merged_report.json
   cat ${snpreport} >> merged_report.json
   cat ${multiqcjson} >> merged_report.json
   cat ${cgmlst_res} >> merged_report.json
   """
 }
-
-
