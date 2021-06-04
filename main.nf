@@ -651,6 +651,8 @@ process json_collection{
   """
 }
 
+report_Rmd = Channel.fromPath("${params.report_template_dir}/Test_output.Rmd")
+
 process build_report{
   label 'min_allocation'
   stageInMode "copy"
@@ -658,13 +660,25 @@ process build_report{
   publishDir "${params.outdir}", mode: 'copy', overwrite: true
 
   input:
-  file json from report_building
+  file (report) from report_Rmd
+  file (mlstjson) from mlst_output_2
+  file (multiqcjson) from multiqc_json_2
+  file (summary) from ariba_summary_output_2a
+  file (motif_report) from ariba_summary_output_2b
+  file (motif_report_local) from ariba_summary_output_2c
+  file (motif_report_nonc) from ariba_summary_output_2d
+  file (quastjson) from quast_result_json_2
+  file (snpreport) from snp_json_output_2
+  file (cgmlst_res) from cgmlst_results_2a
+  file (cgmlst_stats) from cgmlst_results_2b
 
   output:
-  file 'report.html'
+  file("${html_output}")
 
+  script:
+  html_output = "results.html"
   """
-
+  # compile the report
+  Rscript -e 'rmarkdown::render(input = "${report}", params = list(db = "This is a test parameter"), output_format = "html_document", output_file = "${html_output}")'
   """
 }
-
