@@ -254,7 +254,11 @@ process ariba_stats{
 
   output:
   //tuple 'summary.csv', 'motif_report_resfinder.json', 'motif_report_local.json' into ariba_summary_output
-  tuple 'summary.csv', 'motif_report.json', 'motif_report_local.json', 'motif_report_nonc.json' into ariba_summary_output
+  tuple 'summary.csv', 'motif_report.json', 'motif_report_local.json', 'motif_report_nonc.json' into ariba_summary_output_1
+  file 'summary.csv' into ariba_summary_output_2a
+  file 'motif_report.json' into ariba_summary_output_2b
+  file 'motif_report_local.json' into ariba_summary_output_2c
+  file 'motif_report_nonc.json' into ariba_summary_output_2d
   // ariba summary --col_filter n --row_filter n summary ${report_resf} ${report_loc}
   // python3 $baseDir/bin/tsv_to_json.py ${report_resf} motif_report_resfinder.json
   // python3 $baseDir/bin/tsv_to_json.py ${report_loc} motif_report_local.json
@@ -311,7 +315,8 @@ process mlst_lookup{
   file contig from assembled_sample_1
 
   output:
-  file 'mlst.json' into mlst_output
+  file 'mlst.json' into (mlst_output_1, mlst_output_2)
+  //file 'mlst.json' into mlst_output
 
   """
   mlst $contig --threads ${task.cpus} --json mlst.json --novel novel_mlst.fasta --minid 99.5 --mincov 95
@@ -327,7 +332,9 @@ process chewbbaca_cgmlst{
   file 'database.dry' from chewie_init
 
   output:
-  tuple 'cgmlst_alleles.json', 'cgmlst_stats.json' into cgmlst_results
+  tuple 'cgmlst_alleles.json', 'cgmlst_stats.json' into cgmlst_results_1
+  file 'cgmlst_alleles.json' into cgmlst_results_2a
+  file 'cgmlst_stats.json' into cgmlst_results_2b
 
   """
   yes | chewBBACA.py AlleleCall --fr -i \${PWD} -g ${params.chewbbacadb}/schema --json --cpu ${task.cpus} -o \${PWD} --ptf ${params.prodigal_file}
@@ -365,7 +372,8 @@ process quast_json_conversion{
   file(quastreport) from quast_result_2
 
   output:
-  file 'quast_report.json' into quast_result_json
+  //file 'quast_report.json' into quast_result_json
+  file 'quast_report.json' into (quast_result_json_1, quast_result_json_2)
 
   """
   python3 $baseDir/bin/quast_to_json.py $quastreport quast_report.json
@@ -494,7 +502,8 @@ process snp_translation{
 
   output:
   tuple 'vcftools.recode.vcf', 'snp_report.tsv' into snp_translated_output
-  file 'snp_report.json' into snp_json_output
+  //file 'snp_report.json' into snp_json_output
+  file 'snp_report.json' into (snp_json_output_1, snp_json_output_2)
 
   script:
   """
@@ -577,7 +586,8 @@ process multiqc_report{
 
   output:
   file 'multiqc_report.html' into multiqc_output
-  file 'multiqc_data/multiqc_data.json' into multiqc_json
+  file 'multiqc_data/multiqc_data.json' into (multiqc_json_1, multiqc_json_2)
+  //file 'multiqc_data/multiqc_data.json' into multiqc_json
   // MultiQC_data contains a lot delimited files. May be useful later
 
   """
@@ -597,19 +607,20 @@ process json_collection{
   publishDir "${params.outdir}/jsoncollection", mode: 'copy', overwrite: true
 
   input:
-  file (mlstjson) from mlst_output
-  file (multiqcjson) from multiqc_json
+  file (mlstjson) from mlst_output_1
+  file (multiqcjson) from multiqc_json_1
   //file (aribajson) from ariba_summary_output
-  tuple summary, motif_report_resfinder, motif_report_local, motif_report_nonc from ariba_summary_output
-  file (quastjson) from quast_result_json
-  file (snpreport) from snp_json_output
-  tuple (cgmlst_res, cgmlst_stats) from cgmlst_results
+  tuple summary, motif_report_resfinder, motif_report_local, motif_report_nonc from ariba_summary_output_1
+  file (quastjson) from quast_result_json_1
+  file (snpreport) from snp_json_output_1
+  tuple (cgmlst_res, cgmlst_stats) from cgmlst_results_1
 
   output:
-  // tuple 'merged_report.json', mlstjson, multiqcjson, aribajson, quastjson, snpreport, cgmlst_res into json_collection
-  tuple 'merged_report.json', mlstjson, multiqcjson, motif_report_resfinder, motif_report_local, quastjson, snpreport, cgmlst_res into json_collection
-  // cat ${aribajson} >> merged_report.json
+  // tuple 'merged_report.json', mlstjson, multiqcjson, motif_report_resfinder, motif_report_local, quastjson, snpreport, cgmlst_res into json_collection
+  //tuple 'merged_report.json', mlstjson, multiqcjson, summary, motif_report_resfinder, motif_report_local, motif_report_nonc, quastjson, snpreport, cgmlst_res, cgmlst_stats into report_building
   file 'merged_report.json' into report_building
+  // tuple 'merged_report.json', mlstjson, multiqcjson, aribajson, quastjson, snpreport, cgmlst_res into json_collection
+  // cat ${aribajson} >> merged_report.json
 
   """
   touch merged_reports.json
