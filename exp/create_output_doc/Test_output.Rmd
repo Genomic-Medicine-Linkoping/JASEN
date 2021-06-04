@@ -1,0 +1,164 @@
+---
+title: "JASEN results"
+author: "Region Östergötland"
+date: "`r Sys.Date()`"
+link-citations: true
+bibliography: bibliography.bib
+biblio-style: "alpha" #https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
+#csl: "../uppsala-universitet-institutionen-for-biologisk-grundutbildning.csl"
+subtitle: "Sample number: ___"
+subject: "This is a report over JASEN results"
+params:
+    test: "test"
+keywords: 
+  - bioinformatics
+  - "text manipulation"
+  - eggNOG
+output:
+  bookdown::html_document2:
+    highlight: tango
+    theme: yeti
+    split_by: none # only generate a single output page
+    self_contained: TRUE
+    toc: yes
+    toc_float: 
+      collapsed: TRUE
+      smooth_scroll: TRUE
+      print: FALSE
+    code_folding: show
+    number_sections: TRUE
+    code_download: TRUE
+    pandoc_args: ["--top-level-division=section",
+              "-V", "documentclass=report"]
+  bookdown::pdf_document2:
+    keep_tex: no
+    #latex_engine: xelatex
+    #highlight: pygments #Other options: default, tango, kate, monochrome, espresso, zenburn, haddock, and textmate
+    #theme: spacelab
+    # https://pandoc.org/MANUAL.html
+    pandoc_args: ["--top-level-division=section",
+                  "-V", "documentclass=article",
+                  "-V", "linkcolor=MidnightBlue",
+                  "-V", "citecolor=Aquamarine",
+                  "-V", "urlcolor=NavyBlue",
+                  "-V", "toccolor=NavyBlue",
+                  "-V", "pagestyle=headings"]
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r include=FALSE}
+library(jsonlite)
+library(tidyverse)
+library(DT)
+library(bookdown)
+
+dt_alise <- function(json_flattend_to_list, tbl_caption) {
+  df <- do.call(rbind.data.frame, json_flattend_to_list)
+  df %>%
+  datatable( 
+    rownames = FALSE,
+    extensions = c('FixedColumns','Buttons','KeyTable'),
+    options=list(
+      scrollX=TRUE,
+      dom = 'tBlrpf',
+      lengthMenu = c(5, 10, 25),
+      #fixedColumns = list(leftColumns = 1),
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE,
+      pageLength = 10
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table: ', htmltools::em(tbl_caption))
+    )
+}
+
+test_string <- params$test
+
+k1 <- fromJSON("cgmlst_stats.json", flatten=TRUE)
+k2 <- fromJSON("cgmlst_alleles.json", flatten=TRUE)
+k3 <- fromJSON("mlst.json", flatten=TRUE)
+k4 <- fromJSON("motif_report_local.json", flatten=TRUE)
+k5 <- fromJSON("motif_report_nonc.json", flatten=TRUE)
+k6 <- fromJSON("motif_report.json", flatten=TRUE)
+k7 <- fromJSON("quast_report.json", flatten=TRUE)
+k8 <- fromJSON("snp_report.json", flatten=TRUE)
+
+#k1d <- do.call(rbind.data.frame, k1)
+#k2d <- do.call(rbind.data.frame, k2)
+#k3d <- do.call(rbind.data.frame, k3)
+#k4d <- do.call(rbind.data.frame, k4)
+#k5d <- do.call(rbind.data.frame, k5)
+#k6d <- do.call(rbind.data.frame, k6)
+#k9d <- do.call(rbind.data.frame, k9)
+#k8d <- do.call(rbind.data.frame, k8)
+```
+
+
+
+# Cgmlst Stats
+
+```{r echo=FALSE}
+dt_alise(k1, "Cgmlst stats")
+```
+
+
+# Cgmlst Alleles
+
+```{r echo=FALSE}
+dt_alise(k2, "Cgmlst stats")
+```
+
+# Resfinder motif report
+
+```{r echo=FALSE}
+dt_alise(k3, "Cgmlst stats")
+```
+
+# Local database motif report (Ariba non-coding)
+
+```{r echo=FALSE}
+dt_alise(k4, "Cgmlst stats")
+```
+
+# Local database motif report (Ariba coding)
+
+```{r echo=FALSE}
+dt_alise(k5, "Cgmlst stats")
+```
+
+# SNP report
+
+```{r echo=FALSE}
+dt_alise(k6, "Cgmlst stats")
+```
+
+# Quast report
+
+```{r echo=FALSE}
+dt_alise(k7, "Cgmlst stats")
+```
+
+# Summary
+
+```{r echo=FALSE}
+read_csv("summary.csv") %>%
+  datatable( 
+    rownames = FALSE,
+    extensions = c('FixedColumns','Buttons','KeyTable'),
+    options=list(
+      scrollX=TRUE,
+      dom = 'tBlrpf',
+      lengthMenu = c(5, 10, 25),
+      #fixedColumns = list(leftColumns = 1),
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE,
+      pageLength = 10
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table: ', htmltools::em("Summary"))
+    )
+```
