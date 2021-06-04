@@ -149,7 +149,11 @@ assets/sequencing_data/*
 assets/adapters/*
 !assets/adapters/README.md
 
-exp/*
-!exp/env.yml
-!exp/README.md
+exp/create_output_doc/*
+!exp/create_output_doc/Test_output.Rmd
+!exp/create_output_doc/renv.lock
+!exp/create_output_doc/README.md
+!exp/create_output_doc/create_output_doc.Rproj
+!exp/create_output_doc/bibliography.bib
+
 .Rproj.user
