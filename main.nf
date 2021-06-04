@@ -108,15 +108,10 @@ process ariba_prepare_localdb{
   output:
   file 'database_local.rdy' into ariba_init_local
 
-// TODO: Remove if else
   """
-  if  ${params.ariba_db_download} ; then
-    ariba prepareref --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/coding.fa --threads ${task.cpus} ${params.aribadb_local}
-    cp ${params.local_ariba_db_dir}/coding.fa ${params.aribadb_local}
-    touch database_local.rdy
-  else
-    touch database_local.rdy
-  fi
+  ariba prepareref --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/coding.fa --threads ${task.cpus} ${params.aribadb_local}
+  cp ${params.local_ariba_db_dir}/coding.fa ${params.aribadb_local}
+  touch database_local.rdy
   """
 }
 
@@ -126,15 +121,10 @@ process ariba_prepare_non_codingdb{
   output:
   file 'database_non_coding.rdy' into ariba_init_nonc
 
-// TODO: Remove if else
   """
-  if  ${params.ariba_db_download} ; then
-    ariba prepareref --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
-    cp ${params.local_ariba_db_dir}/non-coding.fa ${params.aribadb_nonc}
-    touch database_non_coding.rdy
-  else
-    touch database_non_coding.rdy
-  fi
+  ariba prepareref --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
+  cp ${params.local_ariba_db_dir}/non-coding.fa ${params.aribadb_nonc}
+  touch database_non_coding.rdy
   """
 }
 
