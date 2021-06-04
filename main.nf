@@ -595,12 +595,6 @@ process multiqc_report{
   """
 }
 
-process output_collection{
-  label 'min_allocation'
-"""
-"""
-}
-
 process json_collection{
   label 'min_allocation'
 
