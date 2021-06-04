@@ -617,15 +617,37 @@ process json_collection{
   // cat ${aribajson} >> merged_report.json
 
   """
-  touch merged_reports.json
+  touch merged_report.json
+  echo >> merged_report.json
+  echo "mlstjson" >> merged_report.json
   cat ${mlstjson} >> merged_report.json
+  echo >> merged_report.json
+  echo "summary" >> merged_report.json
+  cat ${summary} >> merged_report.json
+  echo >> merged_report.json
+  echo "motif_report_resfinder" >> merged_report.json
   cat ${motif_report_resfinder} >> merged_report.json
+  echo >> merged_report.json
+  echo "motif_report_local" >> merged_report.json
   cat ${motif_report_local} >> merged_report.json
+  echo >> merged_report.json
+  echo "motif_report_nonc" >> merged_report.json
   cat ${motif_report_nonc} >> merged_report.json
+  echo >> merged_report.json
+  echo "quastjson" >> merged_report.json
   cat ${quastjson} >> merged_report.json
+  echo >> merged_report.json
+  echo "snpreport" >> merged_report.json
   cat ${snpreport} >> merged_report.json
+  echo >> merged_report.json
+  echo "multiqcjson" >> merged_report.json
   cat ${multiqcjson} >> merged_report.json
+  echo >> merged_report.json
+  echo "cgmlst_res" >> merged_report.json
   cat ${cgmlst_res} >> merged_report.json
+  echo >> merged_report.json
+  echo "cgmlst_stats" >> merged_report.json
+  cat ${cgmlst_stats} >> merged_report.json
   """
 }
 
