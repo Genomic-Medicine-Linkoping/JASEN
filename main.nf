@@ -609,6 +609,7 @@ process json_collection{
   // tuple 'merged_report.json', mlstjson, multiqcjson, aribajson, quastjson, snpreport, cgmlst_res into json_collection
   tuple 'merged_report.json', mlstjson, multiqcjson, motif_report_resfinder, motif_report_local, quastjson, snpreport, cgmlst_res into json_collection
   // cat ${aribajson} >> merged_report.json
+  file 'merged_report.json' into report_building
 
   """
   touch merged_reports.json
@@ -622,3 +623,21 @@ process json_collection{
   cat ${cgmlst_res} >> merged_report.json
   """
 }
+
+process build_report{
+  label 'min_allocation'
+  stageInMode "copy"
+
+  publishDir "${params.outdir}", mode: 'copy', overwrite: true
+
+  input:
+  file json from report_building
+
+  output:
+  file 'report.html'
+
+  """
+
+  """
+}
+
