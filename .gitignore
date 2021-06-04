@@ -152,3 +152,4 @@ assets/adapters/*
 exp/*
 !exp/env.yml
 !exp/README.md
+.Rproj.user
