@@ -21,6 +21,7 @@ From:nfcore/base:latest
 %files
         conda_init.sh /
         ../nextflow.config /
+        env.yml /environment.yml
 
 %post
         apt -y update
@@ -33,7 +34,7 @@ From:nfcore/base:latest
 
         /usr/bin/git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git
         /opt/conda/bin/conda update -n base -c defaults conda
-        /opt/conda/bin/conda env create -f JASEN/container/environment.yml
+        /opt/conda/bin/conda env create -f /environment.yml
         ln -s /opt/conda/envs/jasen/lib/libcrypto.so.1.1 /opt/conda/envs/jasen/lib/libcrypto.so.1.0.0
 
         # Conda setup attempts
