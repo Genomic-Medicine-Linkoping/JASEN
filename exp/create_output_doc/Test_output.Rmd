@@ -45,6 +45,8 @@ output:
                   "-V", "pagestyle=headings"]
 ---
 
+**Sample ID: `r params$sample`**
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -56,8 +58,7 @@ library(tidyverse)
 library(DT)
 library(bookdown)
 
-dt_alise <- function(json_flattend_to_list, tbl_caption) {
-  df <- do.call(rbind.data.frame, json_flattend_to_list)
+dtalise <- function(df, tbl_caption) {
   df %>%
   datatable( 
     rownames = FALSE,
@@ -65,18 +66,27 @@ dt_alise <- function(json_flattend_to_list, tbl_caption) {
     options=list(
       scrollX=TRUE,
       dom = 'tBlrpf',
-      lengthMenu = c(5, 10, 25),
-      #fixedColumns = list(leftColumns = 1),
+      lengthMenu = c(10, 30, 100),
+      fixedColumns = list(leftColumns = 1),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
       keys = TRUE,
-      pageLength = 10
+      pageLength = 30
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
     'Table: ', htmltools::em(tbl_caption))
     )
 }
 
-test_string <- params$test
+filter_ariba <- function(df){
+  df %>% 
+    filter(pc_ident > 99) %>%
+    relocate(X.ariba_ref_name, .after = var_description) %>%
+    relocate(pc_ident, .after = ref_name) %>%
+    mutate(phenotype = str_replace(free_text, ".+\\|\\|\\|", "")) %>%
+    relocate(phenotype, .after = pc_ident) %>%
+    select(-free_text)
+}
+  
 
 k1 <- fromJSON("cgmlst_stats.json", flatten=TRUE)
 k2 <- fromJSON("cgmlst_alleles.json", flatten=TRUE)
@@ -87,64 +97,117 @@ k6 <- fromJSON("motif_report.json", flatten=TRUE)
 k7 <- fromJSON("quast_report.json", flatten=TRUE)
 k8 <- fromJSON("snp_report.json", flatten=TRUE)
 
-#k1d <- do.call(rbind.data.frame, k1)
-#k2d <- do.call(rbind.data.frame, k2)
-#k3d <- do.call(rbind.data.frame, k3)
-#k4d <- do.call(rbind.data.frame, k4)
-#k5d <- do.call(rbind.data.frame, k5)
-#k6d <- do.call(rbind.data.frame, k6)
-#k9d <- do.call(rbind.data.frame, k9)
-#k8d <- do.call(rbind.data.frame, k8)
-```
+test_string <- params$test
 
+k1d <- do.call(rbind.data.frame, k1)
+k2d <- do.call(rbind.data.frame, k2)
+#k3d <- do.call(rbind.data.frame, k3)
+k4d <- do.call(rbind.data.frame, k4)
+k5d <- do.call(rbind.data.frame, k5)
+k6d <- do.call(rbind.data.frame, k6)
+k7d <- do.call(rbind.data.frame, k7)
+k8d <- do.call(rbind.data.frame, k8)
+```
 
 
 # Cgmlst Stats
 
 ```{r echo=FALSE}
-dt_alise(k1, "Cgmlst stats")
-```
+# Remove default column names and ...
+oldnames <- do.call(rbind.data.frame, k1) %>%
+  colnames()
+# ... use these instead:
+newnames <- c("EXC","INF","LNF","PLOT","NIPH","ALM","ASM")
+df <- do.call(rbind.data.frame, k1) %>%
+  rename_at(vars(all_of(oldnames)), ~ newnames)
+df <- df[-1, ]
 
+dtalise(df, "Cgmlst stats")
+```
 
 # Cgmlst Alleles
 
 ```{r echo=FALSE}
-dt_alise(k2, "Cgmlst stats")
+# Move first row to be the column names
+names(k2d) <- NULL
+names(k2d) <- lapply(k2d[1, ], as.character)
+k2d <- k2d[-1, ] 
+dtalise(k2d, "Cgmlst Alleles")
 ```
 
-# Resfinder motif report
+# Mlst
 
 ```{r echo=FALSE}
-dt_alise(k3, "Cgmlst stats")
+dtalise(k3, "Mlst")
 ```
 
-# Local database motif report (Ariba non-coding)
+# Ariba 
+
+## Local database motif report (coding)
 
 ```{r echo=FALSE}
-dt_alise(k4, "Cgmlst stats")
+# common <- names(k4d)[names(k4d) %in% names(k5d)]
+# 
+# k4d[common] <- lapply(common, function(x) {
+#   match.fun(paste0("as.", class(k5d[[x]])))(k4d[[x]])
+# })
+
+# k4d$has_known_var <- k4d$has_known_var %>% as.integer
+# k5d$has_known_var <- k5d$has_known_var %>% as.integer
+# k4d$known_var <- k4d$known_var %>% as.factor
+# k5d$known_var <- k5d$known_var %>% as.factor
+# k4d$ref_start <- k4d$ref_start %>% as.integer
+# k5d$ref_start <- k5d$ref_start %>% as.integer
+# k4d$ref_end <- k4d$ref_end %>% as.integer
+# k5d$ref_end <- k5d$ref_end %>% as.integer
+# k4d$ctg_start <- k4d$ctg_start %>% as.integer
+# k5d$ctg_start <- k5d$ctg_start %>% as.integer
+# k4d$ctg_end <- k4d$ctg_end %>% as.integer
+# k5d$ctg_end <- k5d$ctg_end %>% as.integer
+# k4d$smtls_total_depth <- k4d$smtls_total_depth %>% as.integer
+# k5d$smtls_total_depth <- k5d$smtls_total_depth %>% as.integer
+
+#local_db <- bind_rows(k4d,k5d)
+# local_db <- bind_rows(k4d,k5d) %>% 
+#   filter(pc_ident > 99) %>% 
+#   relocate(X.ariba_ref_name, .after = var_description) %>%
+#   relocate(pc_ident, .after = ref_name) %>%
+#   mutate(phenotype = str_replace(free_text, ".+\\|\\|\\|", "")) %>%
+#   relocate(phenotype, .after = pc_ident) %>%
+#   select(-free_text)
+
+k4d %>% 
+  filter_ariba %>%
+  dtalise("Ariba local database motif report")
 ```
 
-# Local database motif report (Ariba coding)
+## Local database motif report (non-coding)
 
 ```{r echo=FALSE}
-dt_alise(k5, "Cgmlst stats")
+k5d %>% 
+  filter_ariba %>%
+  dtalise("Ariba local database motif report")
 ```
 
-# SNP report
+
+## Resfinder motif report
 
 ```{r echo=FALSE}
-dt_alise(k6, "Cgmlst stats")
+k6d %>% 
+  filter(pc_ident > 99) %>% 
+  relocate(X.ariba_ref_name, .after = var_description) %>%
+  relocate(pc_ident, .after = ref_name) %>%
+  mutate(phenotype = str_replace(free_text, ".+\\|\\|\\|", "")) %>%
+  relocate(phenotype, .after = pc_ident) %>%
+  select(-free_text) %>%
+  dtalise("Ariba Resfinder motif report")
 ```
 
-# Quast report
+Reference: [@Zankari2012]
 
-```{r echo=FALSE}
-dt_alise(k7, "Cgmlst stats")
-```
+## Summary
 
-# Summary
-
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 read_csv("summary.csv") %>%
   datatable( 
     rownames = FALSE,
@@ -162,3 +225,19 @@ read_csv("summary.csv") %>%
     'Table: ', htmltools::em("Summary"))
     )
 ```
+
+# Quast report
+
+```{r echo=FALSE}
+
+dtalise(t(k7d), "Quast report")
+```
+
+# SNP report
+
+```{r echo=FALSE}
+dtalise(k8d, "SNP report")
+```
+
+# References
+
