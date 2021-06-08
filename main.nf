@@ -651,7 +651,7 @@ process json_collection{
   """
 }
 
-report_Rmd = Channel.fromPath("${params.report_template_dir}/Test_output.Rmd")
+report_Rmd = Channel.fromPath("${params.report_template_file}")
 
 process build_report{
   label 'min_allocation'
