@@ -5,15 +5,12 @@ date: "`r Sys.Date()`"
 link-citations: true
 bibliography: bibliography.bib
 biblio-style: "alpha" #https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
-#csl: "../uppsala-universitet-institutionen-for-biologisk-grundutbildning.csl"
-subtitle: "Sample number: ___"
 subject: "This is a report over JASEN results"
 params:
-    test: "test"
+    sample: "[ID info missing]"
 keywords: 
-  - bioinformatics
-  - "text manipulation"
-  - eggNOG
+  - JASEN
+  - "Region Östergötland"
 output:
   bookdown::html_document2:
     highlight: tango
@@ -25,9 +22,8 @@ output:
       collapsed: TRUE
       smooth_scroll: TRUE
       print: FALSE
-    code_folding: show
-    number_sections: TRUE
-    code_download: TRUE
+    number_sections: FALSE
+    code_download: FALSE
     pandoc_args: ["--top-level-division=section",
               "-V", "documentclass=report"]
   bookdown::pdf_document2:
