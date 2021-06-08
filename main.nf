@@ -652,6 +652,7 @@ process json_collection{
 }
 
 report_Rmd = Channel.fromPath("${params.report_template_file}")
+bibliography = Channel.fromPath("${params.bibliography}")
 
 process build_report{
   label 'min_allocation'
@@ -671,6 +672,7 @@ process build_report{
   file (snpreport) from snp_json_output_2
   file (cgmlst_res) from cgmlst_results_2a
   file (cgmlst_stats) from cgmlst_results_2b
+  file (bibliography) from bibliography
 
   output:
   file("${html_output}")
