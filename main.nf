@@ -681,6 +681,6 @@ process build_report{
   html_output = "results.html"
   """
   # compile the report
-  Rscript -e 'rmarkdown::render(input = "${report}", params = list(db = "This is a test parameter"), output_format = "html_document", output_file = "${html_output}")'
+  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}"), output_file = "${html_output}")'
   """
 }
