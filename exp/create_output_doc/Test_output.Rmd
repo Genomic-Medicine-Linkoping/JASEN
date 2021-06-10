@@ -211,14 +211,19 @@ handle_empties(k4d,k5d) %>%
 ## Resfinder motif report
 
 ```{r echo=FALSE}
-k6d %>% 
+# If something was found from Resfinder
+if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
   filter(pc_ident > 99) %>% 
   relocate(X.ariba_ref_name, .after = var_description) %>%
   relocate(pc_ident, .after = ref_name) %>%
   mutate(phenotype = str_replace(free_text, ".+\\|\\|\\|", "")) %>%
   relocate(phenotype, .after = pc_ident) %>%
   select(-free_text) %>%
-  dtalise("Ariba Resfinder motif report")
+}else{
+  # If not found, return empty
+  k6d %>% 
+    dt_alise("Ariba Resfinder motif report")
+}
 ```
 
 Reference: [@Zankari2012]
