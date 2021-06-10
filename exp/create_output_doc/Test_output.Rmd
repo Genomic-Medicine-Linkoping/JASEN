@@ -120,12 +120,12 @@ test_string <- params$test
 
 k1d <- do.call(rbind.data.frame, k1)
 k2d <- do.call(rbind.data.frame, k2)
-#k3d <- do.call(rbind.data.frame, k3)
 k4d <- do.call(rbind.data.frame, k4)
 k5d <- do.call(rbind.data.frame, k5)
 k6d <- do.call(rbind.data.frame, k6)
 k7d <- do.call(rbind.data.frame, k7)
 k8d <- do.call(rbind.data.frame, k8)
+phenos <- read_tsv("phenotypes.tsv")
 ```
 
 
