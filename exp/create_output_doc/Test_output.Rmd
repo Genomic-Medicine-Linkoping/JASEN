@@ -84,6 +84,28 @@ filter_ariba <- function(df){
     select(-free_text)
 }
   
+handle_empties <- function(df1, df2){
+  # Both dfs are empty, return the first empty one only
+  if ((dim(df1)[1] == 0 & dim(df1)[2] == 0) & (dim(df2)[1] == 0 & dim(df2)[2] == 0)) {
+    return(df1)
+  # df1 empty, df2 has something, return df2
+  }else if((dim(df1)[1] == 0 & dim(df1)[2] == 0) & (dim(df2)[1] != 0 & dim(df2)[2] != 0)){
+    return(df2)
+  # df2 empty, df1 has something, return df1  
+  }else if((dim(df1)[1] != 0 & dim(df1)[2] != 0) & (dim(df2)[1] == 0 & dim(df2)[2] == 0)){
+    return(df1)    
+  }else if((dim(df1)[1] != 0 & dim(df1)[2] != 0) & (dim(df2)[1] != 0 & dim(df2)[2] != 0)){
+    # Make data types to be equal between df:s
+    common <- names(k4d)[names(k4d) %in% names(k5d)]
+    k4d[common] <- lapply(common, function(x) {
+      match.fun(paste0("as.", class(k5d[[x]])))(k4d[[x]])
+    })
+    return(bind_rows(k4d,k5d))
+  }else{
+    return(data.frame(c("Something","wrong"),c("went","!")))
+  }
+}
+
 
 k1 <- fromJSON("cgmlst_stats.json", flatten=TRUE)
 k2 <- fromJSON("cgmlst_alleles.json", flatten=TRUE)
