@@ -43,11 +43,52 @@ process cgmlst_db_init{
   file 'database.rdy' into chewie_init
   file 'chewiedb.zip' into chewie_source
 
+  script:
+   if( params.species == 'Escherichia_coli' )
+    """
+    if ${params.chewbbaca_db_download} ; then
+      export PATH=\$PATH:$baseDir/bin/
+      mkdir -p ${params.chewbbacadb}
+      wget -c ${params.chewbbacadb_url_Escherichia_coli} -O chewiedb.zip
+      unzip -o chewiedb.zip -d ${params.chewbbacadb} 
+      chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
+      touch database.rdy
+    else
+      touch database.rdy
+    fi  
+    """
+   else if( params.species == 'Enterococcus_faecalis' )
   """
   if ${params.chewbbaca_db_download} ; then
     export PATH=\$PATH:$baseDir/bin/
     mkdir -p ${params.chewbbacadb} 
-    wget ${params.chewbbacadb_url} -O chewiedb.zip
+      wget -c ${params.chewbbacadb_url_Enterococcus_faecalis} -O chewiedb.zip
+      unzip -o chewiedb.zip -d ${params.chewbbacadb} 
+      chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
+      touch database.rdy
+    else
+      touch database.rdy
+    fi
+    """
+   else if( params.species == 'Staphylococcus_aureus' )
+    """
+    if ${params.chewbbaca_db_download} ; then
+      export PATH=\$PATH:$baseDir/bin/
+      mkdir -p ${params.chewbbacadb}
+      wget -c ${params.chewbbacadb_url_Staphylococcus_aureus} -O chewiedb.zip
+      unzip -o chewiedb.zip -d ${params.chewbbacadb} 
+      chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
+      touch database.rdy
+    else
+      touch database.rdy
+    fi
+    """
+   else if( params.species == 'Mycobacterium_tuberculosis' )
+    """
+    if ${params.chewbbaca_db_download} ; then
+      export PATH=\$PATH:$baseDir/bin/
+      mkdir -p ${params.chewbbacadb}
+      wget -c ${params.chewbbacadb_url_Mycobacterium_tuberculosis_bovis_africanum_canettii} -O chewiedb.zip
     unzip -o chewiedb.zip -d ${params.chewbbacadb} 
     chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
     touch database.rdy
@@ -55,6 +96,21 @@ process cgmlst_db_init{
     touch database.rdy
   fi
   """
+   else if( params.species == 'Klebsiella_pneumoniae' )
+    """
+    if ${params.chewbbaca_db_download} ; then
+      export PATH=\$PATH:$baseDir/bin/
+      mkdir -p ${params.chewbbacadb}
+      wget -c ${params.chewbbacadb_url_Klebsiella_pneumoniae_variicola_quasipneumoniae} -O chewiedb.zip
+      unzip -o chewiedb.zip -d ${params.chewbbacadb} 
+      chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
+      touch database.rdy
+    else
+      touch database.rdy
+    fi
+    """
+   else
+    throw new IllegalArgumentException("Unknown species $params.species")
 }
 
 process kraken2_db_download{
