@@ -37,7 +37,7 @@ process bwa_index_reference{
 }
 
 process cgmlst_db_init{
-  label 'min_allocation'
+  label 'max_allocation'
 
   output:
   file 'database.rdy' into chewie_init
