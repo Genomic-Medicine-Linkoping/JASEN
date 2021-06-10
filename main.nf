@@ -124,7 +124,7 @@ process kraken2_db_download{
   if ${params.kraken_db_download} ; then
     export PATH=\$PATH:$baseDir/bin/
     mkdir -p ${params.krakendb}
-    wget ${params.krakendb_url} -O krakendb.tgz
+    wget -c ${params.krakendb_url} -O krakendb.tgz
     # dlsuf=`tar -tf krakendb.tgz | head -n 1 | tail -c 2`
     if [ -f "${params.reference}.sa" ]; then
       tar -xvzf krakendb.tgz -C ${params.krakendb} --strip 1
