@@ -158,3 +158,5 @@ exp/create_output_doc/*
 !exp/create_output_doc/example_results.html
 
 .Rproj.user
+
+temp
