@@ -58,10 +58,10 @@ process cgmlst_db_init{
     fi  
     """
    else if( params.species == 'Enterococcus_faecalis' )
-  """
-  if ${params.chewbbaca_db_download} ; then
-    export PATH=\$PATH:$baseDir/bin/
-    mkdir -p ${params.chewbbacadb} 
+    """
+    if ${params.chewbbaca_db_download} ; then
+      export PATH=\$PATH:$baseDir/bin/
+      mkdir -p ${params.chewbbacadb}
       wget -c ${params.chewbbacadb_url_Enterococcus_faecalis} -O chewiedb.zip
       unzip -o chewiedb.zip -d ${params.chewbbacadb} 
       chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
@@ -89,13 +89,13 @@ process cgmlst_db_init{
       export PATH=\$PATH:$baseDir/bin/
       mkdir -p ${params.chewbbacadb}
       wget -c ${params.chewbbacadb_url_Mycobacterium_tuberculosis_bovis_africanum_canettii} -O chewiedb.zip
-    unzip -o chewiedb.zip -d ${params.chewbbacadb} 
-    chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
-    touch database.rdy
-  else
-    touch database.rdy
-  fi
-  """
+      unzip -o chewiedb.zip -d ${params.chewbbacadb} 
+      chewBBACA.py PrepExternalSchema -i ${params.chewbbacadb} -o ${params.chewbbacadb}/schema --cpu ${task.cpus}
+      touch database.rdy
+    else
+      touch database.rdy
+    fi
+    """
    else if( params.species == 'Klebsiella_pneumoniae' )
     """
     if ${params.chewbbaca_db_download} ; then
@@ -746,4 +746,12 @@ process build_report{
   # compile the report
   Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}"), output_file = "${html_output}")'
   """
+}
+
+
+/* 
+ * completion handler
+ */
+workflow.onComplete {
+	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/$params.sample_ID/results.html\n" : "Oops .. something went wrong" )
 }
