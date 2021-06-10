@@ -5,6 +5,7 @@ date: "`r Sys.Date()`"
 link-citations: true
 bibliography: bibliography.bib
 biblio-style: "alpha" #https://www.overleaf.com/learn/latex/Bibtex_bibliography_styles
+#csl: "pnas.csl"
 subject: "This is a report over JASEN results"
 params:
     sample: "[ID info missing]"
@@ -54,7 +55,7 @@ library(tidyverse)
 library(DT)
 library(bookdown)
 
-dtalise <- function(df, tbl_caption) {
+dt_alise <- function(df, tbl_caption) {
   df %>%
   datatable( 
     rownames = FALSE,
