@@ -35,7 +35,9 @@ OUTPUT_PATH_IN_WORK_DIR = $(INPUT_DIR)
 
 SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out container/$(CONT_NAME) prodigal -p single -t
 
-RUN = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity --genome_name $(GENOME_NAME) --input_dir $(INPUT_DIR) --output_path $(OUTPUT_PATH_IN_WORK_DIR) -resume
+# env TZ="Europe/Stockholm" and -B /run 
+# fix a problem described in: https://github.com/truatpasteurdotfr/singularity-docker-fedora30-brave/issues/3
+RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity --species $(SPECIES) --genome_name $(GENOME_NAME) --input_dir $(INPUT_DIR) --output_path $(OUTPUT_PATH_IN_WORK_DIR) -resume
 
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
