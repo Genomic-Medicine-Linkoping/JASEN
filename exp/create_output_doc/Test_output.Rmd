@@ -83,7 +83,7 @@ filter_ariba <- function(df){
     relocate(phenotype, .after = pc_ident) %>%
     select(-free_text)
 }
-  
+
 handle_empties <- function(df1, df2){
   # Both dfs are empty, return the first empty one only
   if ((dim(df1)[1] == 0 & dim(df1)[2] == 0) & (dim(df2)[1] == 0 & dim(df2)[2] == 0)) {
@@ -150,7 +150,7 @@ dt_alise(df, "Cgmlst stats")
 # Move first row to be the column names
 names(k2d) <- NULL
 names(k2d) <- lapply(k2d[1, ], as.character)
-k2d <- k2d[-1, ] 
+k2d <- k2d[-1, ]
 
 # Transpose df
 k2d <- as_tibble(cbind(names(k2d), t(k2d)), 
@@ -214,9 +214,9 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
   
   # Join phenotype information and print as a pretty table
   left_join(k6d,phenos, by=c("join_column" = "join_column")) %>% 
-  filter(pc_ident > 99) %>% 
-  relocate(X.ariba_ref_name, .after = var_description) %>%
-  relocate(pc_ident, .after = ref_name) %>%
+    filter(pc_ident > 99) %>% 
+    relocate(X.ariba_ref_name, .after = var_description) %>%
+    relocate(pc_ident, .after = ref_name) %>%
     select(-one_of(c("phenotype","free_text","join_column"))) %>%
     dt_alise("Ariba Resfinder motif report")  
 }else{
@@ -273,7 +273,7 @@ t(k7d) %>%
 # SNP report
 
 ```{r echo=FALSE}
-dtalise(k8d, "SNP report")
+dt_alise(k8d, "SNP report")
 ```
 
 # References
