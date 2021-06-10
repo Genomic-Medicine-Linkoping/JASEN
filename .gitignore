@@ -155,5 +155,6 @@ exp/create_output_doc/*
 !exp/create_output_doc/README.md
 !exp/create_output_doc/create_output_doc.Rproj
 !exp/create_output_doc/bibliography.bib
+!exp/create_output_doc/example_results.html
 
 .Rproj.user
