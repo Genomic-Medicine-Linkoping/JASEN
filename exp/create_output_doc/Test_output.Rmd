@@ -141,17 +141,22 @@ df <- do.call(rbind.data.frame, k1) %>%
   rename_at(vars(all_of(oldnames)), ~ newnames)
 df <- df[-1, ]
 
-dtalise(df, "Cgmlst stats")
+dt_alise(df, "Cgmlst stats")
 ```
 
 # Cgmlst Alleles
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 # Move first row to be the column names
 names(k2d) <- NULL
 names(k2d) <- lapply(k2d[1, ], as.character)
 k2d <- k2d[-1, ] 
-dtalise(k2d, "Cgmlst Alleles")
+
+# Transpose df
+k2d <- as_tibble(cbind(names(k2d), t(k2d)), 
+                 validate = FALSE) 
+names(k2d) <- c("gene_name", "allele")
+
 ```
 
 # Mlst
