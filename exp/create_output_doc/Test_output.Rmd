@@ -167,7 +167,7 @@ k2d %>%
       lengthMenu = c(10, 30, 100, 500),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
       keys = TRUE,
-      pageLength = 30
+      pageLength = 10
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
     'Table: ', htmltools::em("Cgmlst Alleles"))
@@ -188,7 +188,7 @@ k3 %>%
       lengthMenu = c(10, 30, 100, 500),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
       keys = TRUE,
-      pageLength = 30
+      pageLength = 10
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
     'Table: ', htmltools::em("Mlst"))
