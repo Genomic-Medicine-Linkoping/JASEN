@@ -144,6 +144,7 @@ process ariba_db_download{
  
   output:
   file 'database.rdy' into ariba_init
+  file 'phenotypes.tsv' into resfinder_phenotypes
 
   """
   if  ${params.ariba_db_download} ; then
@@ -151,6 +152,9 @@ process ariba_db_download{
     ariba prepareref --force -f ./resfinder.fa -m ./resfinder.tsv --threads ${task.cpus} ${params.aribadb}
     mv resfinder.fa ${params.aribadb}
     mv resfinder.tsv ${params.aribadb}
+    wget -vc ${params.resfinder_phenotypes}
+    mv phenotypes.txt phenotypes.tsv
+    cp phenotypes.tsv ${params.aribadb}/phenotypes.tsv
     touch database.rdy
   else
     touch database.rdy
@@ -729,6 +733,7 @@ process build_report{
   file (cgmlst_res) from cgmlst_results_2a
   file (cgmlst_stats) from cgmlst_results_2b
   file (bibliography) from bibliography
+  file (phenotypes) from resfinder_phenotypes
 
   output:
   file("${html_output}")
