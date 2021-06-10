@@ -157,12 +157,42 @@ k2d <- as_tibble(cbind(names(k2d), t(k2d)),
                  validate = FALSE) 
 names(k2d) <- c("gene_name", "allele")
 
+k2d %>%
+  datatable(
+    rownames = FALSE,
+    extensions = c('FixedColumns','Buttons','KeyTable'),
+    options=list(
+      scrollX=TRUE,
+      dom = 'tBlrpf',
+      lengthMenu = c(10, 30, 100, 500),
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE,
+      pageLength = 30
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table: ', htmltools::em("Cgmlst Alleles"))
+    )
+
 ```
 
 # Mlst
 
 ```{r echo=FALSE}
-dtalise(k3, "Mlst")
+k3 %>%
+  datatable(
+    rownames = FALSE,
+    extensions = c('FixedColumns','Buttons','KeyTable'),
+    options=list(
+      scrollX=TRUE,
+      dom = 'tBlrpf',
+      lengthMenu = c(10, 30, 100, 500),
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE,
+      pageLength = 30
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table: ', htmltools::em("Mlst"))
+    )
 ```
 
 # Ariba 
@@ -253,8 +283,22 @@ read_csv("summary.csv") %>%
 # Quast report
 
 ```{r echo=FALSE}
-
-dtalise(t(k7d), "Quast report")
+t(k7d) %>%
+  datatable(
+    rownames = FALSE,
+    extensions = c('FixedColumns','Buttons','KeyTable'),
+    options=list(
+      scrollX=TRUE,
+      dom = 'tBlrpf',
+      lengthMenu = c(10, 30, 100),
+      #fixedColumns = list(leftColumns = 1),
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE,
+      pageLength = 30
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table: ', htmltools::em("Quast report"))
+    )
 ```
 
 # SNP report
