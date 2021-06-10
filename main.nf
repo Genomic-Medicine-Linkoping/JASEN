@@ -713,6 +713,7 @@ process json_collection{
 
 report_Rmd = Channel.fromPath("${params.report_template_file}")
 bibliography = Channel.fromPath("${params.bibliography}")
+ref_style = Channel.fromPath("${params.reference_style}")
 
 process build_report{
   label 'min_allocation'
@@ -734,6 +735,7 @@ process build_report{
   file (cgmlst_stats) from cgmlst_results_2b
   file (bibliography) from bibliography
   file (phenotypes) from resfinder_phenotypes
+  file (ref_style) from ref_style
 
   output:
   file("${html_output}")
