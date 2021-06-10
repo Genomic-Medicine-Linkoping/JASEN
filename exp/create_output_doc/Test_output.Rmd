@@ -199,50 +199,12 @@ Reference: [@Silva2018]
 
 # Ariba 
 
-## Local database motif report (coding)
+## Local database motif report (coding and non-coding)
 
 ```{r echo=FALSE}
-# common <- names(k4d)[names(k4d) %in% names(k5d)]
-# 
-# k4d[common] <- lapply(common, function(x) {
-#   match.fun(paste0("as.", class(k5d[[x]])))(k4d[[x]])
-# })
-
-# k4d$has_known_var <- k4d$has_known_var %>% as.integer
-# k5d$has_known_var <- k5d$has_known_var %>% as.integer
-# k4d$known_var <- k4d$known_var %>% as.factor
-# k5d$known_var <- k5d$known_var %>% as.factor
-# k4d$ref_start <- k4d$ref_start %>% as.integer
-# k5d$ref_start <- k5d$ref_start %>% as.integer
-# k4d$ref_end <- k4d$ref_end %>% as.integer
-# k5d$ref_end <- k5d$ref_end %>% as.integer
-# k4d$ctg_start <- k4d$ctg_start %>% as.integer
-# k5d$ctg_start <- k5d$ctg_start %>% as.integer
-# k4d$ctg_end <- k4d$ctg_end %>% as.integer
-# k5d$ctg_end <- k5d$ctg_end %>% as.integer
-# k4d$smtls_total_depth <- k4d$smtls_total_depth %>% as.integer
-# k5d$smtls_total_depth <- k5d$smtls_total_depth %>% as.integer
-
-#local_db <- bind_rows(k4d,k5d)
-# local_db <- bind_rows(k4d,k5d) %>% 
-#   filter(pc_ident > 99) %>% 
-#   relocate(X.ariba_ref_name, .after = var_description) %>%
-#   relocate(pc_ident, .after = ref_name) %>%
-#   mutate(phenotype = str_replace(free_text, ".+\\|\\|\\|", "")) %>%
-#   relocate(phenotype, .after = pc_ident) %>%
-#   select(-free_text)
-
-k4d %>% 
+handle_empties(k4d,k5d) %>%
   filter_ariba %>%
-  dtalise("Ariba local database motif report")
-```
-
-## Local database motif report (non-coding)
-
-```{r echo=FALSE}
-k5d %>% 
-  filter_ariba %>%
-  dtalise("Ariba local database motif report")
+  dt_alise("Ariba local database motif report")
 ```
 
 
