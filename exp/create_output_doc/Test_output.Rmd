@@ -195,6 +195,8 @@ k2d %>%
 
 Reference to chewBBACA: @Silva2018
 
+# Contig files scan results against PubMLST typing schemes 
+
 ```{r echo=FALSE}
 k3 %>%
   datatable(
