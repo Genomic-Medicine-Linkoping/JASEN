@@ -55,7 +55,7 @@ process cgmlst_db_init{
       touch database.rdy
     else
       touch database.rdy
-    fi  
+    fi
     """
    else if( params.species == 'Enterococcus_faecalis' )
     """
@@ -742,7 +742,7 @@ process build_report{
   html_output = "${params.sample_ID}.html"
   """
   # compile the report
-  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}"), output_file = "${html_output}")'
+  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", multiqc = "${baseDir}/work/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
   """
 }
 
