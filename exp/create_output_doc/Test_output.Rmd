@@ -142,7 +142,24 @@ df <- do.call(rbind.data.frame, k1) %>%
   rename_at(vars(all_of(oldnames)), ~ newnames)
 df <- df[-1, ]
 
-dt_alise(df, "Cgmlst stats")
+df %>%
+  datatable( 
+    rownames = FALSE,
+    extensions = c('Buttons','KeyTable'),
+    options=list(
+      # https://datatables.net/reference/option/dom
+      dom = 'tBr',
+      lengthMenu = c(10, 30, 100),
+      scrollX=TRUE,
+      ordering=FALSE,
+      #fixedColumns = list(leftColumns = 1),
+      #pageLength = 10,
+      keys = TRUE
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table 1: Allele call statistics. For explanation on table headers, see: ', htmltools::tags$a(href="https://github.com/B-UMMI/chewBBACA/wiki/2.-Allele-Calling#allele-call-statistics-output-results_statisticstsv", "chewBBACA.py AlleleCall subcommand documentation"))
+    )
+
 ```
 
 # Cgmlst Alleles
@@ -171,7 +188,7 @@ k2d %>%
       pageLength = 10
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table: ', htmltools::em("Cgmlst Alleles"))
+    'Table 2: Detected cgmlst alleles. For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
     )
 
 ```
@@ -185,14 +202,13 @@ k3 %>%
     extensions = c('FixedColumns','Buttons','KeyTable'),
     options=list(
       scrollX=TRUE,
-      dom = 'tBlrpf',
-      lengthMenu = c(10, 30, 100, 500),
+      dom = 'tBr',
+      ordering=FALSE,
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-      keys = TRUE,
-      pageLength = 10
+      keys = TRUE
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table: ', htmltools::em("Mlst"))
+    'Table 3: Found cgmlst alleles. For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
     )
 ```
 
@@ -244,12 +260,12 @@ t(k7d) %>%
     extensions = c('FixedColumns','Buttons','KeyTable'),
     options=list(
       scrollX=TRUE,
-      dom = 'tBlrpf',
-      lengthMenu = c(10, 30, 100),
+      ordering=FALSE,
+      dom = 'tBr',
+      #lengthMenu = c(10, 30, 100),
       #fixedColumns = list(leftColumns = 1),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-      keys = TRUE,
-      pageLength = 30
+      keys = TRUE
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
     'Table 6: Output of genome assembly quality assessment tool. For detailed information on the table headers, see: ', htmltools::tags$a(href="http://quast.sourceforge.net/docs/manual.html#sec3.1.1", "QUAST manual"))
