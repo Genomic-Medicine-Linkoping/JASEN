@@ -739,7 +739,7 @@ process build_report{
   file("${html_output}")
 
   script:
-  html_output = "results.html"
+  html_output = "${params.sample_ID}.html"
   """
   # compile the report
   Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}"), output_file = "${html_output}")'
@@ -751,5 +751,5 @@ process build_report{
  * completion handler
  */
 workflow.onComplete {
-	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/$params.sample_ID/results.html\n" : "Oops .. something went wrong" )
+	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/$params.sample_ID/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
 }
