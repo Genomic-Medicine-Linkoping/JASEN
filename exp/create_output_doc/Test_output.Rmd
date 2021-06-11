@@ -176,7 +176,7 @@ k2d %>%
 
 ```
 
-# Mlst
+Reference to chewBBACA: @Silva2018
 
 ```{r echo=FALSE}
 k3 %>%
@@ -196,7 +196,7 @@ k3 %>%
     )
 ```
 
-Reference: [@Silva2018]
+Reference information: These results made use of the [PubMLST website](https://pubmlst.org/) developed by Keith Jolley [@Jolley2010] and sited at the University of Oxford. The development of that website was funded by the Wellcome Trust. The typing information was obtained using: Seemann T, [mlst](https://github.com/tseemann/mlst `link to Github repository`).
 
 # Ariba 
 
@@ -208,6 +208,7 @@ handle_empties(k4d,k5d) %>%
   dt_alise('Table 4: Ariba run output for local antibiotics resistance genes. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 ```
 
+Reference to ARIBA: @Hunt2017
 
 ## Resfinder motif report
 
@@ -231,28 +232,7 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
 }
 ```
 
-Reference: [@Zankari2012]
-
-## Summary
-
-```{r echo=FALSE, message=FALSE, warning=FALSE}
-read_csv("summary.csv") %>%
-  datatable( 
-    rownames = FALSE,
-    extensions = c('FixedColumns','Buttons','KeyTable'),
-    options=list(
-      scrollX=TRUE,
-      dom = 'tBlrpf',
-      lengthMenu = c(5, 10, 25),
-      #fixedColumns = list(leftColumns = 1),
-      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-      keys = TRUE,
-      pageLength = 10
-      ), caption = htmltools::tags$caption(
-    style = 'caption-side: bottom; text-align: center;',
-    'Table: ', htmltools::em("Summary"))
-    )
-```
+Reference to Resfinder: @Zankari2012
 
 # Quast report
 
