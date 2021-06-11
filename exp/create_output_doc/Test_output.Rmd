@@ -224,6 +224,7 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
     filter(pc_ident > 99) %>% 
     relocate(X.ariba_ref_name, .after = var_description) %>%
     relocate(pc_ident, .after = ref_name) %>%
+    select(-one_of(c("phenotype","join_column"))) %>%
     dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 }else{
   # If not found, return empty
