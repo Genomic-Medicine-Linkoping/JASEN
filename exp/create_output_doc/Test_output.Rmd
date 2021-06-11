@@ -125,6 +125,8 @@ k6d <- do.call(rbind.data.frame, k6)
 k7d <- do.call(rbind.data.frame, k7)
 k8d <- do.call(rbind.data.frame, k8)
 phenos <- read_tsv("phenotypes.tsv")
+
+#options(DT.options = list(, buttons = c('copy', 'csv', 'excel', 'pdf', 'print')))
 ```
 
 
