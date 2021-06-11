@@ -56,7 +56,7 @@ library(tidyverse)
 library(DT)
 library(bookdown)
 
-dt_alise <- function(df, tbl_caption) {
+dt_alise <- function(df, text_before ,html_object) {
   df %>%
   datatable( 
     rownames = FALSE,
@@ -71,7 +71,7 @@ dt_alise <- function(df, tbl_caption) {
       pageLength = 30
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table: ', htmltools::em(tbl_caption))
+    text_before , html_object)
     )
 }
 
@@ -201,7 +201,12 @@ Reference: [@Silva2018]
 # Ariba 
 
 ## Local database motif report (coding and non-coding)
-Join phenotypes to found ge
+
+```{r echo=FALSE}
+handle_empties(k4d,k5d) %>%
+  filter_ariba %>%
+  dt_alise('Table 4: Ariba run output for local antibiotics resistance genes. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+```
 
 
 ## Resfinder motif report
@@ -218,12 +223,11 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
     filter(pc_ident > 99) %>% 
     relocate(X.ariba_ref_name, .after = var_description) %>%
     relocate(pc_ident, .after = ref_name) %>%
-    select(-one_of(c("phenotype","free_text","join_column"))) %>%
-    dt_alise("Ariba Resfinder motif report")  
+    dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 }else{
   # If not found, return empty
   k6d %>% 
-    dt_alise("Ariba Resfinder motif report")
+    dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 }
 ```
 
@@ -267,14 +271,14 @@ t(k7d) %>%
       pageLength = 30
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table: ', htmltools::em("Quast report"))
+    'Table 6: Output of genome assembly quality assessment tool. For detailed information on the table headers, see: ', htmltools::tags$a(href="http://quast.sourceforge.net/docs/manual.html#sec3.1.1", "QUAST manual"))
     )
 ```
 
 # SNP report
 
 ```{r echo=FALSE}
-dt_alise(k8d, "SNP report")
+    dt_alise('Table 7: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 ```
 
 # MultiQC report
