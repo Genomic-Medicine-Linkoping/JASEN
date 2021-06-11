@@ -117,8 +117,6 @@ k6 <- fromJSON("motif_report.json", flatten=TRUE)
 k7 <- fromJSON("quast_report.json", flatten=TRUE)
 k8 <- fromJSON("snp_report.json", flatten=TRUE)
 
-test_string <- params$test
-
 k1d <- do.call(rbind.data.frame, k1)
 k2d <- do.call(rbind.data.frame, k2)
 k4d <- do.call(rbind.data.frame, k4)
