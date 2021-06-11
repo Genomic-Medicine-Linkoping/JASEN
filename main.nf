@@ -315,10 +315,9 @@ process ariba_stats{
   output:
   //tuple 'summary.csv', 'motif_report_resfinder.json', 'motif_report_local.json' into ariba_summary_output
   tuple 'summary.csv', 'motif_report.json', 'motif_report_local.json', 'motif_report_nonc.json' into ariba_summary_output_1
-  file 'summary.csv' into ariba_summary_output_2a
-  file 'motif_report.json' into ariba_summary_output_2b
-  file 'motif_report_local.json' into ariba_summary_output_2c
-  file 'motif_report_nonc.json' into ariba_summary_output_2d
+  file 'motif_report.json' into ariba_summary_output_2a
+  file 'motif_report_local.json' into ariba_summary_output_2b
+  file 'motif_report_nonc.json' into ariba_summary_output_2c
   // ariba summary --col_filter n --row_filter n summary ${report_resf} ${report_loc}
   // python3 $baseDir/bin/tsv_to_json.py ${report_resf} motif_report_resfinder.json
   // python3 $baseDir/bin/tsv_to_json.py ${report_loc} motif_report_local.json
@@ -725,10 +724,9 @@ process build_report{
   file (report) from report_Rmd
   file (mlstjson) from mlst_output_2
   file (multiqcjson) from multiqc_json_2
-  file (summary) from ariba_summary_output_2a
-  file (motif_report) from ariba_summary_output_2b
-  file (motif_report_local) from ariba_summary_output_2c
-  file (motif_report_nonc) from ariba_summary_output_2d
+  file (motif_report) from ariba_summary_output_2a
+  file (motif_report_local) from ariba_summary_output_2b
+  file (motif_report_nonc) from ariba_summary_output_2c
   file (quastjson) from quast_result_json_2
   file (snpreport) from snp_json_output_2
   file (cgmlst_res) from cgmlst_results_2a
