@@ -63,7 +63,7 @@ dt_alise <- function(df, text_before ,html_object) {
     extensions = c('FixedColumns','Buttons','KeyTable'),
     options=list(
       scrollX=TRUE,
-      dom = 'tBlrpf',
+      dom = 'tBlrpfi',
       lengthMenu = c(10, 30, 100),
       fixedColumns = list(leftColumns = 1),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
@@ -164,7 +164,7 @@ k2d %>%
     extensions = c('FixedColumns','Buttons','KeyTable'),
     options=list(
       scrollX=TRUE,
-      dom = 'tBlrpf',
+      dom = 'tBlrpfi',
       lengthMenu = c(10, 30, 100, 500),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
       keys = TRUE,
