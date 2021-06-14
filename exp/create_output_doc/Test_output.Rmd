@@ -278,8 +278,16 @@ t(k7d) %>%
 
 # SNP report
 
-```{r echo=FALSE}
+```{r echo=FALSE, comment=NA}
+# If the dataframe is not empty, present it
+if (dim(k8d)[1] != 0 & dim(k8d)[2] != 0) {
+  k8d %>% 
     dt_alise('Table 7: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+}else{
+  # If not found, print out just a plain and simple text
+  cat("No SNPs found.")
+}
+
 ```
 
 # MultiQC report
