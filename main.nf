@@ -1,5 +1,12 @@
 #!/usr/bin/env nextflow
 
+log.info """\
+ J A S E N - P I P E L I N E
+ ===================================
+ krakendb_url:          ${params.krakendb_url}
+ chewbbaca_db_download: ${params.chewbbaca_db_download}
+ local_ariba_db_dir:    ${params.local_ariba_db_dir}
+ """
 
 if (!(params.pkm && params.location)) {
   exit 1, "YOU HAVE TO PROVIDE A LOCATION AND PACKAGE MANAGER PROFILE E.g. 'nextflow run main.nf -profile local,conda'"

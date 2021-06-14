@@ -189,7 +189,7 @@ k2d %>%
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
     'Table 2: Detected cgmlst alleles. For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
-    )
+)
 
 ```
 
