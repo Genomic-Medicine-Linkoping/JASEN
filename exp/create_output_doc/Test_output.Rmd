@@ -218,7 +218,9 @@ Reference information: These results made use of the [PubMLST website](https://p
 
 # Ariba 
 
-## Local database motif report (coding and non-coding)
+## Local database motif report
+
+This is includes both coding and non-coding sequences. The determination of which were which was performed with `ariba prepareref` command.
 
 ```{r echo=FALSE}
 handle_empties(k4d,k5d) %>%
