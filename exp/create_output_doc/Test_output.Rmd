@@ -21,7 +21,7 @@ output:
     self_contained: TRUE
     toc: yes
     toc_float: 
-      collapsed: TRUE
+      collapsed: FALSE
       smooth_scroll: TRUE
       print: FALSE
     number_sections: FALSE
