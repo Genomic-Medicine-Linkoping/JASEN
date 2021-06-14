@@ -220,7 +220,7 @@ Reference information: These results made use of the [PubMLST website](https://p
 
 ## Local database motif report
 
-This is includes both coding and non-coding sequences. The determination of which were which was performed with `ariba prepareref` command.
+This is includes both coding and non-coding sequences. The determination of which were which was performed with [`ariba prepareref`](https://github.com/sanger-pathogens/ariba/wiki/Task:-prepareref) command.
 
 ```{r echo=FALSE}
 handle_empties(k4d,k5d) %>%
