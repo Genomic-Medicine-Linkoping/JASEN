@@ -240,7 +240,7 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
   k6d$join_column = str_replace_all(k6d$ref_name,"\\.","_")
   
   # Join phenotype information and print as a pretty table
-  left_join(k6d,phenos, by=c("join_column" = "join_column")) %>% 
+  left_join(k6d,phenos, by=c("join_column" = "join_column")) %>%
     filter(pc_ident > 99) %>% 
     relocate(X.ariba_ref_name, .after = var_description) %>%
     relocate(pc_ident, .after = ref_name) %>%
