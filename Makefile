@@ -30,8 +30,8 @@ IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 #OUTPUT_PATH_IN_WORK_DIR = results
 # E.g. can change the default results directory name to the sample name instead
 # OUTPUT_PATH_IN_WORK_DIR = Klebsiella_pneumoniae_p1
-# Or it can be the same as input dir name:
-OUTPUT_PATH_IN_WORK_DIR = $(INPUT_DIR)
+# OUTPUT_PATH_IN_WORK_DIR = Escherichia_coli_p1
+OUTPUT_PATH_IN_WORK_DIR = saureus_p1
 
 SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out container/$(CONT_NAME) prodigal -p single -t
 
