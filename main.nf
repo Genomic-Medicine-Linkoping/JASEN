@@ -202,7 +202,7 @@ process trimmomatic_trimming{
 }
 
 process ariba_resistancefind{
-  label 'modest_allocation'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report.tsv'
 
@@ -221,7 +221,7 @@ process ariba_resistancefind{
 }
 
 process ariba_resistancefind_local{
-  label 'modest_allocation'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report_local.tsv'
 
@@ -239,7 +239,7 @@ process ariba_resistancefind_local{
 }
 
 process ariba_resistancefind_nonc{
-  label 'modest_allocation'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report_nonc.tsv'
 
