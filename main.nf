@@ -706,5 +706,6 @@ process build_report{
  * completion handler
  */
 workflow.onComplete {
-	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/$params.sample_ID/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
+	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/$params.input_dir/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
+
 }
