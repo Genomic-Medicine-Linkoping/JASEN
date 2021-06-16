@@ -32,7 +32,7 @@ SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):
 
 # env TZ="Europe/Stockholm" and -B /run 
 # fixes a problem described in: https://github.com/truatpasteurdotfr/singularity-docker-fedora30-brave/issues/3
-RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) --output_path $(OUTPUT_PATH_IN_WORK_DIR) #-resume
+RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) --output_path $(SAMPLE_ID) -resume
 
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
