@@ -32,5 +32,9 @@ if [ -z "${s}" ] || [ -z "${p}" ]; then
     usage
 fi
 
-echo "s = ${s}"
-echo "p = ${p}"
+mkdir -p ${d}
+wget -c ${u} -O chewiedb.zip
+unzip -o chewiedb.zip -d ${d} 
+chewBBACA.py PrepExternalSchema -i ${d} -o ${d}/schema --cpu ${c}
+touch database.rdy
+
