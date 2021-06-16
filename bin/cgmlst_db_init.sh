@@ -31,7 +31,7 @@ while getopts ":c:u:d:" o; do
 done
 shift $((OPTIND-1))
 
-if [ -z "${s}" ] || [ -z "${p}" ]; then
+if [ -z "${c}" ] || [ -z "${u}" ] || [ -z "${d}" ]; then
     usage
 fi
 
