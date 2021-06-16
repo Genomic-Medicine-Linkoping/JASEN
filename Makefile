@@ -114,7 +114,7 @@ run:
 	@mkdir -p work
 	$(RUN)
 	# Copy output report to a location where it can be easily version controlled
-	cp $(WORKDIR)/$(OUTPUT_PATH_IN_WORK_DIR)/$(OUTPUT_PATH_IN_WORK_DIR).html exp/create_output_doc/
+	cp $(WORKDIR)/$(INPUT_DIR)/$(SAMPLE_ID).html exp/create_output_doc/
 
 update_subm:
 	cd assets/var-genes-ro ; \
