@@ -6,6 +6,13 @@ log.info """\
  krakendb_url:          ${params.krakendb_url}
  chewbbaca_db_download: ${params.chewbbaca_db_download}
  local_ariba_db_dir:    ${params.local_ariba_db_dir}
+ input_dir:             ${params.input_dir}
+ input:                 ${params.input}
+ species:               ${params.species}
+ genome_name:           ${params.genome_name}
+ chewbbacadb_url:       ${params.chewbbacadb_url}
+ prodigal_file:         ${params.prodigal_file}
+ sample_ID:             ${params.sample_ID}
  """
 
 if (!(params.pkm && params.location)) {
