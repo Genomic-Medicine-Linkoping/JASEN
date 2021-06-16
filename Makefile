@@ -12,16 +12,9 @@ EC = "Escherichia coli"
 CONT_NAME = jasen_2021-06-07.sif
 PROJECT_ROOT = /home/rada/Documents/CGL/JASEN
 
-#GENOME_NAME = Escherichia_coli_GCF_000008865.2_ASM886v2
-#GENOME_NAME = Klebsiella_pneumoniae_GCF_000240185.1_ASM24018v2
-#GENOME_NAME = Mycobacterium_tuberculosis_GCF_000195955.2_ASM19595v2
-GENOME_NAME = Staphylococcus_aureus_GCF_000013425.1_ASM1342v1
-
-#INPUT_DIR = Escherichia_coli_p1
-#INPUT_DIR = Klebsiella_pneumoniae_p1
-INPUT_DIR = saureus_p1
-#INPUT_DIR = Mycobacterium_tuberculosis_p1
-#INPUT_DIR = saureus_p2
+# Name of the species profile
+SPECIES = Staphylococcus_aureus
+#SPECIES = Escherichia_coli
 
 WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
