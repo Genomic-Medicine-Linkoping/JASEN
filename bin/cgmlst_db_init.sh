@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+set -u
+set -o pipefail
+
 # https://stackoverflow.com/a/16496491
 usage() { echo "Usage: $0 [-s <45|90>] [-p <string>]" 1>&2; exit 1; }
 
