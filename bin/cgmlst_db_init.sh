@@ -41,3 +41,7 @@ unzip -o chewiedb.zip -d ${d}
 chewBBACA.py PrepExternalSchema -i ${d} -o ${d}/schema --cpu ${c}
 touch database.rdy
 
+echo "c = ${c}"
+echo "u = ${u}"
+echo "d = ${d}"
+
