@@ -4,7 +4,13 @@ set -u
 set -o pipefail
 
 # https://stackoverflow.com/a/16496491
-usage() { echo "Usage: $0 [-s <45|90>] [-p <string>]" 1>&2; exit 1; }
+usage() { 
+    echo -e "Usage: $0
+[-c <NUM_CPUS>]
+[-d <PATH_TO_WHERE_DB_SHOULD_BE>]
+[-u <CGMLST_SCHEMA_URL>]" 1>&2
+    exit 1
+}
 
 while getopts ":s:p:" o; do
     case "${o}" in
