@@ -6,8 +6,8 @@ log.info """\
  krakendb_url:          ${params.krakendb_url}
  chewbbaca_db_download: ${params.chewbbaca_db_download}
  local_ariba_db_dir:    ${params.local_ariba_db_dir}
- input_dir:             ${params.input_dir}
  input:                 ${params.input}
+ input_dir:             ${params.input_dir}
  species:               ${params.species}
  genome_name:           ${params.genome_name}
  chewbbacadb_url:       ${params.chewbbacadb_url}
