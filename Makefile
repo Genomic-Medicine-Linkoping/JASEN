@@ -25,7 +25,7 @@ IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 # SAMPLE_ID = Klebsiella_pneumoniae_p1
 # SAMPLE_ID = Escherichia_coli_p1
 
-INPUT_DIR = saureus_p1
+OUTPUT_DIR = results
 SAMPLE_ID = Staphylococcus_aureus_prov1
 
 SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out container/$(CONT_NAME) prodigal -p single -t
@@ -114,7 +114,7 @@ run:
 	@mkdir -p work
 	$(RUN)
 	# Copy output report to a location where it can be easily version controlled
-	cp $(WORKDIR)/$(INPUT_DIR)/$(SAMPLE_ID).html exp/create_output_doc/
+	cp $(WORKDIR)/$(OUTPUT_DIR)/$(SAMPLE_ID).html exp/create_output_doc/
 
 update_subm:
 	cd assets/var-genes-ro ; \
