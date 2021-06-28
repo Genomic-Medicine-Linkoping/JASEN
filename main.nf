@@ -102,7 +102,7 @@ process ariba_db_download{
   file 'phenotypes.tsv' into resfinder_phenotypes
 
   """
-  if  ${params.ariba_db_download} ; then
+  if ${params.ariba_db_download} ; then
     ariba getref resfinder resfinder
     ariba prepareref --force -f ./resfinder.fa -m ./resfinder.tsv --threads ${task.cpus} ${params.aribadb}
     mv resfinder.fa ${params.aribadb}
@@ -373,6 +373,9 @@ process quast_assembly_qc{
   """
   quast.py $contig -o . -r ${params.reference} -t ${task.cpus}
   cp report.tsv quast_report.tsv
+  cp -r icarus_viewers ${params.outdir}/quast
+  cp icarus.html ${params.outdir}/quast
+  cp report.html ${params.outdir}/quast  
   """
 }
 
@@ -697,7 +700,7 @@ process build_report{
   html_output = "${params.sample_ID}.html"
   """
   # compile the report
-  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", multiqc = "${baseDir}/work/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/work/results/$params.sample_ID/quast/quast_report.html", multiqc = "${baseDir}/work/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
   """
 }
 
