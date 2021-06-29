@@ -1,0 +1,8 @@
+
+Primer name SPA
+Amplimer 1
+	Sequence: NODE_1_length_957201_cov_81.417054  
+	
+	TAAAGACGATCCTTCGGTGAGC hits forward strand at 378806 with 1 mismatches
+	CAGCAGTAGTGCCGTTTGCTT hits reverse strand at [578026] with 0 mismatches
+	Amplimer length: 371 bp
