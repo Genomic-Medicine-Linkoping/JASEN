@@ -9,6 +9,15 @@ MT = "Mycobacterium tuberculosis"
 KP = "Klebsiella pneumoniae"
 SA = "Staphylococcus aureus"
 EC = "Escherichia coli"
+AC = "Acinetobacter baumannii"
+ES = "Enterococcus faecalis"
+EF = "Enterococcus faecium"
+PA = "Pseudomonas aeruginosa"
+CD = "Clostridioides difficile"
+MA = "Mycobacterium africanum"
+MB = "Mycobacterium bovis"
+SE = "Salmonella enterica"
+
 CONT_NAME = jasen_2021-06-07.sif
 PROJECT_ROOT = /home/rada/Documents/CGL/JASEN
 
@@ -80,6 +89,70 @@ download_bacterial_genomes:
 	@echo ""
 	md5sum $(RG)/Escherichia_coli_GCF_000008865.2_ASM886v2.fna.gz >> $(RG)/md5sums.txt
 	@echo ""
+	@echo ""
+	@echo "Laddar ner $(AC) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/403"
+	wget -vc -O $(RG)/Acinetobacter_baumannii_GCF_002116925.1_ASM211692v1.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/002/116/925/GCF_002116925.1_ASM211692v1/GCF_002116925.1_ASM211692v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(AC) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Acinetobacter_baumannii_GCF_002116925.1_ASM211692v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(ES) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/808?genome_assembly_id=389507"
+	wget -vc -O $(RG)/Enterococcus_faecalis_GCF_003319815.1_ASM331981v1.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/003/319/815/GCF_003319815.1_ASM331981v1/GCF_003319815.1_ASM331981v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(ES) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Enterococcus_faecalis_GCF_003319815.1_ASM331981v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(EF) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/871?genome_assembly_id=429798"
+	wget -vc -O $(RG)/Enterococcus_faecium_GCF_000336405.1_ASM33640v1.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/336/405/GCF_000336405.1_ASM33640v1/GCF_000336405.1_ASM33640v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(EF) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Enterococcus_faecium_GCF_000336405.1_ASM33640v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(PA) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/187?genome_assembly_id=299953"
+	wget -vc -O $(RG)/Pseudomonas_aeruginosa_GCF_000006765.1_ASM676v1.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/006/765/GCF_000006765.1_ASM676v1/GCF_000006765.1_ASM676v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(PA) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Pseudomonas_aeruginosa_GCF_000006765.1_ASM676v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(CD) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/535?genome_assembly_id=308203"
+	wget -vc -O $(RG)/Clostridioides_difficile_GCF_002007885.1_ASM200788v1.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/002/007/885/GCF_002007885.1_ASM200788v1/GCF_002007885.1_ASM200788v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(CD) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Clostridioides_difficile_GCF_002007885.1_ASM200788v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(MA) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/?term=Mycobacterium+africanum"
+	wget -vc -O $(RG)/Mycobacterium_africanum_GCF_000253355.1_ASM25335v1.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/253/355/GCF_000253355.1_ASM25335v1/GCF_000253355.1_ASM25335v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(MA) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Mycobacterium_africanum_GCF_000253355.1_ASM25335v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(MB) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/?term=Mycobacterium+bovis"
+	wget -vc -O $(RG)/Mycobacterium_bovis_GCF_005156105.1_ASM515610v1.fna.gz ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/005/156/105/GCF_005156105.1_ASM515610v1/GCF_005156105.1_ASM515610v1_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(MB) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Mycobacterium_bovis_GCF_005156105.1_ASM515610v1.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
+	@echo ""
+	@echo "Laddar ner $(SE) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/genome/152?genome_assembly_id=305903"
+	wget -vc -O $(RG)/Salmonella_enterica_GCF_000006945.2_ASM694v2.fna.gz https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/006/945/GCF_000006945.2_ASM694v2/GCF_000006945.2_ASM694v2_genomic.fna.gz
+	@echo ""
+	@echo "Skapar md5sum av $(SE) refseq genomet"
+	@echo ""
+	md5sum $(RG)/Salmonella_enterica_GCF_000006945.2_ASM694v2.fna.gz >> $(RG)/md5sums.txt
+	@echo ""
 
 create_prodigal_trn_files:
 	@echo ""
@@ -103,12 +176,52 @@ create_prodigal_trn_files:
 	@echo "För $(EC):"
 	zcat $(RG)/Escherichia_coli_GCF_000008865.2_ASM886v2.fna.gz | $(SG) $(PT)/Escherichia_coli_GCF_000008865.2_ASM886v2.trn
 	@echo ""
+	@echo ""
+	@echo "För $(AC):"
+	zcat $(RG)/Acinetobacter_baumannii_GCF_002116925.1_ASM211692v1.fna.gz | $(SG) $(PT)/Acinetobacter_baumannii_GCF_002116925.1_ASM211692v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(ES):"
+	zcat $(RG)/Enterococcus_faecalis_GCF_003319815.1_ASM331981v1.fna.gz | $(SG) $(PT)/Enterococcus_faecalis_GCF_003319815.1_ASM331981v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(EF):"
+	zcat $(RG)/Enterococcus_faecium_GCF_000336405.1_ASM33640v1.fna.gz | $(SG) $(PT)/Enterococcus_faecium_GCF_000336405.1_ASM33640v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(PA):"
+	zcat $(RG)/Pseudomonas_aeruginosa_GCF_000006765.1_ASM676v1.fna.gz | $(SG) $(PT)/Pseudomonas_aeruginosa_GCF_000006765.1_ASM676v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(CD):"
+	zcat $(RG)/Clostridioides_difficile_GCF_002007885.1_ASM200788v1.fna.gz | $(SG) $(PT)/Clostridioides_difficile_GCF_002007885.1_ASM200788v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(MA):"
+	zcat $(RG)/Mycobacterium_africanum_GCF_000253355.1_ASM25335v1.fna.gz | $(SG) $(PT)/Mycobacterium_africanum_GCF_000253355.1_ASM25335v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(MB):"
+	zcat $(RG)/Mycobacterium_bovis_GCF_005156105.1_ASM515610v1.fna.gz | $(SG) $(PT)/Mycobacterium_bovis_GCF_005156105.1_ASM515610v1.trn
+	@echo ""
+	@echo ""
+	@echo "För $(SE):"
+	zcat $(RG)/Salmonella_enterica_GCF_000006945.2_ASM694v2.fna.gz | $(SG) $(PT)/Salmonella_enterica_GCF_000006945.2_ASM694v2.trn
+	@echo ""
 
 uncompress_genomes:
 	zcat $(RG)/Mycobacterium_tuberculosis_GCF_000195955.2_ASM19595v2.fna.gz > $(RG)/Mycobacterium_tuberculosis_GCF_000195955.2_ASM19595v2.fna
 	zcat $(RG)/Klebsiella_pneumoniae_GCF_000240185.1_ASM24018v2.fna.gz > $(RG)/Klebsiella_pneumoniae_GCF_000240185.1_ASM24018v2.fna
 	zcat $(RG)/Staphylococcus_aureus_GCF_000013425.1_ASM1342v1.fna.gz > $(RG)/Staphylococcus_aureus_GCF_000013425.1_ASM1342v1.fna
 	zcat $(RG)/Escherichia_coli_GCF_000008865.2_ASM886v2.fna.gz > $(RG)/Escherichia_coli_GCF_000008865.2_ASM886v2.fna
+	zcat $(RG)/Acinetobacter_baumannii_GCF_002116925.1_ASM211692v1.fna.gz > $(RG)/Acinetobacter_baumannii_GCF_002116925.1_ASM211692v1.fna
+	zcat $(RG)/Enterococcus_faecalis_GCF_003319815.1_ASM331981v1.fna.gz > $(RG)/Enterococcus_faecalis_GCF_003319815.1_ASM331981v1.fna
+	zcat $(RG)/Enterococcus_faecium_GCF_000336405.1_ASM33640v1.fna.gz > $(RG)/Enterococcus_faecium_GCF_000336405.1_ASM33640v1.fna
+	zcat $(RG)/Pseudomonas_aeruginosa_GCF_000006765.1_ASM676v1.fna.gz > $(RG)/Pseudomonas_aeruginosa_GCF_000006765.1_ASM676v1.fna
+	zcat $(RG)/Clostridioides_difficile_GCF_002007885.1_ASM200788v1.fna.gz > $(RG)/Clostridioides_difficile_GCF_002007885.1_ASM200788v1.fna
+	zcat $(RG)/Mycobacterium_africanum_GCF_000253355.1_ASM25335v1.fna.gz > $(RG)/Mycobacterium_africanum_GCF_000253355.1_ASM25335v1.fna
+	zcat $(RG)/Mycobacterium_bovis_GCF_005156105.1_ASM515610v1.fna.gz > $(RG)/Mycobacterium_bovis_GCF_005156105.1_ASM515610v1.fna
+	zcat $(RG)/Salmonella_enterica_GCF_000006945.2_ASM694v2.fna.gz > $(RG)/Salmonella_enterica_GCF_000006945.2_ASM694v2.fna
 
 run:
 	@mkdir -p work
