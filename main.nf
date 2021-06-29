@@ -375,7 +375,7 @@ process quast_assembly_qc{
   cp report.tsv quast_report.tsv
   cp -r icarus_viewers ${params.outdir}/quast
   cp icarus.html ${params.outdir}/quast
-  cp report.html ${params.outdir}/quast  
+  cp report.html ${params.outdir}/quast
   """
 }
 
@@ -700,7 +700,7 @@ process build_report{
   html_output = "${params.sample_ID}.html"
   """
   # compile the report
-  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/work/results/$params.sample_ID/quast/quast_report.html", multiqc = "${baseDir}/work/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/work/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/work/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
   """
 }
 
@@ -709,7 +709,18 @@ process build_report{
  * completion handler
  */
 workflow.onComplete {
-	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/results/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
+	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/work/results/$params.sample_ID/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
 
+  //   def msg = """\
+  //     Pipeline execution summary
+  //     ---------------------------
+  //     Completed at: ${workflow.complete}
+  //     Duration    : ${workflow.duration}
+  //     Success     : ${workflow.success}
+  //     workDir     : ${workflow.workDir}
+  //     exit status : ${workflow.exitStatus}
+  //     """
+  //     .stripIndent()
 
+  // sendMail(to: 'lauri.mesilaakso@regionostergotland.se', subject: 'My pipeline execution', body: msg)
 }
