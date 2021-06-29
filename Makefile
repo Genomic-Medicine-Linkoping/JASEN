@@ -22,26 +22,22 @@ CONT_NAME = jasen_2021-06-07.sif
 PROJECT_ROOT = /home/rada/Documents/CGL/JASEN
 
 # Name of the species profile
-SPECIES = Staphylococcus_aureus
-#SPECIES = Escherichia_coli
+# SPECIES = Staphylococcus_aureus
+SPECIES = Escherichia_coli
 
 WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
-# To which directory inside work/ should the results files be output?
-#SAMPLE_ID = results
-# E.g. can change the default results directory name to the sample name instead
+# To which directory inside work/results should the output files come?
 # SAMPLE_ID = Klebsiella_pneumoniae_p1
-# SAMPLE_ID = Escherichia_coli_p1
-
-OUTPUT_DIR = results
-SAMPLE_ID = Staphylococcus_aureus_prov1
+SAMPLE_ID = Escherichia_coli_p1
+# SAMPLE_ID = Staphylococcus_aureus_prov1
 
 SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out container/$(CONT_NAME) prodigal -p single -t
 
 # env TZ="Europe/Stockholm" and -B /run 
 # fixes a problem described in: https://github.com/truatpasteurdotfr/singularity-docker-fedora30-brave/issues/3
-RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) --output_path $(SAMPLE_ID) -resume
+RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) -resume
 
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
@@ -227,7 +223,7 @@ run:
 	@mkdir -p work
 	$(RUN)
 	# Copy output report to a location where it can be easily version controlled
-	cp $(WORKDIR)/$(OUTPUT_DIR)/$(SAMPLE_ID)/$(SAMPLE_ID).html exp/create_output_doc/
+	cp $(WORKDIR)/results/$(SAMPLE_ID)/$(SAMPLE_ID).html exp/create_output_doc/
 
 update_subm:
 	cd assets/var-genes-ro ; \
