@@ -1,6 +1,11 @@
 # https://stackoverflow.com/a/55696820
 SHELL = /bin/bash
 
+CURRENT_CONDA_ENV_NAME = nf
+# Note that the extra activate is needed to ensure that the activate floats env to the front of PATH
+CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate $(CURRENT_CONDA_ENV_NAME)
+
+
 #FASTQS?=.github/data/fastqs/
 RG = assets/ref_genomes
 PT = assets/prodigal_training_files
