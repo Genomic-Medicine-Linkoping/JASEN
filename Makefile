@@ -36,7 +36,8 @@ SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):
 
 # env TZ="Europe/Stockholm" and -B /run 
 # fixes a problem described in: https://github.com/truatpasteurdotfr/singularity-docker-fedora30-brave/issues/3
-RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) -resume
+#RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) -resume
+RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume
 
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
@@ -220,9 +221,9 @@ uncompress_genomes:
 
 run:
 	@mkdir -p work
+	rm -rf assets/references
+	$(CONDA_ACTIVATE) ; \
 	$(RUN)
-	# Copy output report to a location where it can be easily version controlled
-	cp $(WORKDIR)/results/$(SAMPLE_ID)/$(SAMPLE_ID).html exp/create_output_doc/
 
 update_subm:
 	cd assets/var-genes-ro ; \
