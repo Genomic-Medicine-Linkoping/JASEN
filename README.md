@@ -1,24 +1,18 @@
-# gms-JASEN: Region Östergötland implementation
+# JASEN: Region Östergötland implementation
 
 <!-- TOC -->
 
-- [gms-JASEN: Region Östergötland implementation](#gms-jasen-region-Östergötland-implementation)
-    - [Installation](#installation)
-        - [Clone and switch to `ro-implementation` branch](#clone-and-switch-to-ro-implementation-branch)
-        - [Install Singularity](#install-singularity)
-        - [Create Singularity container](#create-singularity-container)
-        - [Download reference genomes and create prodigal training files](#download-reference-genomes-and-create-prodigal-training-files)
-        - [Move Fastq files and adapter sequences to `assets`](#move-fastq-files-and-adapter-sequences-to-assets)
-    - [Usage](#usage)
-        - [Optional: Change amount of resources processes are allowed to use](#optional-change-amount-of-resources-processes-are-allowed-to-use)
-        - [Run the pipeline](#run-the-pipeline)
-        - [Finding results](#finding-results)
-- [JASEN](#jasen)
-    - [Setup](#setup)
-    - [Singularity implementation](#singularity-implementation)
-        - [Image creation](#image-creation)
-        - [Image execution](#image-execution)
-    - [Conda implementation](#conda-implementation)
+- [JASEN: Region Östergötland implementation](#jasen-region-östergötland-implementation)
+  - [Installation](#installation)
+    - [Clone and switch to `ro-implementation` branch](#clone-and-switch-to-ro-implementation-branch)
+    - [Install Singularity](#install-singularity)
+    - [Create Singularity container](#create-singularity-container)
+    - [Download reference genomes and create prodigal training files](#download-reference-genomes-and-create-prodigal-training-files)
+    - [Move Fastq files and adapter sequences to `assets`](#move-fastq-files-and-adapter-sequences-to-assets)
+  - [Usage](#usage)
+    - [Optional: Change amount of resources processes are allowed to use](#optional-change-amount-of-resources-processes-are-allowed-to-use)
+    - [Run the pipeline](#run-the-pipeline)
+    - [Finding results](#finding-results)
 
 <!-- /TOC -->
 
@@ -97,25 +91,25 @@ The results can be found in json format in `work/[input-fastq-dir-name]` directo
 
 ---
 
-# JASEN
+# JASEN <!-- omit in toc -->
 _Json producing Assembly driven microbial Sequence analysis pipeline to support Epitypification and Normalize classification decisions_
 
-## Setup
+## Setup <!-- omit in toc -->
 * `git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git`
 * Edit `JASEN/nextflow.config`
 * _`Optionally run: bash JASEN/container/safety_exports.sh USER PREFIX`_
 
 
-## Singularity implementation
-### Image creation
+## Singularity implementation <!-- omit in toc -->
+### Image creation <!-- omit in toc -->
 * Install Singularity (through conda or whatever)
 * `cd JASEN/container && bash build_container.sh`
 
-### Image execution
+### Image execution <!-- omit in toc -->
 * `singularity exec -B JASEN_INSTALL_DIR:/external -B WORKDIR:/out IMAGE nextflow -C /external/nextflow.config run /JASEN/main.nf -profile local,singularity`
 
 
-## Conda implementation
+## Conda implementation <!-- omit in toc -->
 * Install Conda ( https://www.anaconda.com/distribution )
 * Install nextFlow ( `curl -s https://get.nextflow.io | bash` )
 * `bash JASEN/setup.sh`
