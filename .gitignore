@@ -155,9 +155,11 @@ exp/create_output_doc/*
 !exp/create_output_doc/README.md
 !exp/create_output_doc/create_output_doc.Rproj
 !exp/create_output_doc/bibliography.bib
-!exp/create_output_doc/*.html
 !exp/create_output_doc/env.yml
 
 .Rproj.user
 
 temp
+
+results/Staphylococcus_aureus_prov1/*
+!results/Staphylococcus_aureus_prov1/Staphylococcus_aureus_prov1.html
