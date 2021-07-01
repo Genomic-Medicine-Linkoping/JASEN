@@ -624,7 +624,6 @@ process spa_typing {
     file(primers) from primers
 
 	output:
-		file 'spa.fna'
     file 'spa.txt'
 
 	when:
@@ -634,14 +633,8 @@ process spa_typing {
   ipcress \
   --input ${primers} \
   --sequence ${scaffolds} \
-  --mismatch ${params.num_allowed_spa_mismatches} \
-  --pretty > spa.txt
-
-  ipcress \
-  --input ${primers} \
-  --sequence ${scaffolds} \
-  --mismatch ${params.num_allowed_spa_mismatches} \
-  --products > spa.fna
+  --mismatch 3 \
+  --products > spa.txt
 	"""
 }
 
