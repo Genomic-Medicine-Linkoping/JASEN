@@ -21,17 +21,16 @@ SE = "Salmonella enterica"
 CONT_NAME = jasen_2021-06-07.sif
 PROJECT_ROOT = /home/rada/Documents/CGL/JASEN
 
-# Name of the species profile
-# SPECIES = Staphylococcus_aureus
-SPECIES = Escherichia_coli
-
 WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
+# Name of the species profile
+SPECIES = Staphylococcus_aureus
+# SPECIES = Escherichia_coli
 # To which directory inside work/results should the output files come?
 # SAMPLE_ID = Klebsiella_pneumoniae_p1
-SAMPLE_ID = Escherichia_coli_p1
-# SAMPLE_ID = Staphylococcus_aureus_prov1
+# SAMPLE_ID = Escherichia_coli_p1
+SAMPLE_ID = Staphylococcus_aureus_prov1
 
 SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out container/$(CONT_NAME) prodigal -p single -t
 
