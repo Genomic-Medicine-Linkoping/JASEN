@@ -312,7 +312,7 @@ process spades_assembly{
   file(reads) from trimmed_sample_1
 
   output:
-  file 'scaffolds.fasta' into (assembled_sample_1, assembled_sample_2, assembled_sample_3)
+  file 'scaffolds.fasta' into (assembled_sample_1, assembled_sample_2, assembled_sample_3, assembled_sample_4)
 
   script:
   """
@@ -610,6 +610,39 @@ process multiqc_report{
   """
   multiqc ${params.outdir} -f -k json -o \$(pwd)
   """
+}
+
+primers = Channel.fromPath("${params.spa_primers}/primers.tsv")
+
+process spa_typing {
+  label 'min_allocation'
+
+  publishDir "${params.outdir}", mode: 'copy', overwrite: true
+
+	input:
+		file(scaffolds) from assembled_sample_4
+    file(primers) from primers
+
+	output:
+		file 'spa.fna'
+    file 'spa.txt'
+
+	when:
+		params.spa_exist
+
+	"""
+  ipcress \
+  --input ${primers} \
+  --sequence ${scaffolds} \
+  --mismatch ${params.num_allowed_spa_mismatches} \
+  --pretty > spa.txt
+
+  ipcress \
+  --input ${primers} \
+  --sequence ${scaffolds} \
+  --mismatch ${params.num_allowed_spa_mismatches} \
+  --products > spa.fna
+	"""
 }
 
 process json_collection{
