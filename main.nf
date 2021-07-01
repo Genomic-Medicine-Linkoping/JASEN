@@ -371,7 +371,7 @@ process quast_assembly_qc{
   """
 }
 
-process quast_json_conversion{
+process quast_json_conversion{  
   label 'min_allocation'  
   container 'container/jasen_2021-06-07_working.sif'
   publishDir "${params.outdir}/quast", mode: 'copy', overwrite: true
@@ -594,18 +594,18 @@ process multiqc_report{
 
   //More inputs as tracks are added
   input:
-  file(quast_report) from quast_result
-  file(fastqc_report) from fastqc_results
-  tuple snp_vcf, snp_tsv from snp_translated_output
-  tuple picard_stats, picard_insert_stats from picard_output
-  tuple kraken_output, kraken_report from kraken2_output
-  tuple samtools_map, samtools_raw from samtools_duplicated_results
+    file(quast_report) from quast_result
+    file(fastqc_report) from fastqc_results
+    tuple snp_vcf, snp_tsv from snp_translated_output
+    tuple picard_stats, picard_insert_stats from picard_output
+    tuple kraken_output, kraken_report from kraken2_output
+    tuple samtools_map, samtools_raw from samtools_duplicated_results
 
   output:
-  file 'multiqc_report.html' into multiqc_output
-  file 'multiqc_data/multiqc_data.json' into (multiqc_json_1, multiqc_json_2)
-  //file 'multiqc_data/multiqc_data.json' into multiqc_json
-  // MultiQC_data contains a lot delimited files. May be useful later
+    file 'multiqc_report.html' into multiqc_output
+    file 'multiqc_data/multiqc_data.json' into (multiqc_json_1, multiqc_json_2)
+    //file 'multiqc_data/multiqc_data.json' into multiqc_json
+    // MultiQC_data contains a lot delimited files. May be useful later
 
   """
   multiqc ${params.outdir} -f -k json -o \$(pwd)
@@ -736,6 +736,28 @@ process build_report{
  */
 workflow.onComplete {
 	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/results/$params.sample_ID/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
+
+	def msg = """\
+		Pipeline execution summary
+		---------------------------
+		Completed at: ${workflow.complete}
+		Duration    : ${workflow.duration}
+		Success     : ${workflow.success}
+		scriptFile  : ${workflow.scriptFile}
+		workDir     : ${workflow.workDir}
+		exit status : ${workflow.exitStatus}
+		errorMessage: ${workflow.errorMessage}
+		errorReport :
+		"""
+		.stripIndent()
+	def error = """\
+		${workflow.errorReport}
+		"""
+		.stripIndent()
+
+	logFile = file("${baseDir}.log.complete")
+	logFile.text = msg
+	logFile.append(error)
 
   //   def msg = """\
   //     Pipeline execution summary
