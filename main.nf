@@ -21,7 +21,7 @@ if (!(params.pkm && params.location)) {
 
 process bwa_index_reference{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   output:
   file "database.rdy" into bwa_indexes
@@ -38,7 +38,7 @@ process bwa_index_reference{
 
 process cgmlst_db_init{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   output:
   file 'database.rdy' into chewie_init
@@ -57,7 +57,7 @@ process cgmlst_db_init{
 
 process kraken2_db_download{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   output:
   file 'database.rdy' into kraken2_init
@@ -84,7 +84,7 @@ process kraken2_db_download{
 
 process ariba_db_download{
   label 'modest_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
  
   output:
   file 'database.rdy' into ariba_init
@@ -108,7 +108,7 @@ process ariba_db_download{
 
 process ariba_prepare_localdb{
   label 'modest_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
  
   output:
   file 'database_local.rdy' into ariba_init_local
@@ -122,7 +122,7 @@ process ariba_prepare_localdb{
 
 process ariba_prepare_non_codingdb{
   label 'modest_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
  
   output:
   file 'database_non_coding.rdy' into ariba_init_nonc
@@ -139,7 +139,7 @@ samples = Channel.fromPath("${params.input}/*.{fastq.gz,fsa.gz,fa.gz,fastq,fsa,f
 
 process fastqc_readqc{
   label 'modest_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/fastqc", mode: 'copy', overwrite: true
 
@@ -177,7 +177,7 @@ process lane_concatination{
 
 process trimmomatic_trimming{
   label 'min_allocation'
-  container 'container/jasen_2021-06-30.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/trimmomatic", mode: 'copy', overwrite: true
 
   input:
@@ -194,7 +194,7 @@ process trimmomatic_trimming{
 
 process ariba_resistancefind{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report.tsv'
 
   input:
@@ -212,7 +212,7 @@ process ariba_resistancefind{
 
 process ariba_resistancefind_local{
   label 'max_allocation'
-  container 'container/jasen_2021-06-30.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report_local.tsv'
 
   input:
@@ -230,7 +230,7 @@ process ariba_resistancefind_local{
 
 process ariba_resistancefind_nonc{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true, pattern: 'motif_report_nonc.tsv'
 
   input:
@@ -248,7 +248,7 @@ process ariba_resistancefind_nonc{
 
 process ariba_stats{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/ariba", mode: 'copy', overwrite: true
   cpus 1
@@ -278,7 +278,7 @@ process ariba_stats{
 
 process kraken2_decontamination{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/kraken2", mode: 'copy', overwrite: true
 
@@ -295,7 +295,7 @@ process kraken2_decontamination{
 }
 process spades_assembly{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/spades", mode: 'copy', overwrite: true
 
@@ -313,7 +313,7 @@ process spades_assembly{
 
 process mlst_lookup{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/mlst", mode: 'copy', overwrite: true
 
@@ -330,7 +330,7 @@ process mlst_lookup{
 
 process chewbbaca_cgmlst{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/cgmlst", mode: 'copy', overwrite: true
 
   input:
@@ -353,7 +353,7 @@ process chewbbaca_cgmlst{
 
 process quast_assembly_qc{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/quast", mode: 'copy', overwrite: true
 
   input:
@@ -373,7 +373,7 @@ process quast_assembly_qc{
 
 process quast_json_conversion{  
   label 'min_allocation'  
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/quast", mode: 'copy', overwrite: true
   cpus 1
 
@@ -391,7 +391,7 @@ process quast_json_conversion{
 
 process bwa_read_mapping{
   label 'max_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}/bwa", mode: 'copy', overwrite: true
 
   input:
@@ -408,7 +408,7 @@ process bwa_read_mapping{
 
 process samtools_bam_conversion{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/bwa", mode: 'copy', overwrite: true
 
@@ -426,7 +426,7 @@ process samtools_bam_conversion{
 
 process samtools_duplicates_stats{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/samtools", mode: 'copy', overwrite: true
 
@@ -444,7 +444,7 @@ process samtools_duplicates_stats{
 
 process picard_markduplicates{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/picard", mode: 'copy', overwrite: true
   cpus 1
@@ -463,7 +463,7 @@ process picard_markduplicates{
 
 process samtools_calling{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/snpcalling", mode: 'copy', overwrite: true
 
@@ -481,7 +481,7 @@ process samtools_calling{
 
 process vcftools_snpcalling{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/snpcalling", mode: 'copy', overwrite: true
 
@@ -507,7 +507,7 @@ process vcftools_snpcalling{
 
 process snp_translation{
   publishDir "${params.outdir}/snpcalling", mode: 'copy', overwrite: true
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   label 'min_allocation'
 
@@ -531,7 +531,7 @@ process snp_translation{
 
 process picard_qcstats{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/picard", mode: 'copy', overwrite: true
 
@@ -549,7 +549,7 @@ process picard_qcstats{
 
 process samtools_deduplicated_stats{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/samtools", mode: 'copy', overwrite: true
 
@@ -588,7 +588,7 @@ SNPcalling
 
 process multiqc_report{
   label 'min_allocation'
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_2021-07-02.sif'
 
   publishDir "${params.outdir}/multiqc", mode: 'copy', overwrite: true
 
@@ -616,7 +616,7 @@ primers = Channel.fromPath("${params.spa_primers}/primers.tsv")
 
 process spa_typing {
   label 'min_allocation'
-  container 'container/jasen_2021-06-30.sif'
+  container 'container/jasen_2021-07-02.sif'
   publishDir "${params.outdir}", mode: 'copy', overwrite: true
 
 	input:
@@ -701,7 +701,7 @@ ref_style = Channel.fromPath("${params.reference_style}")
 process build_report{
   label 'min_allocation'
   stageInMode "copy"
-  container 'container/jasen_2021-06-07_working.sif'
+  container 'container/jasen_tidyverse_2021-07-02.sif'
   publishDir "${params.outdir}", mode: 'copy', overwrite: true
 
   input:
