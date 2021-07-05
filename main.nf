@@ -365,7 +365,7 @@ process quast_assembly_qc{
   """
   quast.py $contig -o . -r ${params.reference} -t ${task.cpus}
   cp report.tsv quast_report.tsv
-  cp -r icarus_viewers ${params.outdir}/quast
+  cp -r icarus_viewers ${params.outdir}/quast/icarus_viewers/
   cp icarus.html ${params.outdir}/quast
   cp report.html ${params.outdir}/quast
   """
