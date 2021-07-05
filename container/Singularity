@@ -28,9 +28,10 @@ From:nfcore/base:latest
         ln -s /opt/conda/lib/libcrypto.so.1.1 /opt/conda/lib/libcrypto.so.1.0.0
         apt-get clean 
         rm -rf /var/lib/apt/lists/\* /tmp/\* /var/tmp/*
+        #mkdir -p /scratch/nxf /scratch/sing /scratch/tmp /external /out
  
 
-        /usr/bin/git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git
+        #/usr/bin/git clone --recurse-submodules --single-branch --branch master https://github.com/genomic-medicine-sweden/JASEN.git
         /opt/conda/bin/conda update -n base -c defaults conda
         /opt/conda/bin/conda install mamba -n base -c conda-forge
         /opt/conda/bin/mamba env create -f /environment.yml
