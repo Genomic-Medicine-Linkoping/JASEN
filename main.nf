@@ -624,7 +624,8 @@ process spa_typing {
     file(primers) from primers
 
 	output:
-    file 'spa.txt'
+    file "spa_${params.sample_ID}.txt"
+    file "spa_${params.sample_ID}.fna"
 
 	when:
 		params.spa_exist
@@ -634,7 +635,8 @@ process spa_typing {
   --input ${primers} \
   --sequence ${scaffolds} \
   --mismatch 3 \
-  --products > spa.txt
+  --products > spa_${params.sample_ID}.txt
+  sed -n '/^>SPA/,/^--/p' spa.txt | sed \\\$d > spa_${params.sample_ID}.fna
 	"""
 }
 
