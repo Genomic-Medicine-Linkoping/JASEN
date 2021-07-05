@@ -46,7 +46,7 @@ From:nfcore/base:latest
         . /opt/conda/etc/profile.d/conda.sh
         conda config --set auto_activate_base true
         conda clean -a
-
+        
         # Installation of nextFlow
         #mkdir -p /usr/share/man/man1
         #apt -y install default-jre openjdk-11-jdk
