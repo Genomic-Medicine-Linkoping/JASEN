@@ -2,9 +2,9 @@ Bootstrap:docker
 From:nfcore/base:latest
 
 %labels
-	MAINTAINER Isak Sylvin <isak.sylvin@scilifelab.se>
-	DESCRIPTION Singularity container for JASEN microbiology WGS pipeline
-	VERSION 0.1.0
+	MAINTAINER Lauri Mesilaakso <lauri.mesilaakso@regionostergotland.se>
+	DESCRIPTION Singularity container for JASEN microbiology WGS pipeline (except building final HTML report)
+	VERSION 0.2.0
 
 %environment
         export PYTHONNOUSERSITE=True
