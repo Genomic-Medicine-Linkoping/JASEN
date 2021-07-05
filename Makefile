@@ -35,14 +35,16 @@ SPECIES = Staphylococcus_aureus
 # To which directory inside work/results should the output files come?
 # SAMPLE_ID = Klebsiella_pneumoniae_p1
 # SAMPLE_ID = Escherichia_coli_p1
-SAMPLE_ID = Staphylococcus_aureus_prov1
+#SAMPLE_ID = Staphylococcus_aureus_prov1
+SAMPLE_ID = Staphylococcus_aureus_prov2
+INPUT_DIR = saureus_p2
 
 SG = /usr/local/bin/singularity exec -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out container/$(CONT_NAME) prodigal -p single -t
 
 # env TZ="Europe/Stockholm" and -B /run 
 # fixes a problem described in: https://github.com/truatpasteurdotfr/singularity-docker-fedora30-brave/issues/3
 #RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) -resume
-RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume
+RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --input_dir $(INPUT_DIR) --sample_ID $(SAMPLE_ID)
 
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
