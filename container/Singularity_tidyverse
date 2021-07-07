@@ -24,8 +24,9 @@ From:nfcore/base:latest
         env_tidyverse.yml /environment.yml
 
 %post
+        export DEBIAN_FRONTEND=noninteractive
         apt -y update
-        apt -y install build-essential make curl unzip locales
+        apt install --no-install-recommends -y build-essential make curl unzip locales
         apt-get clean
         rm -rf /var/lib/apt/lists/\* /tmp/\* /var/tmp/*
         ln -s /opt/conda/lib/libcrypto.so.1.1 /opt/conda/lib/libcrypto.so.1.0.0
