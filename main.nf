@@ -83,8 +83,7 @@ process kraken2_db_download{
 }
 
 process ariba_db_download{
-  label 'modest_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
  
   output:
   file 'database.rdy' into ariba_init
@@ -107,8 +106,7 @@ process ariba_db_download{
 }
 
 process ariba_prepare_localdb{
-  label 'modest_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
  
   output:
   file 'database_local.rdy' into ariba_init_local
@@ -121,8 +119,7 @@ process ariba_prepare_localdb{
 }
 
 process ariba_prepare_non_codingdb{
-  label 'modest_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
  
   output:
   file 'database_non_coding.rdy' into ariba_init_nonc
@@ -138,8 +135,7 @@ process ariba_prepare_non_codingdb{
 samples = Channel.fromPath("${params.input}/*.{fastq.gz,fsa.gz,fa.gz,fastq,fsa,fa}")
 
 process fastqc_readqc{
-  label 'modest_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/fastqc", mode: 'copy', overwrite: true
 
@@ -176,8 +172,7 @@ process lane_concatination{
 }
 
 process trimmomatic_trimming{
-  label 'min_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
   publishDir "${params.outdir}/trimmomatic", mode: 'copy', overwrite: true
 
   input:
@@ -312,8 +307,7 @@ process spades_assembly{
 }
 
 process mlst_lookup{
-  label 'min_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/mlst", mode: 'copy', overwrite: true
 
@@ -352,8 +346,7 @@ process chewbbaca_cgmlst{
 
 
 process quast_assembly_qc{
-  label 'min_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
   publishDir "${params.outdir}/quast", mode: 'copy', overwrite: true
 
   input:
@@ -407,8 +400,7 @@ process bwa_read_mapping{
 }
 
 process samtools_bam_conversion{
-  label 'min_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/bwa", mode: 'copy', overwrite: true
 
@@ -462,8 +454,7 @@ process picard_markduplicates{
 }
 
 process samtools_calling{
-  label 'min_allocation'
-  container 'container/jasen_2021-07-02.sif'
+  label 'max_allocation'
 
   publishDir "${params.outdir}/snpcalling", mode: 'copy', overwrite: true
 
