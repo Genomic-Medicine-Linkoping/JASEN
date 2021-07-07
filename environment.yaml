@@ -5,31 +5,31 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - kraken2
+  - bwa
+  - fastqc
+  - trimmomatic
+  - spades
+  - mlst
+  - chewbbaca
+  - quast
+  - samtools
+  - picard
+  - freebayes
+  - bcftools=1.5
+  - vcftools
+  - ariba
+  - bowtie2
   - openjdk
   - python=3.7.1
-  - ariba
-  - bcftools=1.5
   - blast
-  - bowtie2
-  - bwa
   - cd-hit
-  - chewbbaca
-  - fastqc
-  - freebayes
   - gatk4
   - libiconv
-  - kraken2
-  - mlst
-  - picard
   - pip
   - pymummer
   - pysam
-  - quast
   - r-base
-  - samtools
-  - spades
-  - trimmomatic
-  - vcftools
   - singularity
   - pip:
     - biopython
