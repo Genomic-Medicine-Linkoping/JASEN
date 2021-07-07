@@ -614,7 +614,7 @@ process multiqc_report{
 
 primers = Channel.fromPath("${params.spa_primers}/primers.tsv")
 
-process spa_typing {
+process spa_gene_extraction {
   label 'min_allocation'
   container "${params.container_pipeline_fullpath}"
   publishDir "${params.outdir}", mode: 'copy', overwrite: true
