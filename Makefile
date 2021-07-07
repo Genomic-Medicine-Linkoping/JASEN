@@ -59,6 +59,11 @@ clear_files:
 	@(rm -f $(RG)/*.gz $(RG)/*.fna $(PT)/*.trn)
 	@echo ""
 
+build_containers:
+	cd container; \
+	sudo -E singularity build jasen_`date +%Y-%m-%d`.sif Singularity && \
+	sudo -E /usr/local/bin/singularity build jasen_tidyverse_`date +%Y-%m-%d`.sif Singularity_tidyverse
+
 download_bacterial_genomes:
 	@echo ""
 	@echo "Laddar ner $(MT) refseq genomet, se mera info om genomet här: https://www.ncbi.nlm.nih.gov/assembly/GCF_000195955.2/"
