@@ -65,6 +65,6 @@ update_subm:
 	/usr/bin/git merge $(UPSTR_NAME)/$(UPSTR_BRANCH) ; \
 	cd .. ; \
 	/usr/bin/git status ; \
+	/usr/bin/git commit -am "Update submodule"
 	# TODO: Could add the rest of the steps here as well
-	# /usr/bin/git add assets/var-genes-ro
 	# /usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
