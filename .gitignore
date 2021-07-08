@@ -165,3 +165,5 @@ results/Staphylococcus_aureus_prov1/*
 !results/Staphylococcus_aureus_prov1/Staphylococcus_aureus_prov1.html
 results/Staphylococcus_aureus_prov2/*
 !results/Staphylococcus_aureus_prov2/Staphylococcus_aureus_prov2.html
+
+assets/fastq-temp
