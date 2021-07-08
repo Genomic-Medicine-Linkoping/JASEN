@@ -10,20 +10,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 RG = assets/ref_genomes
 PT = assets/prodigal_training_files
 
-MT = "Mycobacterium tuberculosis"
-KP = "Klebsiella pneumoniae"
-SA = "Staphylococcus aureus"
-EC = "Escherichia coli"
-AC = "Acinetobacter baumannii"
-ES = "Enterococcus faecalis"
-EF = "Enterococcus faecium"
-PA = "Pseudomonas aeruginosa"
-CD = "Clostridioides difficile"
-MA = "Mycobacterium africanum"
-MB = "Mycobacterium bovis"
-SE = "Salmonella enterica"
-
-CONT_NAME = jasen_2021-06-07.sif
+CONT_NAME = jasen_2021-07-07.sif
 PROJECT_ROOT = /home/rada/Documents/CGL/JASEN
 
 WORKDIR = $(PROJECT_ROOT)/work
