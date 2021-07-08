@@ -7,7 +7,6 @@ log.info """\
  chewbbaca_db_download: ${params.chewbbaca_db_download}
  local_ariba_db_dir:    ${params.local_ariba_db_dir}
  input:                 ${params.input}
- input_dir:             ${params.input_dir}
  species:               ${params.species}
  genome_name:           ${params.genome_name}
  chewbbacadb_url:       ${params.chewbbacadb_url}
@@ -644,64 +643,8 @@ process spa_gene_extraction {
   --sequence ${scaffolds} \
   --mismatch 3 \
   --products > spa_${params.sample_ID}.txt
-  sed -n '/^>SPA/,/^--/p' spa.txt | sed \\\$d > spa_${params.sample_ID}.fna
+  sed -n '/^>SPA/,/^--/p' spa_${params.sample_ID}.txt | sed \\\$d > spa_${params.sample_ID}.fna
 	"""
-}
-
-process json_collection{
-  label 'min_allocation'
-
-  publishDir "${params.outdir}/jsoncollection", mode: 'copy', overwrite: true
-
-  input:
-  file (mlstjson) from mlst_output_1
-  file (multiqcjson) from multiqc_json_1
-  //file (aribajson) from ariba_summary_output
-  tuple summary, motif_report_resfinder, motif_report_local, motif_report_nonc from ariba_summary_output_1
-  file (quastjson) from quast_result_json_1
-  file (snpreport) from snp_json_output_1
-  tuple (cgmlst_res, cgmlst_stats) from cgmlst_results_1
-
-  output:
-  // tuple 'merged_report.json', mlstjson, multiqcjson, motif_report_resfinder, motif_report_local, quastjson, snpreport, cgmlst_res into json_collection
-  //tuple 'merged_report.json', mlstjson, multiqcjson, summary, motif_report_resfinder, motif_report_local, motif_report_nonc, quastjson, snpreport, cgmlst_res, cgmlst_stats into report_building
-  file 'merged_report.json' into report_building
-  // tuple 'merged_report.json', mlstjson, multiqcjson, aribajson, quastjson, snpreport, cgmlst_res into json_collection
-  // cat ${aribajson} >> merged_report.json
-
-  """
-  touch merged_report.json
-  echo >> merged_report.json
-  echo "mlstjson" >> merged_report.json
-  cat ${mlstjson} >> merged_report.json
-  echo >> merged_report.json
-  echo "summary" >> merged_report.json
-  cat ${summary} >> merged_report.json
-  echo >> merged_report.json
-  echo "motif_report_resfinder" >> merged_report.json
-  cat ${motif_report_resfinder} >> merged_report.json
-  echo >> merged_report.json
-  echo "motif_report_local" >> merged_report.json
-  cat ${motif_report_local} >> merged_report.json
-  echo >> merged_report.json
-  echo "motif_report_nonc" >> merged_report.json
-  cat ${motif_report_nonc} >> merged_report.json
-  echo >> merged_report.json
-  echo "quastjson" >> merged_report.json
-  cat ${quastjson} >> merged_report.json
-  echo >> merged_report.json
-  echo "snpreport" >> merged_report.json
-  cat ${snpreport} >> merged_report.json
-  echo >> merged_report.json
-  echo "multiqcjson" >> merged_report.json
-  cat ${multiqcjson} >> merged_report.json
-  echo >> merged_report.json
-  echo "cgmlst_res" >> merged_report.json
-  cat ${cgmlst_res} >> merged_report.json
-  echo >> merged_report.json
-  echo "cgmlst_stats" >> merged_report.json
-  cat ${cgmlst_stats} >> merged_report.json
-  """
 }
 
 report_Rmd = Channel.fromPath("${params.report_template_file}")
@@ -726,7 +669,7 @@ process build_report{
   file (bibliography) from bibliography
   file (phenotypes) from resfinder_phenotypes
   file (ref_style) from ref_style
-
+  
   output:
   file("${html_output}")
 
