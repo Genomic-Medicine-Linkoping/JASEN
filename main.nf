@@ -44,6 +44,9 @@ process cgmlst_db_init{
   file 'database.rdy' into chewie_init
   file 'chewiedb.zip' into chewie_source
 
+  when:
+  params.chewbbacadb_url
+
   script:
     """
     export PATH=\$PATH:$baseDir/bin/
@@ -333,20 +336,24 @@ process chewbbaca_cgmlst{
   container "${params.container_pipeline_fullpath}"
   publishDir "${params.outdir}/cgmlst", mode: 'copy', overwrite: true
 
+  when:
+  params.chewbbacadb_url
+
   input:
   file contig from assembled_sample_3
   file 'database.dry' from chewie_init
 
   output:
-  tuple 'cgmlst_alleles.json', 'cgmlst_stats.json' into cgmlst_results_1
-  file 'cgmlst_alleles.json' into cgmlst_results_2a
-  file 'cgmlst_stats.json' into cgmlst_results_2b
+  file 'cgmlst_alleles.json' into cgmlst_results_a
+  file 'cgmlst_stats.json' into cgmlst_results_b
 
   """
   yes | chewBBACA.py AlleleCall --fr -i \${PWD} -g ${params.chewbbacadb}/schema --json --cpu ${task.cpus} -o \${PWD} --ptf ${params.prodigal_file}
   mv results_*/* .
   mv results_alleles.json cgmlst_alleles.json
   mv results_statistics.json cgmlst_stats.json
+  cp cgmlst_alleles.json ${params.chewbbacadb}/res/cgmlst_alleles.json
+  cp cgmlst_stats.json ${params.chewbbacadb}/res/cgmlst_stats.json
   """
 }
 
@@ -715,8 +722,6 @@ process build_report{
   file (motif_report_nonc) from ariba_summary_output_2c
   file (quastjson) from quast_result_json_2
   file (snpreport) from snp_json_output_2
-  file (cgmlst_res) from cgmlst_results_2a
-  file (cgmlst_stats) from cgmlst_results_2b
   file (bibliography) from bibliography
   file (phenotypes) from resfinder_phenotypes
   file (ref_style) from ref_style
@@ -726,6 +731,14 @@ process build_report{
 
   script:
   html_output = "${params.sample_ID}.html"
+
+  if ( params.chewbbacadb_url )
+  """
+  cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
+  cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
+  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+  """
+  else
   """
   # compile the report
   Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'

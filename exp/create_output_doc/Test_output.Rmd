@@ -134,64 +134,77 @@ phenos <- read_tsv("phenotypes.tsv")
 # Cgmlst Stats
 
 ```{r echo=FALSE}
-# Remove default column names and ...
-oldnames <- do.call(rbind.data.frame, k1) %>%
-  colnames()
-# ... use these instead:
-newnames <- c("EXC","INF","LNF","PLOT","NIPH","ALM","ASM")
-df <- do.call(rbind.data.frame, k1) %>%
-  rename_at(vars(all_of(oldnames)), ~ newnames)
-df <- df[-1, ]
+# If the dataframe is not empty, present it
+if (dim(k1)[1] != 0 & dim(k1)[2] != 0) {
+  # Remove default column names and ...
+  oldnames <- do.call(rbind.data.frame, k1) %>%
+    colnames()
+  # ... use these instead:
+  newnames <- c("EXC","INF","LNF","PLOT","NIPH","ALM","ASM")
+  df <- do.call(rbind.data.frame, k1) %>%
+    rename_at(vars(all_of(oldnames)), ~ newnames)
+  df <- df[-1, ]
+  
+  df %>%
+    datatable( 
+      rownames = FALSE,
+      extensions = c('Buttons','KeyTable'),
+      options=list(
+        # https://datatables.net/reference/option/dom
+        dom = 'tBr',
+        lengthMenu = c(10, 30, 100),
+        scrollX=TRUE,
+        ordering=FALSE,
+        #fixedColumns = list(leftColumns = 1),
+        #pageLength = 10,
+        keys = TRUE
+        ), caption = htmltools::tags$caption(
+      style = 'caption-side: bottom; text-align: center;',
+      'Table 1: Allele call statistics. For explanation on table headers, see: ', htmltools::tags$a(href="https://github.com/B-UMMI/chewBBACA/wiki/2.-Allele-Calling#allele-call-statistics-output-results_statisticstsv", "chewBBACA.py AlleleCall subcommand documentation"))
+      )
+}else{
+  # If not found, print out just a plain and simple text
+  cat("No cgmlst results due to missing schema in: https://www.cgmlst.org/ncs \n or http://enterobase.warwick.ac.uk/")
+}
 
-df %>%
-  datatable( 
-    rownames = FALSE,
-    extensions = c('Buttons','KeyTable'),
-    options=list(
-      # https://datatables.net/reference/option/dom
-      dom = 'tBr',
-      lengthMenu = c(10, 30, 100),
-      scrollX=TRUE,
-      ordering=FALSE,
-      #fixedColumns = list(leftColumns = 1),
-      #pageLength = 10,
-      keys = TRUE
-      ), caption = htmltools::tags$caption(
-    style = 'caption-side: bottom; text-align: center;',
-    'Table 1: Allele call statistics. For explanation on table headers, see: ', htmltools::tags$a(href="https://github.com/B-UMMI/chewBBACA/wiki/2.-Allele-Calling#allele-call-statistics-output-results_statisticstsv", "chewBBACA.py AlleleCall subcommand documentation"))
-    )
+
 
 ```
 
 # Cgmlst Alleles
 
 ```{r echo=FALSE, warning=FALSE}
-# Move first row to be the column names
-names(k2d) <- NULL
-names(k2d) <- lapply(k2d[1, ], as.character)
-k2d <- k2d[-1, ]
-
-# Transpose df
-k2d <- as_tibble(cbind(names(k2d), t(k2d)), 
-                 validate = FALSE) 
-names(k2d) <- c("gene_name", "allele")
-
-k2d %>%
-  datatable(
-    rownames = FALSE,
-    extensions = c('FixedColumns','Buttons','KeyTable'),
-    options=list(
-      scrollX=TRUE,
-      dom = 'tBlrpfi',
-      lengthMenu = c(10, 30, 100, 500),
-      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-      keys = TRUE,
-      pageLength = 10
-      ), caption = htmltools::tags$caption(
-    style = 'caption-side: bottom; text-align: center;',
-    'Table 2: Detected cgmlst alleles. For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
-)
-
+# If the dataframe is not empty, present it
+if (dim(k2d)[1] != 0 & dim(k2d)[2] != 0) {
+  # Move first row to be the column names
+  names(k2d) <- NULL
+  names(k2d) <- lapply(k2d[1, ], as.character)
+  k2d <- k2d[-1, ]
+  
+  # Transpose df
+  k2d <- as_tibble(cbind(names(k2d), t(k2d)), 
+                   validate = FALSE) 
+  names(k2d) <- c("gene_name", "allele")
+  
+  k2d %>%
+    datatable(
+      rownames = FALSE,
+      extensions = c('FixedColumns','Buttons','KeyTable'),
+      options=list(
+        scrollX=TRUE,
+        dom = 'tBlrpfi',
+        lengthMenu = c(10, 30, 100, 500),
+        buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+        keys = TRUE,
+        pageLength = 10
+        ), caption = htmltools::tags$caption(
+      style = 'caption-side: bottom; text-align: center;',
+      'Table 2: Detected cgmlst alleles. For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
+  )
+}else{
+  # If not found, print out just a plain and simple text
+  cat("No cgmlst results due to missing schema in: https://www.cgmlst.org/ncs \n or http://enterobase.warwick.ac.uk/")
+}
 ```
 
 Reference to chewBBACA: @Silva2018
