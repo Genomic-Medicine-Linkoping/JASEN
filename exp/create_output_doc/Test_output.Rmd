@@ -274,6 +274,8 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
     relocate(X.ariba_ref_name, .after = var_description) %>%
     relocate(pc_ident, .after = ref_name) %>%
     select(-one_of(c("phenotype","join_column"))) %>%
+    mutate(matched2refGene = round(ref_base_assembled / ref_len, digits = 2)) %>%
+    relocate(matched2refGene, .after = ref_base_assembled) %>%
     dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"), '. matched2refGene column is calculated with ref_base_assembled / ref_len')
 }else{
   # If not found, return empty
