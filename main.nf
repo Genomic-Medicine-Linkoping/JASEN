@@ -44,7 +44,7 @@ process cgmlst_db_init{
   file 'chewiedb.zip' into chewie_source
 
   when:
-  params.chewbbacadb_url
+  params.chewbbaca_db_download
 
   script:
     """
@@ -336,7 +336,7 @@ process chewbbaca_cgmlst{
   publishDir "${params.outdir}/cgmlst", mode: 'copy', overwrite: true
 
   when:
-  params.chewbbacadb_url
+  params.chewbbaca_db_download
 
   input:
   file contig from assembled_sample_3
@@ -572,7 +572,6 @@ process samtools_deduplicated_stats{
   samtools stats --coverage 1,10000,1 ${alignment_sorted_rmdup} |grep ^COV | cut -f 2- &> samtools_coverage_distribution.tsv
 
   """
-
 }
 
 /*
@@ -676,16 +675,16 @@ process build_report{
   script:
   html_output = "${params.sample_ID}.html"
 
-  if ( params.chewbbacadb_url )
+  if ( params.chewbbaca_db_download )
   """
   cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
   cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
-  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
   """
   else
   """
   # compile the report
-  Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
   """
 }
 
