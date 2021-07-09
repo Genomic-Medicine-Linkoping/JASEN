@@ -58,7 +58,7 @@ library(tidyverse)
 library(DT)
 library(bookdown)
 
-dt_alise <- function(df, text_before ,html_object) {
+dt_alise <- function(df, text_before ,html_object, text_after) {
   df %>%
   datatable( 
     rownames = FALSE,
@@ -73,7 +73,7 @@ dt_alise <- function(df, text_before ,html_object) {
       pageLength = 30
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    text_before , html_object)
+    text_before , html_object, text_after)
     )
 }
 
@@ -149,7 +149,7 @@ if (dim(k1)[1] != 0 & dim(k1)[2] != 0) {
       )
 }else{
   # If not found, print out just a plain and simple text
-  cat("No cgmlst results due to missing schema in: https://www.cgmlst.org/ncs \n or http://enterobase.warwick.ac.uk/")
+  cat("No cgmlst results due to missing schema in:\nhttps://www.cgmlst.org/ncs\nhttp://enterobase.warwick.ac.uk/")
 }
 
 
@@ -188,7 +188,7 @@ if (dim(k2d)[1] != 0 & dim(k2d)[2] != 0) {
   )
 }else{
   # If not found, print out just a plain and simple text
-  cat("No cgmlst results due to missing schema in: https://www.cgmlst.org/ncs \n or http://enterobase.warwick.ac.uk/")
+  cat("No cgmlst results due to missing schema in:\nhttps://www.cgmlst.org/ncs\nhttp://enterobase.warwick.ac.uk/")
 }
 ```
 
@@ -209,7 +209,7 @@ k3 %>%
       keys = TRUE
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table 3: Found cgmlst alleles. For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
+    'Table 3: For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
     )
 ```
 
@@ -274,7 +274,7 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
     relocate(X.ariba_ref_name, .after = var_description) %>%
     relocate(pc_ident, .after = ref_name) %>%
     select(-one_of(c("phenotype","join_column"))) %>%
-    dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+    dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"), '. matched2refGene column is calculated with ref_base_assembled / ref_len')
 }else{
   # If not found, return empty
   k6d %>% 
