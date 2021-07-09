@@ -34,5 +34,6 @@ for i in "${!input_files_array[@]}"; do
   FULL_PATH_INPUT_DIR="$SEQ_DATA"/"$INPUT_DIR"
   # Clear reference files before running next workflow
   rm -rf assets/references
+  nextflow run main.nf -profile local,singularity,"$SPECIES" --sample_ID "$INPUT_DIR" | tee -a nf_logs.log
   #break
 done
