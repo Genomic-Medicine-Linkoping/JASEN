@@ -222,9 +222,39 @@ Reference information: These results made use of the [PubMLST website](https://p
 This table includes both coding and non-coding sequences denoted by 1 and 0 in gene column respectively.   The determination of which were which was performed with [`ariba prepareref`](https://github.com/sanger-pathogens/ariba/wiki/Task:-prepareref) command.
 
 ```{r echo=FALSE}
+handle_empties <- function(df1, df2){
+  # Both dfs are empty, return the first empty one only
+  if ((dim(df1)[1] == 0 & dim(df1)[2] == 0) & (dim(df2)[1] == 0 & dim(df2)[2] == 0)) {
+    return(df1)
+  # df1 empty, df2 has something, return df2
+  }else if((dim(df1)[1] == 0 & dim(df1)[2] == 0) & (dim(df2)[1] != 0 & dim(df2)[2] != 0)){
+    return(df2)
+  # df2 empty, df1 has something, return df1  
+  }else if((dim(df1)[1] != 0 & dim(df1)[2] != 0) & (dim(df2)[1] == 0 & dim(df2)[2] == 0)){
+    return(df1)    
+  }else if((dim(df1)[1] != 0 & dim(df1)[2] != 0) & (dim(df2)[1] != 0 & dim(df2)[2] != 0)){
+    # Make data types to be equal between df:s
+    common <- names(k4d)[names(k4d) %in% names(k5d)]
+    k4d[common] <- lapply(common, function(x) {
+      match.fun(paste0("as.", class(k5d[[x]])))(k4d[[x]])
+    })
+    return(bind_rows(k4d,k5d))
+  }else{
+    return(data.frame(c("Something","wrong"),c("went","!")))
+  }
+}
+
 handle_empties(k4d,k5d) %>%
-  filter_ariba %>%
-  dt_alise('Table 4: Ariba run output for local antibiotics resistance genes. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+  filter(pc_ident > 99) %>%
+  relocate(X.ariba_ref_name, .after = var_description) %>%
+  relocate(pc_ident, .after = ref_name) %>%
+  mutate(phenotype = str_replace(free_text, ".+\\|\\|\\|", "")) %>%
+  relocate(phenotype, .after = pc_ident) %>%
+  select(-free_text) %>%
+  mutate(matched2refGene = round(ref_base_assembled / ref_len, digits = 2)) %>%
+  relocate(matched2refGene, .after = ref_base_assembled) %>%
+  #dplyr::mutate(matched2refGene = ref_len / ref_base_assembled) %>%
+  dt_alise('Table 4: Ariba run output for local antibiotics resistance genes. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"), '. matched2refGene column is calculated with ref_base_assembled / ref_len')
 ```
 
 Reference to ARIBA: @Hunt2017
