@@ -347,7 +347,7 @@ process chewbbaca_cgmlst{
   file 'cgmlst_stats.json' into cgmlst_results_b
 
   """
-  yes | chewBBACA.py AlleleCall --fr -i \${PWD} -g ${params.chewbbacadb}/schema --json --cpu ${task.cpus} -o \${PWD} --ptf ${params.prodigal_file}
+  yes | chewBBACA.py AlleleCall --fr -i \${PWD} -g ${params.chewbbacadb}schema --json --cpu ${task.cpus} -o \${PWD} --ptf ${params.prodigal_file}
   mv results_*/* .
   mv results_alleles.json cgmlst_alleles.json
   mv results_statistics.json cgmlst_stats.json
