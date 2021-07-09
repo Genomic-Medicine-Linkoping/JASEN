@@ -95,7 +95,7 @@ process ariba_db_download{
   """
   if ${params.ariba_db_download} ; then
     ariba getref resfinder resfinder
-    ariba prepareref --force -f ./resfinder.fa -m ./resfinder.tsv --threads ${task.cpus} ${params.aribadb}
+    ariba prepareref --cdhit_max_memory 0 --force -f ./resfinder.fa -m ./resfinder.tsv --threads ${task.cpus} ${params.aribadb}
     mv resfinder.fa ${params.aribadb}
     mv resfinder.tsv ${params.aribadb}
     wget -vc ${params.resfinder_phenotypes}
@@ -116,7 +116,7 @@ process ariba_prepare_localdb{
   file 'database_local.rdy' into ariba_init_local
 
   """
-  ariba prepareref --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/coding.fa --threads ${task.cpus} ${params.aribadb_local}
+  ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/coding.fa --threads ${task.cpus} ${params.aribadb_local}
   cp ${params.local_ariba_db_dir}/coding.fa ${params.aribadb_local}
   touch database_local.rdy
   """
@@ -130,7 +130,7 @@ process ariba_prepare_non_codingdb{
   file 'database_non_coding.rdy' into ariba_init_nonc
 
   """
-  ariba prepareref --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
+  ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
   cp ${params.local_ariba_db_dir}/non-coding.fa ${params.aribadb_nonc}
   touch database_non_coding.rdy
   """
