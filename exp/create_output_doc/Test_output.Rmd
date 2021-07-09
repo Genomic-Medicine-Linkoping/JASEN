@@ -213,7 +213,7 @@ k3 %>%
     )
 ```
 
-Reference information: These results made use of the [PubMLST website](https://pubmlst.org/) developed by Keith Jolley [@Jolley2010] and sited at the University of Oxford. The development of that website was funded by the Wellcome Trust. The typing information was obtained using: Seemann T, [mlst](https://github.com/tseemann/mlst `link to Github repository`).
+Reference information: These results made use of the [PubMLST website](https://pubmlst.org/) developed by Keith Jolley [@Jolley2010] and sited at the University of Oxford. The development of that website was funded by the Wellcome Trust. The typing information was obtained using: Seemann T, [mlst](https://github.com/tseemann/mlst).
 
 # Ariba 
 
