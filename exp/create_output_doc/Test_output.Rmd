@@ -85,7 +85,7 @@ if (params$cgmlst == TRUE){
   k2 <- fromJSON("cgmlst_alleles.json", flatten=TRUE)
   k1d <- do.call(rbind.data.frame, k1)
   k2d <- do.call(rbind.data.frame, k2)
-  }else{
+}else{
   # Produce empty df:s
   k1 <- data.frame(Date=as.Date(character()),
                  File=character(), 
