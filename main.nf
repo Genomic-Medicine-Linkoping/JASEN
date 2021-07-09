@@ -351,8 +351,9 @@ process chewbbaca_cgmlst{
   mv results_*/* .
   mv results_alleles.json cgmlst_alleles.json
   mv results_statistics.json cgmlst_stats.json
-  cp cgmlst_alleles.json ${params.chewbbacadb}/res/cgmlst_alleles.json
-  cp cgmlst_stats.json ${params.chewbbacadb}/res/cgmlst_stats.json
+  mkdir -p ${params.chewbbacadb}res/
+  cp cgmlst_alleles.json ${params.chewbbacadb}res/cgmlst_alleles.json
+  cp cgmlst_stats.json ${params.chewbbacadb}res/cgmlst_stats.json
   """
 }
 
@@ -676,16 +677,16 @@ process build_report{
   html_output = "${params.sample_ID}.html"
 
   if ( params.chewbbaca_db_download )
-  """
-  cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
-  cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
+    """
+    cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
+    cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
     Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
-  """
+    """
   else
-  """
-  # compile the report
+    """
+    # compile the report
     Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
-  """
+    """
 }
 
 
