@@ -161,13 +161,6 @@ exp/create_output_doc/*
 
 temp
 
-results/Staphylococcus_aureus_prov1/*
-!results/Staphylococcus_aureus_prov1/Staphylococcus_aureus_prov1.html
-results/Staphylococcus_aureus_prov2/*
-!results/Staphylococcus_aureus_prov2/Staphylococcus_aureus_prov2.html
-results/Staphylococcus_aureus_SASPA17S-04/*
-!results/Staphylococcus_aureus_SASPA17S-04/Staphylococcus_aureus_SASPA17S-04.html
-results/Proteus_vulgaris_MRR160070/*
-!results/Proteus_vulgaris_MRR160070/Proteus_vulgaris_MRR160070.html
+results/*
 
 assets/fastq-temp
