@@ -3,7 +3,8 @@
 # http://linuxcommand.org/lc3_man_pages/seth.html
 #set -x
 # http://redsymbol.net/articles/unofficial-bash-strict-mode/
-set -euo pipefail
+#set -e
+set -uo pipefail
 #IFS=$'\n\t'
 
 CWD=$(pwd)
