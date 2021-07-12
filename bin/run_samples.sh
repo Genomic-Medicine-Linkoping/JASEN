@@ -33,7 +33,7 @@ for i in "${!input_files_array[@]}"; do
   SPECIES=$(echo "$INPUT_DIR" | awk -F_ '{printf $1"_"$2}')
   # /home/rada/Documents/CGL/JASEN/assets/sequencing_data/Proteus_vulgaris_MRR160070
   FULL_PATH_INPUT_DIR="$SEQ_DATA"/"$INPUT_DIR"
-  # Clear reference files before running next workflow
+  # Clear reference files before running next workflow run
   rm -rf assets/references
   nextflow run main.nf -profile local,singularity,"$SPECIES" --sample_ID "$INPUT_DIR" | tee -a nf_logs.log
   #break
