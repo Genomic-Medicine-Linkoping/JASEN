@@ -120,7 +120,7 @@ phenos <- read_tsv("phenotypes.tsv")
 
 ```{r echo=FALSE}
 # If the dataframe is not empty, present it
-if (dim(k1)[1] != 0 & dim(k1)[2] != 0) {
+if (dim(k1d)[1] != 0 & dim(k1d)[2] != 0) {
   # Remove default column names and ...
   oldnames <- do.call(rbind.data.frame, k1) %>%
     colnames()
@@ -151,9 +151,6 @@ if (dim(k1)[1] != 0 & dim(k1)[2] != 0) {
   # If not found, print out just a plain and simple text
   cat("No cgmlst results due to missing schema in:\nhttps://www.cgmlst.org/ncs\nhttp://enterobase.warwick.ac.uk/")
 }
-
-
-
 ```
 
 # Cgmlst Alleles
