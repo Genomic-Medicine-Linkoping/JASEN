@@ -35,6 +35,14 @@ for i in "${!input_files_array[@]}"; do
   FULL_PATH_INPUT_DIR="$SEQ_DATA"/"$INPUT_DIR"
   # Clear reference files before running next workflow run
   rm -rf assets/references
+  start_time=$(date +"%c")
+  echo "Start time: $start_time" | tee -a nf_logs.log
+  start=$(date +%s)
   nextflow run main.nf -profile local,singularity,"$SPECIES" --sample_ID "$INPUT_DIR" | tee -a nf_logs.log
+  end=$(date +%s)
+  runtime=$((end-start))
+  echo "The run took: $runtime s." | tee -a nf_logs.log
+  end_time=$(date +"%c")
+  echo "End time: $end_time" | tee -a nf_logs.log
   #break
 done
