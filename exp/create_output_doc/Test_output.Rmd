@@ -58,7 +58,7 @@ library(tidyverse)
 library(DT)
 library(bookdown)
 
-dt_alise <- function(df, text_before ,html_object, text_after) {
+dt_alise <- function(df, text_before, html_object, text_after) {
   df %>%
   datatable( 
     rownames = FALSE,
