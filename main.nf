@@ -207,7 +207,7 @@ process ariba_resistancefind{
   file 'motif_report.tsv' into ariba_output
 
   """
-  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 100 --verbose --force --threads ${task.cpus} ${params.aribadb} ${forward} ${reverse} outdir
+  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 500 --verbose --force --threads ${task.cpus} ${params.aribadb} ${forward} ${reverse} outdir
   cp outdir/report.tsv motif_report.tsv
   """
 }
@@ -225,7 +225,7 @@ process ariba_resistancefind_local{
   file 'motif_report_local.tsv' into ariba_output_local
 
   """
-  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 100 --verbose --force --threads ${task.cpus} ${params.aribadb_local} ${forward} ${reverse} outdir
+  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 500 --verbose --force --threads ${task.cpus} ${params.aribadb_local} ${forward} ${reverse} outdir
   cp outdir/report.tsv motif_report_local.tsv
   """
 }
@@ -243,7 +243,7 @@ process ariba_resistancefind_nonc{
   file 'motif_report_nonc.tsv' into ariba_output_nonc
 
   """
-  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 100 --verbose --force --threads ${task.cpus} ${params.aribadb_nonc} ${forward} ${reverse} outdir
+  ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 500 --verbose --force --threads ${task.cpus} ${params.aribadb_nonc} ${forward} ${reverse} outdir
   cp outdir/report.tsv motif_report_nonc.tsv
   """
 }
@@ -269,10 +269,10 @@ process ariba_stats{
   """
   # If any of the files has some contents (more than the tsv header); run ariba summary
   if [[ \$(wc -l <${report}) -ge 2 ]] || [[ \$(wc -l <${report_local}) -ge 2 ]] || [[ \$(wc -l <${report_nonc}) -ge 2 ]]; then
-  ariba summary --col_filter n --row_filter n summary ${report} ${report_local} ${report_nonc}
-  python3 $baseDir/bin/tsv_to_json.py ${report} motif_report.json
-  python3 $baseDir/bin/tsv_to_json.py ${report_local} motif_report_local.json
-  python3 $baseDir/bin/tsv_to_json.py ${report_nonc} motif_report_nonc.json
+    ariba summary --col_filter n --row_filter n summary ${report} ${report_local} ${report_nonc}
+    python3 $baseDir/bin/tsv_to_json.py ${report} motif_report.json
+    python3 $baseDir/bin/tsv_to_json.py ${report_local} motif_report_local.json
+    python3 $baseDir/bin/tsv_to_json.py ${report_nonc} motif_report_nonc.json
   else
     # Otherwise just create empty json files
     echo -e "#ariba_ref_name\tref_name\tgene\tvar_only\tflag\treads\tcluster\tref_len\tref_base_assembled\tpc_ident\tctg\tctg_len\tctg_cov\tknown_var\tvar_type\tvar_seq_type\tknown_var_change\thas_known_var\tref_ctg_change\tref_ctg_effect\tref_start\tref_end\tref_nt\tctg_start\tctg_end\tctg_nt\tsmtls_total_depth\tsmtls_nts\tsmtls_nts_depth\tvar_description\tfree_text" > motif_report.tsv
