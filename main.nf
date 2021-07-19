@@ -261,20 +261,28 @@ process ariba_stats{
   file(report) from ariba_output
 
   output:
-  //tuple 'summary.csv', 'motif_report_resfinder.json', 'motif_report_local.json' into ariba_summary_output
   tuple 'summary.csv', 'motif_report.json', 'motif_report_local.json', 'motif_report_nonc.json' into ariba_summary_output_1
   file 'motif_report.json' into ariba_summary_output_2a
   file 'motif_report_local.json' into ariba_summary_output_2b
   file 'motif_report_nonc.json' into ariba_summary_output_2c
-  // ariba summary --col_filter n --row_filter n summary ${report_resf} ${report_loc}
-  // python3 $baseDir/bin/tsv_to_json.py ${report_resf} motif_report_resfinder.json
-  // python3 $baseDir/bin/tsv_to_json.py ${report_loc} motif_report_local.json
 
   """
+  # If any of the files has some contents (more than the tsv header); run ariba summary
+  if [[ \$(wc -l <${report}) -ge 2 ]] || [[ \$(wc -l <${report_local}) -ge 2 ]] || [[ \$(wc -l <${report_nonc}) -ge 2 ]]; then
   ariba summary --col_filter n --row_filter n summary ${report} ${report_local} ${report_nonc}
   python3 $baseDir/bin/tsv_to_json.py ${report} motif_report.json
   python3 $baseDir/bin/tsv_to_json.py ${report_local} motif_report_local.json
   python3 $baseDir/bin/tsv_to_json.py ${report_nonc} motif_report_nonc.json
+  else
+    # Otherwise just create empty json files
+    echo -e "#ariba_ref_name\tref_name\tgene\tvar_only\tflag\treads\tcluster\tref_len\tref_base_assembled\tpc_ident\tctg\tctg_len\tctg_cov\tknown_var\tvar_type\tvar_seq_type\tknown_var_change\thas_known_var\tref_ctg_change\tref_ctg_effect\tref_start\tref_end\tref_nt\tctg_start\tctg_end\tctg_nt\tsmtls_total_depth\tsmtls_nts\tsmtls_nts_depth\tvar_description\tfree_text" > motif_report.tsv
+    cp motif_report.tsv motif_report_local.tsv
+    cp motif_report.tsv motif_report_nonc.tsv
+    python3 $baseDir/bin/tsv_to_json.py motif_report.tsv motif_report.json
+    python3 $baseDir/bin/tsv_to_json.py motif_report_local.tsv motif_report_local.json
+    python3 $baseDir/bin/tsv_to_json.py motif_report_nonc.tsv motif_report_nonc.json
+    touch summary.csv
+  fi
   """
 }
 
