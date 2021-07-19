@@ -407,28 +407,13 @@ process bwa_read_mapping{
   file(database_initalization) from bwa_indexes
 
   output:
-  file 'alignment.sam' into mapped_sample
-
-  """
-  bwa mem -M -t ${task.cpus} ${params.bwa}/${params.genome_name}.fna ${trimmed[0]} ${trimmed[1]} > alignment.sam
-  """
-}
-
-process samtools_bam_conversion{
-  label 'max_allocation'
-  container "${params.container_pipeline_fullpath}"
-
-  publishDir "${params.outdir}/bwa", mode: 'copy', overwrite: true
-
-  input:
-  file(aligned_sam) from mapped_sample
-
-  output:
   file 'alignment_sorted.bam' into sorted_sample_1, sorted_sample_2
 
   """
-  samtools view --threads ${task.cpus} -b -o alignment.bam -T ${params.reference} ${aligned_sam}
+  bwa mem -M -t ${task.cpus} ${params.bwa}/${params.genome_name}.fna ${trimmed[0]} ${trimmed[1]} > alignment.sam
+  samtools view --threads ${task.cpus} -b -o alignment.bam -T ${params.reference} alignment.sam
   samtools sort --threads ${task.cpus} -o alignment_sorted.bam alignment.bam
+  rm -f alignment.bam alignment.sam
   """
 }
 
