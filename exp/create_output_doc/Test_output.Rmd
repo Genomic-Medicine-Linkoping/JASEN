@@ -240,7 +240,10 @@ handle_empties <- function(df1, df2){
   }
 }
 
-handle_empties(k4d,k5d) %>%
+local_df <- handle_empties(k4d,k5d)
+# Handle situation when there were no local resistance genes found
+if (dim(local_df)[1] != 0 & dim(local_df)[2] != 0) {
+  local_df %>%
   filter(pc_ident > 99) %>%
   relocate(X.ariba_ref_name, .after = var_description) %>%
   relocate(pc_ident, .after = ref_name) %>%
@@ -251,6 +254,10 @@ handle_empties(k4d,k5d) %>%
   relocate(matched2refGene, .after = ref_base_assembled) %>%
   #dplyr::mutate(matched2refGene = ref_len / ref_base_assembled) %>%
   dt_alise('Table 4: Ariba run output for local antibiotics resistance genes. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"), '. matched2refGene column is calculated with ref_base_assembled / ref_len')
+}else{
+  # If not found, print out just a plain and simple text
+  cat("No resistance genes defined by local db found.")
+}
 ```
 
 Reference to ARIBA: @Hunt2017
@@ -266,7 +273,7 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
   
   # Join phenotype information and print as a pretty table
   left_join(k6d,phenos, by=c("join_column" = "join_column")) %>%
-    filter(pc_ident > 99) %>% 
+    filter(pc_ident > 99) %>%
     relocate(X.ariba_ref_name, .after = var_description) %>%
     relocate(pc_ident, .after = ref_name) %>%
     select(-one_of(c("phenotype","join_column"))) %>%
@@ -275,8 +282,9 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
     dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"), '. matched2refGene column is calculated with ref_base_assembled / ref_len')
 }else{
   # If not found, return empty
-  k6d %>% 
-    dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+  cat("No resistance genes defined in Resfinder found.")
+  #k6d %>% 
+  #  dt_alise('Table 5: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 }
 ```
 
