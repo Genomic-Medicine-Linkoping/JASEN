@@ -680,12 +680,12 @@ process build_report{
     """
     cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
     cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
     """
   else
     """
     # compile the report
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, quast = "${baseDir}/results/$params.sample_ID/quast/report.html", multiqc = "${baseDir}/results/$params.sample_ID/multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
     """
 }
 
@@ -694,7 +694,7 @@ process build_report{
  * completion handler
  */
 workflow.onComplete {
-	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> ${baseDir}/results/$params.sample_ID/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
+	log.info ( workflow.success ? "\nDone! Open the following report in your browser --> results/$params.sample_ID/$params.sample_ID"+".html\n" : "Oops .. something went wrong" )
 
 	def msg = """\
 		Pipeline execution summary
