@@ -164,3 +164,9 @@ temp
 results/*
 
 assets/fastq-temp
+
+
+exp/post_process_results/*
+!exp/post_process_results/env.yml
+!exp/post_process_results/gather_files.py
+!exp/post_process_results/README.md
