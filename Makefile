@@ -50,7 +50,7 @@ build_containers:
 
 preprocess_genomes:
 	rm -f assets/ref_genomes/md5sums.txt
-	bash download_genomes.sh
+	bash preprocess_genomes.sh
 
 run:
 	@mkdir -p work
