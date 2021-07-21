@@ -6,7 +6,7 @@
 set -euo pipefail
 #IFS=$'\n\t'
 
-INPUT="genome_data.csv"
+INPUT="genome_data.tsv"
 CONT_NAME="jasen_2021-07-07.sif"
 OUT_DIR="assets/ref_genomes"
 PT="assets/prodigal_training_files"
