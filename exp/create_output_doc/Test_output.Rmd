@@ -30,19 +30,6 @@ output:
     code_download: FALSE
     pandoc_args: ["--top-level-division=section",
               "-V", "documentclass=report"]
-  bookdown::pdf_document2:
-    keep_tex: no
-    #latex_engine: xelatex
-    #highlight: pygments #Other options: default, tango, kate, monochrome, espresso, zenburn, haddock, and textmate
-    #theme: spacelab
-    # https://pandoc.org/MANUAL.html
-    pandoc_args: ["--top-level-division=section",
-                  "-V", "documentclass=article",
-                  "-V", "linkcolor=MidnightBlue",
-                  "-V", "citecolor=Aquamarine",
-                  "-V", "urlcolor=NavyBlue",
-                  "-V", "toccolor=NavyBlue",
-                  "-V", "pagestyle=headings"]
 ---
 
 **Sample ID: `r params$sample`**
