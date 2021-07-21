@@ -40,6 +40,9 @@ all_results = Path(args.indir)
 # Path where we want our results to end up
 gathered_tsvs = Path(args.outdir)
 
+# If output dir is missing create it
+if not gathered_tsvs.is_dir():
+	gathered_tsvs.mkdir(parents=True, exist_ok=True)
 
 for path in sorted(all_results.rglob(args.pattern)):
 	id = path.resolve().parent.parent.name
