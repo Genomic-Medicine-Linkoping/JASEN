@@ -1,0 +1,1 @@
+/home/rada/Documents/CGL/JASEN/bin/join_nf_results.py
