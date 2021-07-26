@@ -1,1 +1,0 @@
-/home/rada/Documents/CGL/JASEN/bin/join_res_et_validation.py
