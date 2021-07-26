@@ -39,7 +39,7 @@ RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sampl
 # Git branches
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
-CURR_BRANCH = local_aribadb
+CURR_BRANCH = ro-implementation
 
 
 all: clear_files preprocess_genomes
@@ -73,9 +73,9 @@ update_subm:
 	/usr/bin/git merge $(UPSTR_NAME)/$(UPSTR_BRANCH) ; \
 	cd .. ; \
 	/usr/bin/git status ; \
+	# Beware: This stages and commits everything
 	/usr/bin/git commit -am "Update submodule"
-	# TODO: Could add the rest of the steps here as well
-	# /usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
+	/usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
 
 run_samples:
 	$(CONDA_ACTIVATE) ; \
