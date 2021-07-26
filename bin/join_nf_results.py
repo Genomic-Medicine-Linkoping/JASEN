@@ -91,9 +91,8 @@ with open(tsv, 'w') as f:
 		species = si[0][0] + '. ' + si[1]
 		id = si[2:][0]
 		genes_str = ', '.join(current_si.genes)
+		# Write nothing if MLST type is missing
 		if (mlst_type=='-'):
 			f.write(f'{id}\t{species}\t{genes_str}\t\n')
 		else:
 			f.write(f'{id}\t{species}\t{genes_str}\tST{mlst_type}\n')
-
-
