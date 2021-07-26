@@ -45,39 +45,30 @@ args = parser.parse_args()
 mlst_dir = Path(args.mlst_dir)
 resistance_dir = Path(args.resistance_dir)
 tsv = Path(args.outfile)
-
 json_pat = args.json_pattern
 
 st = {}
 
+# Store all found MLST types in a dict 
 for path in sorted(mlst_dir.glob(json_pat)):
-	# print(path)
 	df = pd.read_json(path)
 	sequence_type = df.iloc[0]['sequence_type']
 	id = re.sub(json_pat[1:], '', str(path.name))
 	st[id] = str(sequence_type)
-	# print(str(path) + ": " + str(sequence_type))
-	# break
-		# id = path.resolve().parent.parent.name
-		# motif_report = path.resolve()
-		# stem = path.stem
-		# new_filename = id + "_" + stem + args.suffix
-		# out_file_path = tsv.resolve()/new_filename
-		# copy(motif_report, out_file_path)
 
-# print(st)
-
+# Define the namedtuple
 Resistance_genes = namedtuple('Resistance_genes', ['species_id','genes'])
 # List for storing species_id specific NamedTuples  
 species_id_res_genes_list = []
 
+# 
 for path in sorted(resistance_dir.glob(args.res_pattern)):
-	# print(path)
 	df = pd.read_csv(path, sep='\t')
+	# Extract species and ID data from file name
 	species_id = re.sub(r'_motif_report.*\.tsv', '', str(path.name))
-	# print(id)
-	# print(species)
+	# Convert all genes in the current dataframe to a list
 	genes = df["ref_name"].to_list()
+	# Check if the list contains already the current species_id inside a namedtuple
 	if (any(nt.species_id==species_id for nt in species_id_res_genes_list)):
 		# Obtain already in list stored NamedTuple instance
 		current_nt = [nt for nt in species_id_res_genes_list if nt.species_id==species_id][0]
@@ -93,7 +84,7 @@ for path in sorted(resistance_dir.glob(args.res_pattern)):
 
 with open(tsv, 'w') as f:
 	# Write tsv header
-	f.write(f'Prov-nummer\tArt\tKända resistensgener (samt PVL)\tKänd MLST\n')
+	f.write(f'Prov-nummer\tArt\tKända resistensgener samt PVL\tKänd MLST eller Spa-typ\n')
 	for current_si in species_id_res_genes_list:
 		mlst_type = st.get(current_si.species_id)
 		si = current_si.species_id.split('_')
