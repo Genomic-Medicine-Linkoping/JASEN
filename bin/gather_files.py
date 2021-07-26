@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser(prog='gather_files.py',
 				    usage='%(prog)s [options] <indir> <outdir>',
 				    description='Gather files of interest from <indir> to <outdir> using "pattern" and saving with "suffix"',
 				    epilog='---')
+
 parser.add_argument('--pattern',
 		    '-p',
 		    type=str,
