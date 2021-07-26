@@ -5,12 +5,20 @@ SHELL = /bin/bash
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
 
+.PHONY: all, \
+run, \
+clear_files, \
+run_samples, \
+update_subm, \
+build_containers, \
+preprocess_genomes
+
+# Commands necessary for using conda env:s
 CURRENT_CONDA_ENV_NAME = nf
+# https://stackoverflow.com/a/55696820
 # Note that the extra activate is needed to ensure that the activate floats env to the front of PATH
 CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate $(CURRENT_CONDA_ENV_NAME)
 
-
-#FASTQS?=.github/data/fastqs/
 RG = assets/ref_genomes
 PT = assets/prodigal_training_files
 
@@ -22,23 +30,19 @@ IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 # Name of the species profile
 SPECIES = Staphylococcus_aureus
-# SPECIES = Escherichia_coli
 # To which directory inside work/results should the output files come?
-# SAMPLE_ID = Klebsiella_pneumoniae_p1
-# SAMPLE_ID = Escherichia_coli_p1
-#SAMPLE_ID = Staphylococcus_aureus_prov1
 SAMPLE_ID = Staphylococcus_aureus_prov2
 
-# env TZ="Europe/Stockholm" and -B /run 
-# fixes a problem described in: https://github.com/truatpasteurdotfr/singularity-docker-fedora30-brave/issues/3
-#RUN = env TZ="Europe/Stockholm" /usr/local/bin/singularity exec -B /run -B $(PROJECT_ROOT):/external -B $(WORKDIR):/out $(IMAGE) nextflow -C /external/nextflow.config run main.nf -profile local,singularity,$(SPECIES) -resume
+# Command for running one sample
 RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID)
 
+# Git branches
 UPSTR_NAME = origin
 UPSTR_BRANCH = main
 CURR_BRANCH = local_aribadb
 
-all: clear_files download_bacterial_genomes create_prodigal_trn_files uncompress_genomes
+
+all: clear_files preprocess_genomes
 
 clear_files:
 	@echo ""
