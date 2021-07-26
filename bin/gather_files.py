@@ -9,7 +9,7 @@ from shutil import copy
 parser = argparse.ArgumentParser(prog='gather_files.py',
 				    allow_abbrev=False,
 				    usage='%(prog)s [options] <indir> <outdir>',
-				    description='List the content of a folder',
+				    description='Gather files of interest from <indir> to <outdir> using "pattern" and saving with "suffix"',
 				    epilog='---')
 parser.add_argument('--pattern',
 		    '-p',
@@ -29,21 +29,21 @@ parser.add_argument('indir',
 
 parser.add_argument('outdir', 
 		    type=str,
-		    help='Place where we want our renamed tsv:s')
+		    help='Place where we want our renamed tsv:s to be stored')
 
 # Execute the parse_args() method
 args = parser.parse_args()
-
 
 # Path to where the results are
 all_results = Path(args.indir)
 # Path where we want our results to end up
 gathered_tsvs = Path(args.outdir)
 
-# If output dir is missing create it
+# If output dir is missing, create it
 if not gathered_tsvs.is_dir():
 	gathered_tsvs.mkdir(parents=True, exist_ok=True)
 
+# Find spread out results files and gather them to one output dir
 for path in sorted(all_results.rglob(args.pattern)):
 	id = path.resolve().parent.parent.name
 	motif_report = path.resolve()
