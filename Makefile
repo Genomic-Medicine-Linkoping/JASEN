@@ -76,3 +76,7 @@ update_subm:
 	/usr/bin/git commit -am "Update submodule"
 	# TODO: Could add the rest of the steps here as well
 	# /usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
+
+run_samples:
+	$(CONDA_ACTIVATE) ; \
+	bash run_samples.sh
