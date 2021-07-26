@@ -173,3 +173,5 @@ exp/post_process_results/*
 !exp/post_process_results/Makefile
 !exp/post_process_results/join_nf_results.py
 !exp/post_process_results/join_res_et_validation.py
+!exp/post_process_results/compare_mlst.py
+!exp/post_process_results/compare_resistence.py

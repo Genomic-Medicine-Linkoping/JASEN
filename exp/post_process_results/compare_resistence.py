@@ -1,0 +1,1 @@
+/home/rada/Documents/CGL/JASEN/bin/compare_resistence.py
