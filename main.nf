@@ -534,24 +534,6 @@ process samtools_deduplicated_stats{
   """
 }
 
-/*
-The following reports are generated ( * = Supported in multiqc):
-
-Ariba summary
-* Kraken report
-MLST report, MLST novel
-* Picard Insert Size
-* Picard MarkDuplicates
-* Quast report
-Quast json
-* Samtools flagstat
-* Samtools idxstats
-Samtools coverage distribution
-Samtools total reads
-SNPcalling
-
-*/
-
 process multiqc_report{
   label 'min_allocation'
 
