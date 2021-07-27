@@ -137,35 +137,39 @@ and these are supported only for determining MLST:
 - Mycobacterium xenopi
 
 
+## Usage
 
-The results can be found in json format in `work/[input-fastq-dir-name]` directory. 
+### Optional: Change amount of resources Nextflow is allowed to use
 
----
+Use the following command for finding which lines to modify in order to adjust (in the `nextflow.config`-file) the resource usage according to your local system:
 
-**Original instructions for setting up the pipeline:**
+```bash
+grep -nA 16 -P "^process\s\{" nextflow.config
+```
 
----
+### Run the pipeline
 
-# JASEN <!-- omit in toc -->
-_Json producing Assembly driven microbial Sequence analysis pipeline to support Epitypification and Normalize classification decisions_
+The pipeline can be run with the following command (after having performed the steps in [Installation](#installation)).
 
-## Setup <!-- omit in toc -->
-* `git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git`
-* Edit `JASEN/nextflow.config`
-* _`Optionally run: bash JASEN/container/safety_exports.sh USER PREFIX`_
+Adjust the values for `SPECIES`, `SAMPLE_ID`, `CONT_NAME` and `CONT_REPORT` according to your case. The values should be:
 
+- `SPECIES` = The name of the species the fastq samples are from
+- `SAMPLE_ID` = The input directory name inside `assets/sequencing_data`
+- `CONT_NAME` = The name of the singularity image (which does not contain the `tidyverse` word in it) created in [Create Singularity containers](#create-singularity-containers)
+- `CONT_REPORT` = The name of the singularity image (which contains the `tidyverse` word in it) created in [Create Singularity containers](#create-singularity-containers)
 
-## Singularity implementation <!-- omit in toc -->
-### Image creation <!-- omit in toc -->
-* Install Singularity (through conda or whatever)
-* `cd JASEN/container && bash build_container.sh`
+Below is one example of running the pipeline.  
 
-### Image execution <!-- omit in toc -->
-* `singularity exec -B JASEN_INSTALL_DIR:/external -B WORKDIR:/out IMAGE nextflow -C /external/nextflow.config run /JASEN/main.nf -profile local,singularity`
+```bash
+make run \
+SPECIES=Staphylococcus_saprophyticus \
+SAMPLE_ID=Staphylococcus_saprophyticus_Stam-121 \
+CONT_NAME=jasen_2021-07-27.sif \
+CONT_REPORT=jasen_tidyverse_2021-07-27.sif
+```
 
+Note: The underscores between words in make commandline arguments `SPECIES` and `SAMPLE_ID` are mandatory.
 
-## Conda implementation <!-- omit in toc -->
-* Install Conda ( https://www.anaconda.com/distribution )
-* Install nextFlow ( `curl -s https://get.nextflow.io | bash` )
-* `bash JASEN/setup.sh`
-* `nextflow run JASEN/main.nf -profile -local,conda`
+### Finding results
+
+The results can be found in json format in `results/[input-fastq-dir-name]` directory. 
