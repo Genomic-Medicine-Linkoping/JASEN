@@ -60,9 +60,6 @@ This command creates two singularity images which are used in the pipeline. They
 ### Download reference genomes and create prodigal training files
 
 ```bash
-# Change this line to your specific case
-JASEN_INSTALL_DIR="/home/Hanna/Documents/CG-Linkoping/gms-JASEN/"
-cd "$JASEN_INSTALL_DIR"
 make
 ```
 
