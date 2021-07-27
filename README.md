@@ -44,11 +44,10 @@ These instructions were tested with globally installed Singularity version 3.7.4
 
 In case `sudo: singularity: command not found` error is encountered, follow [these instructions](https://sylabs.io/guides/2.5/user-guide/troubleshooting.html#error-running-singularity-with-sudo 'Error running singularity with sudo').
 
-### Create Singularity container
+### Create Singularity containers
 
 ```bash
-cd container
-bash build_container.sh
+make build_containers
 ```
 
 Note: Building of the container requires sudo privileges.
