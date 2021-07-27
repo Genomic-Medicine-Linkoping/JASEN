@@ -54,7 +54,7 @@ clear_files:
 
 build_containers:
 	cd container; \
-	sudo -E singularity build jasen_`date +%Y-%m-%d`.sif Singularity && \
+	sudo -E /usr/local/bin/singularity build jasen_`date +%Y-%m-%d`.sif Singularity && \
 	sudo -E /usr/local/bin/singularity build jasen_tidyverse_`date +%Y-%m-%d`.sif Singularity_tidyverse
 
 preprocess_genomes:
