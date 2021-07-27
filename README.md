@@ -93,10 +93,50 @@ cp "$PROJ_ROOT"/"$TEST_ADAPTERS" "$PROJ_ROOT"/"$ADAPTERS_DIR"
 conda env create -f nf-env.yml
 ```
 
-The pipeline utilises [Resfinder](https://pubmed.ncbi.nlm.nih.gov/22782487/ 'DOI: 10.1093/jac/dks261') to identify acquired antimicrobial resistance genes.
+### Notes
+
+Note that currently only these species are supported for determining both CGMLST and MLST:
+- Escherichia coli
+- Staphylococcus aureus
+- Klebsiella pneumoniae
+- Mycobacterium tuberculosis
+- Acinetobacter baumannii
+- Enterococcus faecalis
+- Enterococcus faecium
+- Pseudomonas aeruginosa
+- Clostridioides difficile
+- Mycobacterium africanum
+- Mycobacterium bovis
+- Salmonella enterica
+
+and these are supported only for determining MLST:
+- Enterobacter cloacae
+- Proteus mirabilis
+- Proteus vulgaris
+- Mycobacterium gordonae
+- Mycobacteroides abscessus
+- Mycobacterium avium
+- Mycobacterium intracellulare
+- Mycobacterium malmoense
+- Staphylococcus argenteus
+- Staphylococcus saprophyticus
+- Stenotrophomonas maltophilia
+- Streptococcus pyogenes
+- Citrobacter braakii
+- Corynebacterium striatum
+- Enterococcus gallinarum
+- Klebsiella aerogenes
+- Mycobacterium chimera
+- Mycobacterium malmoense
+- Mycobacterium kansasii
+- Mycobacteroides chelonae
+- Mycobacterium celatum
+- Mycobacterium marinum
+- Mycobacterium szulgai
+- Mycobacterium scrofulaceum
+- Mycobacterium xenopi
 
 
-### Finding results
 
 The results can be found in json format in `work/[input-fastq-dir-name]` directory. 
 
