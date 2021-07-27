@@ -36,7 +36,7 @@ Note: `ro` in the branch name comes from words *Region Östergötland*.
 
 ### Install Singularity
 
-Follow the installation instructions: [here](https://sylabs.io/guides/3.7/user-guide/quick_start.html#quick-installation-steps 'Quick installation steps').
+Follow the installation instructions: [here](https://sylabs.io/guides/3.8/user-guide/quick_start.html 'Quick installation steps').
 
 If you have RHEL derivative system follow [these instructions](https://sylabs.io/guides/3.0/user-guide/installation.html#install-dependencies 'Installing dependencies with yum/rpm') for installing dependencies.
 
