@@ -1,1 +1,0 @@
-/home/rada/Documents/CGL/JASEN/bin/preprocess_genomes.sh
