@@ -29,7 +29,7 @@ WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 # Name of the species profile
-SPECIES = Staphylococcus_aureus
+SPECIES = Staphylococcus_saprophyticus
 # To which directory inside work/results should the output files come?
 SAMPLE_ID = Staphylococcus_saprophyticus_Stam-121
 
