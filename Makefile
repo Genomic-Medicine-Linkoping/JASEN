@@ -18,7 +18,7 @@ preprocess_genomes
 CURRENT_CONDA_ENV_NAME = nf
 # https://stackoverflow.com/a/55696820
 # Note that the extra activate is needed to ensure that the activate floats env to the front of PATH
-CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate $(CURRENT_CONDA_ENV_NAME)
+CONDA_ACTIVATE = PS=$${PS:-} ; source $$(conda info --base)/etc/profile.d/conda.sh ; conda activate ; conda activate $(CURRENT_CONDA_ENV_NAME)
 
 RG = assets/ref_genomes
 PT = assets/prodigal_training_files
@@ -79,6 +79,7 @@ update_subm:
 	/usr/bin/git status ; \
 	# Beware: This stages and commits everything
 	/usr/bin/git commit -am "Update submodule"
+	# TODO: Could add the rest of the steps here as well
 	/usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
 
 run_samples:
