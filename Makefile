@@ -1,6 +1,7 @@
 SHELL = /bin/bash
 .ONESHELL:
-.SHELLFLAGS := -eu -o pipefail -c
+#.SHELLFLAGS := -eu -o pipefail -c
+.SHELLFLAGS := -e -o pipefail -c
 .DELETE_ON_ERROR:
 MAKEFLAGS += --warn-undefined-variables
 MAKEFLAGS += --no-builtin-rules
