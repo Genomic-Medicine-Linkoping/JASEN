@@ -63,23 +63,34 @@ This command creates two singularity images which are used in the pipeline. They
 make
 ```
 
-### Move Fastq files and adapter sequences to `assets`
+This command 
+
+### Move Fastq.gz files `assets/sequencing_data`
+
+The paired end `fastq.gz` files must contain `_R1_` and `_R2_` in the file names in order that Nextflow can recognise the forward and reverse reads.
 
 ```bash
-cp -r /home/Hanna/Documents/CG-Linkoping/gms-JASEN/assets/sequencing_data/Escherichia_coli_p1 /home/Hanna/Documents/gms-JASEN/assets/sequencing_data/
-cp /home/Hanna/Documents/CG-Linkoping/gms-JASEN/assets/adapters/qiaseq_adapters.fa  /home/Hanna/Documents/gms-JASEN/assets/adapters/
+# Fastq-files
+# Changes these to your local settings
+PROJ_ROOT="/home/rada/Documents/CGL/JASEN"
+INFILES="assets/test_data/sequencing_data/ecoli_1k"
+INDIR="assets/sequencing_data/"
+cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 ```
 
-## Usage
-
-### Optional: Change amount of resources processes are allowed to use
-
-The modifications can be done on lines between 73 and 89 in `nextflow.config`-file.
-
-### Run the pipeline
+### Move adapter sequences to `assets/adapters`
 
 ```bash
-make run
+
+TEST_ADAPTERS="assets/test_data/adapters/giaseq_adapters.fa"
+ADAPTERS_DIR="assets/adapters/"
+cp "$PROJ_ROOT"/"$TEST_ADAPTERS" "$PROJ_ROOT"/"$ADAPTERS_DIR"
+```
+
+### Create a conda environment named `nf`
+
+```bash
+conda env create -f nf-env.yml
 ```
 
 The pipeline utilises [Resfinder](https://pubmed.ncbi.nlm.nih.gov/22782487/ 'DOI: 10.1093/jac/dks261') to identify acquired antimicrobial resistance genes.
