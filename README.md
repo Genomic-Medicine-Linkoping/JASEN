@@ -52,6 +52,11 @@ make build_containers
 
 Note: Building of the container requires sudo privileges.
 
+This command creates two singularity images which are used in the pipeline. They are:
+
+- `jasen_<date>.sif`: This is used in all processes except in `build_report` (building the final html report)
+- `jasen_tidyverse_<date>.sif`: This is used in building the final html report with `build_report` process
+
 ### Download reference genomes and create prodigal training files
 
 ```bash
