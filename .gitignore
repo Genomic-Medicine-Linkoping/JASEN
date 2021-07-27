@@ -148,6 +148,7 @@ assets/sequencing_data/*
 # Sequencing adapters
 assets/adapters/*
 !assets/adapters/README.md
+assets/test_data/adapters/giaseq_adapters.fa
 
 exp/create_output_doc/*
 !exp/create_output_doc/Test_output.Rmd
