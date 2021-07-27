@@ -109,22 +109,13 @@ process ariba_prepare_localdb{
  
   output:
   file 'database_local.rdy' into ariba_init_local
+  file 'database_non_coding.rdy' into ariba_init_nonc
 
   """
   ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/coding.fa --threads ${task.cpus} ${params.aribadb_local}
   cp ${params.local_ariba_db_dir}/coding.fa ${params.aribadb_local}
   touch database_local.rdy
-  """
-}
 
-process ariba_prepare_non_codingdb{
-  label 'max_allocation'
-  container "${params.container_pipeline_fullpath}"
- 
-  output:
-  file 'database_non_coding.rdy' into ariba_init_nonc
-
-  """
   ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
   cp ${params.local_ariba_db_dir}/non-coding.fa ${params.aribadb_nonc}
   touch database_non_coding.rdy
