@@ -40,7 +40,7 @@ Follow the installation instructions: [here](https://sylabs.io/guides/3.8/user-g
 
 If you have RHEL derivative system follow [these instructions](https://sylabs.io/guides/3.0/user-guide/installation.html#install-dependencies 'Installing dependencies with yum/rpm') for installing dependencies.
 
-These instructions were run with globally installed Singularity version 3.7.4.
+These instructions were tested with globally installed Singularity version 3.7.4.
 
 In case `sudo: singularity: command not found` error is encountered, follow [these instructions](https://sylabs.io/guides/2.5/user-guide/troubleshooting.html#error-running-singularity-with-sudo 'Error running singularity with sudo').
 
