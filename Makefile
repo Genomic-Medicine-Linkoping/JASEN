@@ -23,8 +23,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 RG = assets/ref_genomes
 PT = assets/prodigal_training_files
 
-CONT_NAME = jasen_2021-07-07.sif
-PROJECT_ROOT = /home/rada/Documents/CGL/JASEN
+PROJECT_ROOT = $(PWD)
 
 WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
