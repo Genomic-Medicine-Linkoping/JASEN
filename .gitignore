@@ -158,6 +158,7 @@ exp/create_output_doc/*
 !exp/create_output_doc/create_output_doc.Rproj
 !exp/create_output_doc/bibliography.bib
 !exp/create_output_doc/env.yml
+!exp/create_output_doc/pnas.csl
 
 .Rproj.user
 
