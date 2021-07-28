@@ -6,7 +6,7 @@
   - [Installation](#installation)
     - [Clone and switch to `ro-implementation` branch](#clone-and-switch-to-ro-implementation-branch)
     - [Install Singularity](#install-singularity)
-    - [Create Singularity containers](#create-singularity-containers)
+    - [Build the main Singularity image](#build-the-main-singularity-image)
     - [Download reference genomes and create prodigal training files](#download-reference-genomes-and-create-prodigal-training-files)
     - [Move Fastq.gz files `assets/sequencing_data`](#move-fastqgz-files-assetssequencing_data)
     - [Move adapter sequences to `assets/adapters`](#move-adapter-sequences-to-assetsadapters)
@@ -43,15 +43,15 @@ These instructions were tested with globally installed Singularity version 3.7.4
 
 In case `sudo: singularity: command not found` error is encountered, follow [these instructions](https://sylabs.io/guides/2.5/user-guide/troubleshooting.html#error-running-singularity-with-sudo 'Error running singularity with sudo').
 
-### Create Singularity containers
+### Build the main Singularity image
 
 ```bash
 make build_sif
 ```
 
-Note: Building of the container requires sudo privileges.
+Note: Building of the image requires sudo privileges.
 
-This command creates one singularity image which is used in the pipeline. It is `jasen_<date>.sif`. It is used in all processes except in `build_report` (building the final html report). For that is used singularity [image](https://cloud.sylabs.io/library/ljmesi/default/jasen_tidyverse.sif) hosted on sylabs cloud library. `Singularity_tidyverse` image in `container/` directory was used to build this image.
+This command creates one singularity image which is used in the pipeline. It is `jasen_<date>.sif`. It is used in all processes except in `build_report` (building the final html report). For creating a final report is used another singularity [image](https://cloud.sylabs.io/library/ljmesi/default/jasen_tidyverse.sif) hosted on sylabs cloud library. `Singularity_tidyverse` image in `container/` directory was used to build this image.
 
 ### Download reference genomes and create prodigal training files
 
