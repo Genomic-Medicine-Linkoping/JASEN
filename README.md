@@ -32,7 +32,7 @@ rm -r assets/prodigal_training_files/
 git checkout ro-implementation
 ```
 
-Note: `ro` in the branch name comes from words *Region Östergötland*.
+Note: `ro` in the branch name comes from words *[Region Östergötland](https://www.regionostergotland.se/)*.
 
 ### Install Singularity
 
