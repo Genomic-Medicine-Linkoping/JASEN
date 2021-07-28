@@ -1,3 +1,6 @@
 [submodule "assets/var-genes-ro"]
 	path = assets/var-genes-ro
 	url = https://github.com/Genomic-Medicine-Linkoping/var-genes-ro.git
+[submodule "assets/test_data/prodigal_training_files"]
+	path = assets/test_data/prodigal_training_files
+	url = https://github.com/mickaelsilva/prodigal_training_files.git
