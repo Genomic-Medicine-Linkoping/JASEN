@@ -80,8 +80,7 @@ cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 ### Move adapter sequences to `assets/adapters`
 
 ```bash
-
-TEST_ADAPTERS="assets/test_data/adapters/giaseq_adapters.fa"
+TEST_ADAPTERS="assets/test_data/adapters/NexteraPE-PE.fa"
 ADAPTERS_DIR="assets/adapters/"
 cp "$PROJ_ROOT"/"$TEST_ADAPTERS" "$PROJ_ROOT"/"$ADAPTERS_DIR"
 ```
