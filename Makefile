@@ -53,11 +53,6 @@ clear_files:
 	rm -f $(RG)/md5sums.txt
 	@echo ""
 
-build_sif:
-	cd container; \
-	sudo -E /usr/local/bin/singularity build jasen_`date +%Y-%m-%d`.sif Singularity # && \
-	# sudo -E /usr/local/bin/singularity build jasen_tidyverse_`date +%Y-%m-%d`.sif Singularity_tidyverse
-
 preprocess: clear_files
 	cp bin/preprocess_genomes.sh assets/genome_data.tsv . && \
 	bash preprocess_genomes.sh $(CONT_NAME) && \

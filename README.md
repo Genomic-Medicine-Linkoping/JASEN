@@ -55,19 +55,20 @@ This command creates one singularity image which is used in the pipeline. It is 
 
 ### Download reference genomes and create prodigal training files
 
-If you wish to run the pipeline with test data, for preprocessing, use these commands:
+If you wish to run the pipeline with *E. coli* test data (the fastq files in: `assets/test_data/sequencing_data/ecoli_1k`), use these commands:
 
 ```bash
+CONT="library://ljmesi/jasen/main.sif"
 make clear_files
 cp -r assets/test_data/ref_genomes assets/
 cp -r assets/test_data/prodigal_training_files assets/
+cat assets/ref_genomes/Escherichia_coli.fna | singularity exec "$CONT" prodigal -p single -t assets/prodigal_training_files/Escherichia_coli.trn
 ```
 
-otherwise run these commands: 
+otherwise run this command: 
 
 ```bash
-SIF=jasen_<date>.sif
-make preprocess CONT_NAME="$SIF"
+make preprocess
 ```
 
 where `jasen_<date>.sif` is the name of the previous step newly built singularity image, e.g. `jasen_2021-07-28.sif`.
