@@ -11,11 +11,11 @@
     - [Move Fastq.gz files `assets/sequencing_data`](#move-fastqgz-files-assetssequencing_data)
     - [Move adapter sequences to `assets/adapters`](#move-adapter-sequences-to-assetsadapters)
     - [Create a conda environment named `nf`](#create-a-conda-environment-named-nf)
-    - [Notes](#notes)
   - [Usage](#usage)
     - [Optional: Change amount of resources Nextflow is allowed to use](#optional-change-amount-of-resources-nextflow-is-allowed-to-use)
     - [Run the pipeline](#run-the-pipeline)
     - [Finding results](#finding-results)
+  - [Notes](#notes)
 
 <!-- /TOC -->
 
@@ -92,7 +92,44 @@ cp "$PROJ_ROOT"/"$TEST_ADAPTERS" "$PROJ_ROOT"/"$ADAPTERS_DIR"
 conda env create -f nf-env.yml
 ```
 
-### Notes
+## Usage
+
+### Optional: Change amount of resources Nextflow is allowed to use
+
+Use the following command for finding which lines to modify in order to adjust (in the `nextflow.config`-file) the resource usage according to your local system:
+
+```bash
+grep -nA 16 -P "^process\s\{" nextflow.config
+```
+
+### Run the pipeline
+
+The pipeline can be run with the following command (after having performed the steps in [Installation](#installation)).
+
+Adjust the values for `SPECIES`, `SAMPLE_ID` and `CONT_NAME` according to your case. The values should be:
+
+- `SPECIES` = The name of the species the fastq samples are from
+- `SAMPLE_ID` = The input directory name inside `assets/sequencing_data`
+- `CONT_NAME` = The name of the singularity image created in [Build the main Singularity image](#build-the-main-singularity-image)
+
+Below is one example of running the pipeline.  
+
+```bash
+make \
+SPECIES=Escherichia_coli \
+SAMPLE_ID=Escherichia_coli_p1 \
+CONT_NAME=jasen_<date>.sif
+```
+
+CONT_NAME=jasen_2021-07-28.sif
+
+Note: The underscores between words in make commandline arguments `SPECIES` and `SAMPLE_ID` are mandatory.
+
+### Finding results
+
+The results can be found in json format in `results/[input-fastq-dir-name]` directory. 
+
+## Notes
 
 Note that currently only these species are supported for determining both CGMLST and MLST:
 - Escherichia coli
@@ -135,40 +172,3 @@ and these are supported only for determining MLST:
 - Mycobacterium scrofulaceum
 - Mycobacterium xenopi
 
-
-## Usage
-
-### Optional: Change amount of resources Nextflow is allowed to use
-
-Use the following command for finding which lines to modify in order to adjust (in the `nextflow.config`-file) the resource usage according to your local system:
-
-```bash
-grep -nA 16 -P "^process\s\{" nextflow.config
-```
-
-### Run the pipeline
-
-The pipeline can be run with the following command (after having performed the steps in [Installation](#installation)).
-
-Adjust the values for `SPECIES`, `SAMPLE_ID`, `CONT_NAME` and `CONT_REPORT` according to your case. The values should be:
-
-- `SPECIES` = The name of the species the fastq samples are from
-- `SAMPLE_ID` = The input directory name inside `assets/sequencing_data`
-- `CONT_NAME` = The name of the singularity image (which does not contain the `tidyverse` word in it) created in [Create Singularity containers](#create-singularity-containers)
-- `CONT_REPORT` = The name of the singularity image (which contains the `tidyverse` word in it) created in [Create Singularity containers](#create-singularity-containers)
-
-Below is one example of running the pipeline.  
-
-```bash
-make run \
-SPECIES=Staphylococcus_saprophyticus \
-SAMPLE_ID=Staphylococcus_saprophyticus_Stam-121 \
-CONT_NAME=jasen_2021-07-27.sif \
-CONT_REPORT=jasen_tidyverse_2021-07-27.sif
-```
-
-Note: The underscores between words in make commandline arguments `SPECIES` and `SAMPLE_ID` are mandatory.
-
-### Finding results
-
-The results can be found in json format in `results/[input-fastq-dir-name]` directory. 
