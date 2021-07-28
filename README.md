@@ -59,8 +59,8 @@ If you wish to run the pipeline with test data, for preprocessing, use these com
 
 ```bash
 make clear_files
-cp -r assets/test_data/ref_genomes assets/ref_genomes
-cp -r assets/test_data/prodigal_training_files assets/prodigal_training_files
+cp -r assets/test_data/ref_genomes assets/
+cp -r assets/test_data/prodigal_training_files assets/
 ```
 
 otherwise run these commands: 
