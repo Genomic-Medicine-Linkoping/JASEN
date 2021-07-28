@@ -24,7 +24,7 @@ RG = assets/ref_genomes
 PT = assets/prodigal_training_files
 
 CONT_NAME = jasen_2021-07-27.sif
-CONT_REPORT = jasen_tidyverse_2021-07-27.sif
+# CONT_REPORT = jasen_tidyverse_2021-07-27.sif
 PROJECT_ROOT = $(PWD)
 
 WORKDIR = $(PROJECT_ROOT)/work
@@ -36,7 +36,7 @@ SPECIES = Staphylococcus_saprophyticus
 SAMPLE_ID = Staphylococcus_saprophyticus_Stam-121
 
 # Command for running one sample
-RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) --container_pipeline $(CONT_NAME) --container_reporting $(CONT_REPORT)
+RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) --container_pipeline $(CONT_NAME) #--container_reporting $(CONT_REPORT)
 
 # Git branches
 UPSTR_NAME = origin
