@@ -25,10 +25,11 @@ while IFS= read -r LINE; do
 	echo "Downloading $SPECIES genome:"
 	echo ""
 	wget -vc -O "$COMP_FILE" "$URL"
-	echo "Creating md5sum of $SPECIES genome file: $FN"
+	echo "Appending md5sum of $SPECIES genome file: $FN to $OUT_DIR/md5sums.txt"
 	md5sum "$COMP_FILE" >> "$OUT_DIR"/md5sums.txt
   echo "Uncompressing the genome file: $FN"
   zcat "$COMP_FILE" > "$UNCOMP_FILE"
 	echo ""
+  echo "Creating prodigal training file: $TRN"
   cat "$UNCOMP_FILE" | singularity exec $CONT_NAME prodigal -p single -t $TRN
 done < "$INPUT"
