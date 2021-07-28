@@ -23,7 +23,7 @@ CONDA_ACTIVATE = source $$(conda info --base)/etc/profile.d/conda.sh ; conda act
 RG = assets/ref_genomes
 PT = assets/prodigal_training_files
 
-CONT_NAME = jasen_2021-07-27.sif
+CONT_NAME = jasen_2021-07-28.sif
 # CONT_REPORT = jasen_tidyverse_2021-07-27.sif
 PROJECT_ROOT = $(PWD)
 
