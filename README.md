@@ -69,9 +69,7 @@ This command removes all downloaded genome files, prodigal training files and ch
 The paired end `fastq.gz` files must contain `_R1_` and `_R2_` in the file names in order that Nextflow can recognise the forward and reverse reads.
 
 ```bash
-# Fastq-files
-# Changes these to your local settings
-PROJ_ROOT="/home/rada/Documents/CGL/JASEN"
+PROJ_ROOT="$PWD"
 INFILES="assets/test_data/sequencing_data/ecoli_1k"
 INDIR="assets/sequencing_data/"
 cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
@@ -80,6 +78,7 @@ cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 ### Move adapter sequences to `assets/adapters`
 
 ```bash
+PROJ_ROOT="$PWD"
 TEST_ADAPTERS="assets/test_data/adapters/NexteraPE-PE.fa"
 ADAPTERS_DIR="assets/adapters/"
 cp "$PROJ_ROOT"/"$TEST_ADAPTERS" "$PROJ_ROOT"/"$ADAPTERS_DIR"
