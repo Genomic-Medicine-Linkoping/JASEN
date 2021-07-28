@@ -139,6 +139,7 @@ dmypy.json
 
 # The used singularity image
 container/jasen_*.sif
+.singularity
 
 # Input files
 assets/sequencing_data/*
