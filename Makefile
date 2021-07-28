@@ -36,7 +36,7 @@ SPECIES = Staphylococcus_saprophyticus
 SAMPLE_ID = Staphylococcus_saprophyticus_Stam-121
 
 # Command for running one sample
-RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) --container_pipeline $(CONT_NAME) #--container_reporting $(CONT_REPORT)
+RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) --container_pipeline $(CONT_NAME) $(ARGS)
 
 # Git branches
 UPSTR_NAME = origin

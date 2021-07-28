@@ -123,13 +123,14 @@ Adjust the values for `SPECIES`, `SAMPLE_ID` and `CONT_NAME` according to your c
 - `SAMPLE_ID` = The input directory name inside `assets/sequencing_data`
 - `CONT_NAME` = The name of the singularity image created in [Build the main Singularity image](#build-the-main-singularity-image)
 
-Below is one example of running the pipeline.  
+Below is one example of running the pipeline with test data
 
 ```bash
 make \
 SPECIES=Escherichia_coli \
 SAMPLE_ID=Escherichia_coli_p1 \
-CONT_NAME=jasen_<date>.sif
+CONT_NAME=jasen_<date>.sif \
+ARGS="--genome Escherichia_coli"
 ```
 
 CONT_NAME=jasen_2021-07-28.sif
