@@ -126,6 +126,7 @@ Adjust the values for `SPECIES`, `SAMPLE_ID` and `CONT_NAME` according to your c
 Below is one example of running the pipeline with test data
 
 ```bash
+rm -rf assets/references/
 make \
 SPECIES=Escherichia_coli \
 SAMPLE_ID=Escherichia_coli_p1 \
