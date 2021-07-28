@@ -33,7 +33,7 @@ all: $(RES_OUT) $(MLST_OUT) #$(GATHERED) $(JOINED_RES)
 
 # Create a dummy file to keep track of having gathered the results of interest into the right directories
 $(GATHERED): 
-	python3 $(GATHER) $(INDIR) $(MLST)
+	python3 $(GATHER) $(INDIR) $(MLST) -p "**/mlst.json" -s ".json"
 	python3 $(GATHER) $(INDIR) $(RESISTANCE)	
 	touch $@
 
