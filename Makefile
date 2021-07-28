@@ -44,7 +44,7 @@ UPSTR_BRANCH = main
 CURR_BRANCH = ro-implementation
 
 
-all: clear_files preprocess_genomes
+all: run
 
 clear_files:
 	@echo ""
