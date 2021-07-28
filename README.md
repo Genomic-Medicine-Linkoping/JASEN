@@ -130,8 +130,7 @@ rm -rf assets/references/
 make \
 SPECIES=Escherichia_coli \
 SAMPLE_ID=Escherichia_coli_p1 \
-CONT_NAME=jasen_<date>.sif \
-ARGS="--genome Escherichia_coli"
+ARGS="--genome_name Escherichia_coli --adapter_fname NexteraPE-PE.fa"
 ```
 
 CONT_NAME=jasen_2021-07-28.sif
