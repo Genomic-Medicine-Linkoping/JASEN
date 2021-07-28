@@ -134,9 +134,9 @@ CONT_NAME=jasen_<date>.sif \
 ARGS="--genome_name Escherichia_coli --adapter_fname NexteraPE-PE.fa"
 ```
 
-CONT_NAME=jasen_2021-07-28.sif
+Note 1: The underscores between words in make commandline arguments `SPECIES` and `SAMPLE_ID` are mandatory.
 
-Note: The underscores between words in make commandline arguments `SPECIES` and `SAMPLE_ID` are mandatory.
+Note 2: The last line (starting with `ARGS=`) is useful when testing the pipeline. It is not necessary otherwise.
 
 ### Finding results
 
