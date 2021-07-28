@@ -48,7 +48,7 @@ all: run
 
 clear_files:
 	@echo ""
-	@echo "Raderar både nedladdade och träningsfilerna:"
+	@echo "Remove all downloaded genome files, prodigal training files and checksum file"
 	@echo ""
 	@(rm -f $(RG)/*.gz $(RG)/*.fna $(PT)/*.trn)
 	@echo ""
