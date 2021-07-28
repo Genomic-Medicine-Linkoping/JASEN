@@ -82,7 +82,7 @@ Changes these to how your local system is set up.
 ```bash
 PROJ_ROOT="$PWD"
 INFILES="assets/test_data/sequencing_data/ecoli_1k"
-INDIR="assets/sequencing_data/Escherichia_coli_p1"
+INDIR="assets/sequencing_data/Escherichia_coli_p1/"
 cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 ```
 
