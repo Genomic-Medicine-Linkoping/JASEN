@@ -1,4 +1,4 @@
-SHELL = /bin/bash
+SHELL := /bin/bash
 .ONESHELL:
 #.SHELLFLAGS := -eu -o pipefail -c
 .SHELLFLAGS := -e -o pipefail -c
