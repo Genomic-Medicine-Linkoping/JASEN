@@ -67,6 +67,7 @@ This command removes all downloaded genome files, prodigal training files and ch
 ### Move Fastq.gz files `assets/sequencing_data`
 
 The paired end `fastq.gz` files must contain `_R1_` and `_R2_` in the file names in order that Nextflow can recognise the forward and reverse reads.
+Changes these to how your local system is set up.
 
 ```bash
 PROJ_ROOT="$PWD"
@@ -76,6 +77,8 @@ cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 ```
 
 ### Move adapter sequences to `assets/adapters`
+
+Changes these to how your local system is set up.
 
 ```bash
 PROJ_ROOT="$PWD"
