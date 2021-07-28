@@ -58,8 +58,7 @@ build_sif:
 	sudo -E /usr/local/bin/singularity build jasen_`date +%Y-%m-%d`.sif Singularity # && \
 	# sudo -E /usr/local/bin/singularity build jasen_tidyverse_`date +%Y-%m-%d`.sif Singularity_tidyverse
 
-preprocess_genomes:
-	rm -f assets/ref_genomes/md5sums.txt && \
+preprocess: clear_files
 	cp bin/preprocess_genomes.sh assets/genome_data.tsv . && \
 	bash preprocess_genomes.sh $(CONT_NAME) && \
 	rm -f preprocess_genomes.sh genome_data.tsv
