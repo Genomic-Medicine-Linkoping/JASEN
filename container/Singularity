@@ -12,7 +12,7 @@ From:nfcore/base:latest
         export LANG=C.UTF-8
 
 %files
-        env.yml /environment.yml
+        main.yml /environment.yml
 
 %post
         apt update && apt -y upgrade
