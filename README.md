@@ -55,6 +55,16 @@ This command creates one singularity image which is used in the pipeline. It is 
 
 ### Download reference genomes and create prodigal training files
 
+If you wish to run the pipeline with test data, for preprocessing, use these commands:
+
+```bash
+make clear_files
+cp -r assets/test_data/ref_genomes assets/ref_genomes
+cp -r assets/test_data/prodigal_training_files assets/prodigal_training_files
+```
+
+otherwise run these commands: 
+
 ```bash
 SIF=jasen_<date>.sif
 make preprocess CONT_NAME="$SIF"
