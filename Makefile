@@ -31,7 +31,8 @@ IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 # Name of the species profile
 SPECIES = Staphylococcus_saprophyticus
-# To which directory inside work/results should the output files come?
+# This is the name of the input directory (with the fastq files) in assets/sequencing_data
+# and also the name of the output directory in results/
 SAMPLE_ID = Staphylococcus_saprophyticus_Stam-121
 
 # Command for running one sample
