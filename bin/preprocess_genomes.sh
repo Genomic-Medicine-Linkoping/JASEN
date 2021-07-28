@@ -30,5 +30,5 @@ while IFS= read -r LINE; do
   echo "Uncompressing the genome file: $FN"
   zcat "$COMP_FILE" > "$UNCOMP_FILE"
 	echo ""
-  cat "$UNCOMP_FILE" | singularity exec container/$CONT_NAME prodigal -p single -t $TRN
+  cat "$UNCOMP_FILE" | singularity exec $CONT_NAME prodigal -p single -t $TRN
 done < "$INPUT"
