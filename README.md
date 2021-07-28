@@ -24,11 +24,10 @@
 ### Clone and switch to `ro-implementation` branch
 
 ```bash
-INSTALL_DIR="dir/where/you/want/your/gms-JASEN/installation"
+INSTALL_DIR="dir/where/you/want/your/JASEN/installation"
 cd "$INSTALL_DIR"
 git clone --recurse-submodules --single-branch --branch ro-implementation https://github.com/Genomic-Medicine-Linkoping/JASEN.git
-cd gms-JASEN
-rm -r assets/prodigal_training_files/
+cd JASEN
 git checkout ro-implementation
 ```
 
