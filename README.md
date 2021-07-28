@@ -47,15 +47,12 @@ In case `sudo: singularity: command not found` error is encountered, follow [the
 ### Create Singularity containers
 
 ```bash
-make build_containers
+make build_sif
 ```
 
 Note: Building of the container requires sudo privileges.
 
-This command creates two singularity images which are used in the pipeline. They are:
-
-- `jasen_<date>.sif`: This is used in all processes except in `build_report` (building the final html report)
-- `jasen_tidyverse_<date>.sif`: This is used in building the final html report with `build_report` process
+This command creates one singularity image which is used in the pipeline. It is `jasen_<date>.sif`. It is used in all processes except in `build_report` (building the final html report). For that is used singularity [image](https://cloud.sylabs.io/library/ljmesi/default/jasen_tidyverse.sif) hosted on sylabs cloud library. `Singularity_tidyverse` image in `container/` directory was used to build this image.
 
 ### Download reference genomes and create prodigal training files
 

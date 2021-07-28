@@ -53,10 +53,10 @@ clear_files:
 	@(rm -f $(RG)/*.gz $(RG)/*.fna $(PT)/*.trn)
 	@echo ""
 
-build_containers:
+build_sif:
 	cd container; \
-	sudo -E /usr/local/bin/singularity build jasen_`date +%Y-%m-%d`.sif Singularity && \
-	sudo -E /usr/local/bin/singularity build jasen_tidyverse_`date +%Y-%m-%d`.sif Singularity_tidyverse
+	sudo -E /usr/local/bin/singularity build jasen_`date +%Y-%m-%d`.sif Singularity # && \
+	# sudo -E /usr/local/bin/singularity build jasen_tidyverse_`date +%Y-%m-%d`.sif Singularity_tidyverse
 
 preprocess_genomes:
 	rm -f assets/ref_genomes/md5sums.txt && \
