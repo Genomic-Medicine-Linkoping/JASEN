@@ -56,10 +56,13 @@ This command creates one singularity image which is used in the pipeline. It is 
 ### Download reference genomes and create prodigal training files
 
 ```bash
-make
+SIF=jasen_<date>.sif
+make preprocess CONT_NAME="$SIF"
 ```
 
-This command 
+where `jasen_<date>.sif` is the name of the previous step newly built singularity image, e.g. `jasen_2021-07-28.sif`.
+
+This command removes all downloaded genome files, prodigal training files and checksum file (if they previously existed) and then downloads creates them again.
 
 ### Move Fastq.gz files `assets/sequencing_data`
 
