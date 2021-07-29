@@ -11,7 +11,6 @@ run, \
 clear_files, \
 run_samples, \
 update_subm, \
-build_containers, \
 preprocess_genomes
 
 # Commands necessary for using conda env:s
