@@ -15,7 +15,7 @@ log.info """\
  """
 
 if (!(params.pkm && params.location)) {
-  exit 1, "YOU HAVE TO PROVIDE A LOCATION AND PACKAGE MANAGER PROFILE E.g. 'nextflow run main.nf -profile local,conda'"
+  exit 1, "YOU HAVE TO PROVIDE A LOCATION AND PACKAGE MANAGER PROFILE E.g. 'nextflow run main.nf -profile local,singularity'"
 }
 
 process bwa_index_reference{
