@@ -371,11 +371,10 @@ process quast_assembly_qc{
   file contig from assembled_sample_2
 
   output:
-  file 'quast_report.tsv' into quast_result, quast_result_2
+  file 'report.tsv' into quast_result, quast_result_2
 
   """
   quast.py $contig -o . -r ${params.reference} -t ${task.cpus}
-  cp report.tsv quast_report.tsv
   mkdir -p ${params.outdir}/quast/icarus_viewers/
   cp icarus_viewers/* ${params.outdir}/quast/icarus_viewers/
   cp icarus.html ${params.outdir}/quast/
@@ -486,13 +485,11 @@ process vcftools_snpcalling{
   vcffilter="--minQ 30 --thin 50 --minDP 3 --min-meanDP 20"
   bcffilter="GL[0]<-500 & GL[1]=0 & QR/RO>30 & QA/AO>30 & QUAL>5000 & ODDS>1100 & GQ>140 & DP>100 & MQM>59 & SAP<15 & PAIRED>0.9 & EPP>3"
 
-
   freebayes -= --pvar 0.7 -j -J --standard-filters -C 6 --min-coverage 30 --ploidy 1 -f ${params.reference} -b ${samhits} -v freebayes.vcf
   bcftools view freebayes.vcf -o unfiltered_bcftools.bcf.gz -O b --exclude-uncalled --types snps
   bcftools index unfiltered_bcftools.bcf.gz
   bcftools view unfiltered_bcftools.bcf.gz -i \${bcffilter} -o bcftools.bcf.gz -O b
   vcftools --bcf bcftools.bcf.gz \${vcffilter} --remove-filtered-all --recode-INFO-all --recode-bcf --out vcftools
-
   """
 }
 
@@ -506,12 +503,14 @@ process snp_translation{
 
   output:
   tuple 'vcftools.recode.vcf', 'snp_report.tsv' into snp_translated_output
-  //file 'snp_report.json' into snp_json_output
-  file 'snp_report.json' into (snp_json_output_1, snp_json_output_2)
+  file 'snp_report.json' into snp_json_output
+  file 'bcftools_stats.txt' into bcftools_stats
 
   script:
   """
   bcftools view ${bcf_file} > vcftools.recode.vcf
+  gzip -k vcftools.recode.vcf
+  bcftools stats -v vcftools.recode.vcf.gz > bcftools_stats.txt
   gatk VariantsToTable -V vcftools.recode.vcf -F CHROM -F POS -F ID -F REF -F ALT -F QUAL -F FILTER -F DP -F I16 -F QS -F MQ0F -GF PL -O snp_report.tsv
   python3 $baseDir/bin/tsv_to_json.py snp_report.tsv snp_report.json
   """
@@ -545,13 +544,13 @@ process samtools_deduplicated_stats{
   file(alignment_sorted_rmdup) from deduplicated_sample_3
 
   output:
-  tuple 'samtools_idxstats.tsv', 'samtools_coverage_distribution.tsv' into samtools_deduplicated_output
+  tuple 'samtools_idxstats.tsv', 'samtools_coverage_distribution.tsv', 'samtools_stats.txt' into samtools_deduplicated_output
 
   """
   samtools index ${alignment_sorted_rmdup}
   samtools idxstats ${alignment_sorted_rmdup} &> samtools_idxstats.tsv
-  samtools stats --coverage 1,10000,1 ${alignment_sorted_rmdup} |grep ^COV | cut -f 2- &> samtools_coverage_distribution.tsv
-
+  samtools stats --coverage 1,10000,1 ${alignment_sorted_rmdup} > samtools_stats.txt
+  grep ^COV samtools_stats.txt | cut -f 2- &> samtools_coverage_distribution.tsv
   """
 }
 
@@ -568,7 +567,9 @@ process multiqc_report{
     tuple picard_stats, picard_insert_stats from picard_output
     tuple kraken_output, kraken_report from kraken2_output
     tuple samtools_map, samtools_raw from samtools_duplicated_results
+    file(bcftools_stats) from bcftools_stats
     file(trimmomatic_log) from trimmommatic_out
+    tuple idxstats, cov_dist, stats from samtools_deduplicated_output
 
   output:
     file 'multiqc_report.html' into multiqc_output
