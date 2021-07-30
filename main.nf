@@ -626,6 +626,7 @@ process build_report{
   file (motif_report_local) from ariba_summary_output_2b
   file (motif_report_nonc) from ariba_summary_output_2c
   file (quastjson) from quast_result_json
+  file (snpreport) from snp_json_output
   file (bibliography) from bibliography
   file (phenotypes) from resfinder_phenotypes
   file (ref_style) from ref_style
