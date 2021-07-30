@@ -331,9 +331,9 @@ process mlst_lookup{
     cp -r ${params.sample_ID}_mlst ${params.sample_ID}_out ${params.outdir}/mlst
     """
   else
-  """
-  mlst $contig --threads ${task.cpus} --json mlst.json --novel novel_mlst.fasta --minid 99.5 --mincov 95
-  """
+    """
+    mlst $contig --threads ${task.cpus} --json mlst.json --novel novel_mlst.fasta --minid 99.5 --mincov 95
+    """
 }
 
 process chewbbaca_cgmlst{
@@ -578,7 +578,7 @@ process multiqc_report{
     // MultiQC_data contains a lot delimited files. May be useful later
 
   """
-  multiqc ${params.outdir} -f -k json -o \$(pwd)
+  multiqc ${params.outdir} -f -k json -x ${params.outdir}/mlst/*_out -o \$(pwd)
   """
 }
 
