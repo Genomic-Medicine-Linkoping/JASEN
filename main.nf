@@ -15,6 +15,9 @@ log.info """\
  input:                 ${params.input}
  outdir:                ${params.outdir}
  reference:             ${params.reference}
+ bwa:                   ${params.bwa}
+ ariba_mlst:            ${params.ariba_mlst}
+ ariba_pubmlst_name:    ${params.ariba_pubmlst_name}
  """
 
 if (!(params.pkm && params.location)) {
