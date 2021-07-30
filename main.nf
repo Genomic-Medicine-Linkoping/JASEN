@@ -179,10 +179,11 @@ process trimmomatic_trimming{
   tuple forward, reverse from lane_concat
 
   output:
-  tuple "trim_front_pair.fastq.gz", "trim_rev_pair.fastq.gz", "trim_unpair.fastq.gz" into (trimmed_sample_1, trimmed_sample_2, trimmed_sample_3, trimmed_sample_4, trimmed_sample_5, trimmed_sample_6)
+  tuple "trim_front_pair.fastq.gz", "trim_rev_pair.fastq.gz", "trim_unpair.fastq.gz" into (trimmed_sample_1, trimmed_sample_2, trimmed_sample_3, trimmed_sample_4, trimmed_sample_5, trimmed_sample_6, trimmed_sample_7)
+  file 'trim_out.log' into trimmommatic_out
 
   """
-  trimmomatic PE -threads ${task.cpus} -phred33 ${forward} ${reverse} trim_front_pair.fastq.gz trim_front_unpair.fastq.gz trim_rev_pair.fastq.gz trim_rev_unpair.fastq.gz ILLUMINACLIP:${params.adapters}:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36
+  trimmomatic PE -threads ${task.cpus} -phred33 ${forward} ${reverse} trim_front_pair.fastq.gz trim_front_unpair.fastq.gz trim_rev_pair.fastq.gz trim_rev_unpair.fastq.gz ILLUMINACLIP:${params.adapters}:2:30:10 LEADING:3 TRAILING:3 SLIDINGWINDOW:4:15 MINLEN:36 2> trim_out.log
   cat trim_front_unpair.fastq.gz trim_rev_unpair.fastq.gz >> trim_unpair.fastq.gz
   """
 }
@@ -556,6 +557,7 @@ process multiqc_report{
     tuple picard_stats, picard_insert_stats from picard_output
     tuple kraken_output, kraken_report from kraken2_output
     tuple samtools_map, samtools_raw from samtools_duplicated_results
+    file(trimmomatic_log) from trimmommatic_out
 
   output:
     file 'multiqc_report.html' into multiqc_output
