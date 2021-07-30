@@ -141,6 +141,9 @@ process fastqc_readqc{
 
   """
   fastqc ${params.input}/${lane1dir} --format fastq --threads ${task.cpus} -o .
+  FILENAME=\$(basename -s .fastq.gz ${params.input}/${lane1dir})
+  mkdir -p ${params.outdir}/fastqc
+  cp \$FILENAME'_fastqc.zip' ${params.outdir}/fastqc
   """
 }
 
