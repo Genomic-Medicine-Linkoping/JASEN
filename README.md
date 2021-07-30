@@ -6,7 +6,6 @@
   - [Installation](#installation)
     - [Clone and switch to `ro-implementation` branch](#clone-and-switch-to-ro-implementation-branch)
     - [Install Singularity](#install-singularity)
-    - [Build the main Singularity image](#build-the-main-singularity-image)
     - [Download reference genomes and create prodigal training files](#download-reference-genomes-and-create-prodigal-training-files)
     - [Move Fastq.gz files `assets/sequencing_data`](#move-fastqgz-files-assetssequencing_data)
     - [Move adapter sequences to `assets/adapters`](#move-adapter-sequences-to-assetsadapters)
@@ -43,25 +42,16 @@ These instructions were tested with globally installed Singularity version 3.7.4
 
 In case `sudo: singularity: command not found` error is encountered, follow [these instructions](https://sylabs.io/guides/2.5/user-guide/troubleshooting.html#error-running-singularity-with-sudo 'Error running singularity with sudo').
 
-### Build the main Singularity image
-
-```bash
-make build_sif
-```
-
-Note: Building of the image requires sudo privileges.
-
-This command creates one singularity image which is used in the pipeline. It is `jasen_<date>.sif`. It is used in all processes except in `build_report` (building the final html report). For creating a final report is used another singularity [image](https://cloud.sylabs.io/library/ljmesi/default/jasen_tidyverse.sif) hosted on sylabs cloud library. `Singularity_tidyverse` image in `container/` directory was used to build this image.
-
 ### Download reference genomes and create prodigal training files
 
-If you wish to run the pipeline with *E. coli* test data (the fastq files in: `assets/test_data/sequencing_data/ecoli_1k`), use these commands:
+If you wish to run the pipeline with *Escherichia coli* test data (the fastq input files in: `assets/test_data/sequencing_data/ecoli_1k`), use these commands:
 
 ```bash
 CONT="library://ljmesi/jasen/main.sif"
 make clear_files
 cp -r assets/test_data/ref_genomes assets/
 cp -r assets/test_data/prodigal_training_files assets/
+rm -f assets/prodigal_training_files/Escherichia_coli.trn
 cat assets/ref_genomes/Escherichia_coli.fna | singularity exec "$CONT" prodigal -p single -t assets/prodigal_training_files/Escherichia_coli.trn
 ```
 
@@ -71,14 +61,13 @@ otherwise run this command:
 make preprocess
 ```
 
-where `jasen_<date>.sif` is the name of the previous step newly built singularity image, e.g. `jasen_2021-07-28.sif`.
-
-This command removes all downloaded genome files, prodigal training files and checksum file (if they previously existed) and then downloads creates them again.
+`make preprocess` removes all downloaded genome files, prodigal training files and checksum file for downloaded genomes (if they previously existed) and then creates them again.
 
 ### Move Fastq.gz files `assets/sequencing_data`
 
 The paired end `fastq.gz` files must contain `_R1_` and `_R2_` in the file names in order that Nextflow can recognise the forward and reverse reads.
-Changes these to how your local system is set up.
+
+Here is an example with the *Escherichia coli* test data:
 
 ```bash
 PROJ_ROOT="$PWD"
@@ -89,7 +78,7 @@ cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 
 ### Move adapter sequences to `assets/adapters`
 
-Changes these to how your local system is set up.
+With the *Escherichia coli* test data we should use *Nextera PE* adapters.
 
 ```bash
 PROJ_ROOT="$PWD"
@@ -102,7 +91,11 @@ cp "$PROJ_ROOT"/"$TEST_ADAPTERS" "$PROJ_ROOT"/"$ADAPTERS_DIR"
 
 ```bash
 conda env create -f nf-env.yml
+# or if you have mamba installed:
+mamba env create -f nf-env.yml
 ```
+
+This conda environment contains only the latest version of Nextflow. When the pipeline is run with the `Makefile`, the command preceding the running of the pipeline, is activating this environment.  
 
 ## Usage
 
@@ -118,26 +111,25 @@ grep -nA 16 -P "^process\s\{" nextflow.config
 
 The pipeline can be run with the following command (after having performed the steps in [Installation](#installation)).
 
-Adjust the values for `SPECIES`, `SAMPLE_ID` and `CONT_NAME` according to your case. The values should be:
+Adjust the values for `SPECIES` and `SAMPLE_ID` according to your case. The values should be:
 
 - `SPECIES` = The name of the species the fastq samples are from
 - `SAMPLE_ID` = The input directory name inside `assets/sequencing_data`
-- `CONT_NAME` = The name of the singularity image created in [Build the main Singularity image](#build-the-main-singularity-image)
 
 Below is one example of running the pipeline with test data
 
 ```bash
-rm -rf assets/references/
 make \
 SPECIES=Escherichia_coli \
 SAMPLE_ID=Escherichia_coli_p1 \
-CONT_NAME=jasen_<date>.sif \
-ARGS="--genome_name Escherichia_coli --adapter_fname NexteraPE-PE.fa"
+ARGS="--genome_name Escherichia_coli --adapter_fname NexteraPE-PE.fa --prodigal_file Escherichia_coli"
 ```
 
 Note 1: The underscores between words in make commandline arguments `SPECIES` and `SAMPLE_ID` are mandatory.
 
-Note 2: The last line (starting with `ARGS=`) is useful when testing the pipeline. It is not necessary otherwise.
+Note 2: The last line (starting with `ARGS=`) is useful when testing the pipeline. It is not necessary otherwise. 
+
+Note 3: `prodigal_file` is the just the basename (i.e. without `.trn`) and should be located in `assets/prodigal_training_files/`, e.g. `assets/prodigal_training_files/Escherichia_coli.trn`.
 
 ### Finding results
 
