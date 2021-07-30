@@ -391,7 +391,7 @@ process quast_json_conversion{
   file(quastreport) from quast_result_2
 
   output:
-  file 'quast_report.json' into (quast_result_json_1, quast_result_json_2)
+  file 'quast_report.json' into quast_result_json
 
   """
   python3 $baseDir/bin/quast_to_json.py $quastreport quast_report.json
@@ -625,8 +625,7 @@ process build_report{
   file (motif_report) from ariba_summary_output_2a
   file (motif_report_local) from ariba_summary_output_2b
   file (motif_report_nonc) from ariba_summary_output_2c
-  file (quastjson) from quast_result_json_2
-  file (snpreport) from snp_json_output_2
+  file (quastjson) from quast_result_json
   file (bibliography) from bibliography
   file (phenotypes) from resfinder_phenotypes
   file (ref_style) from ref_style
