@@ -1,0 +1,28 @@
+ARIBA run with this command:
+/opt/conda/envs/jasen/bin/ariba run k_pneu_mlst/ref_db Klebsiella_pneumoniae_K927/K927_S13_L001_R1_001.fastq.gz Klebsiella_pneumoniae_K927/K927_S13_L001_R2_001.fastq.gz k_pneu_out
+from this directory: /home/rada/Documents/CGL/JASEN/exp/test_mlst-typing
+
+ARIBA version: 2.14.6
+
+External dependencies:
+bowtie2	2.3.5.1	/opt/conda/envs/jasen/bin/bowtie2
+cdhit	4.8.1	/opt/conda/envs/jasen/bin/cd-hit-est
+nucmer	3.1	/opt/conda/envs/jasen/bin/nucmer
+
+External dependencies OK: True
+
+Python version:
+3.7.10 | packaged by conda-forge | (default, Feb 19 2021, 16:07:37) 
+[GCC 9.3.0]
+
+Python packages:
+ariba	2.14.6	/opt/conda/envs/jasen/lib/python3.7/site-packages/ariba/__init__.py
+bs4	4.9.3	/opt/conda/envs/jasen/lib/python3.7/site-packages/bs4/__init__.py
+dendropy	4.5.2	/opt/conda/envs/jasen/lib/python3.7/site-packages/dendropy/__init__.py
+pyfastaq	3.17.0	/opt/conda/envs/jasen/lib/python3.7/site-packages/pyfastaq/__init__.py
+pymummer	0.10.3	/opt/conda/envs/jasen/lib/python3.7/site-packages/pymummer/__init__.py
+pysam	0.16.0.1	/opt/conda/envs/jasen/lib/python3.7/site-packages/pysam/__init__.py
+
+Python packages OK: True
+
+Everything looks OK: True

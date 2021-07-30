@@ -1,0 +1,8 @@
+#ariba_ref_name	ref_name	gene	var_only	flag	reads	cluster	ref_len	ref_base_assembled	pc_ident	ctg	ctg_len	ctg_cov	known_var	var_type	var_seq_type	known_var_change	has_known_var	ref_ctg_change	ref_ctg_effect	ref_start	ref_end	ref_nt	ctg_start	ctg_end	ctg_nt	smtls_total_depth	smtls_nts	smtls_nts_depth	var_description	free_text
+gapA.3	gapA.3	0	0	19	142	gapA	450	450	100.0	gapA.l15.c30.ctg.1	1043	34.0	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
+infB.3	infB.3	0	0	19	168	infB	318	318	100.0	infB.l15.c17.ctg.1	1015	40.3	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
+mdh.1	mdh.1	0	0	19	228	mdh	477	477	100.0	mdh.l15.c4.ctg.1	1569	37.2	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
+pgi.1	pgi.1	0	0	19	224	pgi	432	432	100.0	pgi.l15.c4.ctg.1	1190	47.6	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
+phoE.1	phoE.1	0	0	19	178	phoE	420	420	100.0	phoE.l15.c4.ctg.1	1356	33.6	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
+rpoB.1	rpoB.1	0	0	19	214	rpoB	501	501	100.0	rpoB.l15.c4.ctg.1	1321	38.9	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
+tonB.4	tonB.4	0	0	19	148	tonB	414	414	100.0	tonB.l15.c4.ctg.1	1145	30.3	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.	.
