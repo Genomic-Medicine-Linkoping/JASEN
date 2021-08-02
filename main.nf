@@ -574,8 +574,6 @@ process multiqc_report{
   output:
     file 'multiqc_report.html' into multiqc_output
     file 'multiqc_data/multiqc_data.json' into (multiqc_json_1, multiqc_json_2)
-    //file 'multiqc_data/multiqc_data.json' into multiqc_json
-    // MultiQC_data contains a lot delimited files. May be useful later
 
   """
   multiqc ${params.outdir} -f -k json -x ${params.outdir}/mlst/*_out -o \$(pwd)
