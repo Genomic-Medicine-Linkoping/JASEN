@@ -12,6 +12,8 @@ params:
     multiqc: "[Link missing to multiqc report]"
     quast: "[Link missing to quast report]"
     cgmlst: TRUE
+    spa_exist: TRUE
+    spa_path: ""
 keywords: 
   - JASEN
   - "Region Östergötland"
@@ -319,5 +321,26 @@ if (dim(k8d)[1] != 0 & dim(k8d)[2] != 0) {
 # MultiQC report
 
 MultiQC report can be found [here](`r params$multiqc`). Reference to MultiQC: @Ewels2016.
+
+`r if(params$spa_exist) {"# Spa type"}`
+
+```{r eval=params$spa_exist, echo=FALSE, message=FALSE}
+read_tsv(params$spa_path) %>% 
+  datatable(
+  rownames = FALSE,
+  extensions = c('FixedColumns','Buttons','KeyTable'),
+  options=list(
+      scrollX=TRUE,
+      ordering=FALSE,
+      dom = 'tBr',
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE
+    ), caption = htmltools::tags$caption(
+  style = 'caption-side: bottom; text-align: center;',
+  'Table 9: Output of spaTyper tool: ', htmltools::tags$a(href="https://github.com/HCGB-IGTP/spaTyper", "https://github.com/HCGB-IGTP/spaTyper"))
+)
+```
+
+`r if(params$spa_exist) {"Reference to spaTyper: @jose_francisco_sanchez_herrero_2020_4063625"}`
 
 # References

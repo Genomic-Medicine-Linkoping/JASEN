@@ -582,30 +582,30 @@ process multiqc_report{
   """
 }
 
-primers = Channel.fromPath("${params.spa_primers}/primers.tsv")
+repeats = Channel.fromPath("${params.spa_primers}/sparepeats.fasta")
+repeat_order = Channel.fromPath("${params.spa_primers}/spatypes.txt")
 
 process spa_gene_extraction {
   label 'min_allocation'
-  publishDir "${params.outdir}", mode: 'copy', overwrite: true
+  publishDir "${params.outdir}/spaTyper", mode: 'copy', overwrite: true
 
 	input:
 		file(scaffolds) from assembled_sample_4
-    file(primers) from primers
+    file(repeats) from repeats
+    file(repeat_order) from repeat_order
 
 	output:
     file "spa_${params.sample_ID}.txt"
-    file "spa_${params.sample_ID}.fna"
 
 	when:
 		params.spa_exist
 
 	"""
-  ipcress \
-  --input ${primers} \
-  --sequence ${scaffolds} \
-  --mismatch 3 \
-  --products > spa_${params.sample_ID}.txt
-  sed -n '/^>SPA/,/^--/p' spa_${params.sample_ID}.txt | sed \\\$d > spa_${params.sample_ID}.fna
+  spaTyper \
+  -f ${scaffolds} \
+  -o ${repeat_order} \
+  -r ${repeats} \
+  --output spa_${params.sample_ID}.txt
 	"""
 }
 
@@ -638,15 +638,26 @@ process build_report{
   html_output = "${params.sample_ID}.html"
 
   if ( params.chewbbaca_db_download )
+    if ( params.spa_exist )
     """
     cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
     cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.txt", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
     """
   else
     """
-    # compile the report
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
+    cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = FALSE, spa_path = "", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    """
+  else
+    if ( params.spa_exist )
+    """
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.txt", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    """
+    else
+    """
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, spa_exist = FALSE, spa_path = "", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
     """
 }
 
