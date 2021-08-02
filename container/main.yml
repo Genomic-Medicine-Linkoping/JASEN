@@ -28,3 +28,4 @@ dependencies:
   - multiqc = 1.11
   #- exonerate = 2.4.0
   - spatyper = 0.3.3
+  - ncbi-amrfinderplus = 3.10.5

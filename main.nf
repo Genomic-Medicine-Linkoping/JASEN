@@ -276,6 +276,7 @@ process ariba_stats{
   """
 }
 
+
 process kraken2_decontamination{
   label 'max_allocation'
 
@@ -301,13 +302,58 @@ process spades_assembly{
   file(reads) from trimmed_sample_1
 
   output:
-  file 'scaffolds.fasta' into (assembled_sample_1, assembled_sample_2, assembled_sample_3, assembled_sample_4)
+  file 'scaffolds.fasta' into (assembled_sample_1, assembled_sample_2, assembled_sample_3, assembled_sample_4, assembled_sample_5)
 
   script:
   """
   spades.py --threads ${task.cpus} --careful -o . -1 ${reads[0]} -2 ${reads[1]} -s ${reads[2]}
   """
 }
+
+process aMRFinderPlus{
+  label 'max_allocation'
+  publishDir "${params.outdir}/AMRFinderPlus", mode: 'copy', overwrite: true
+
+  input:
+  file(scaffolds) from assembled_sample_5
+
+  output:
+  file "aMRFinderPlus.tsv" into aMRFinderPlus
+  file "IDedRegions.fa" 
+
+  script:
+  if ( params.aMRFinderPlus_organism )
+    """
+    mkdir -p ${params.aMRFinderPlusDb}
+    amrfinder_update -d ${params.aMRFinderPlusDb}
+    amrfinder --nucleotide ${scaffolds} \
+    --organism ${params.aMRFinderPlus_org_name} \
+    -d ${params.aMRFinderPlusDb}/latest \
+    -o aMRFinderPlus.tsv \
+    --threads ${task.cpus} \
+    --nucleotide_output "IDedRegions.fa" \
+    --report_all_equal \
+    --coverage_min 0.9 \
+    --ident_min 0.9 \
+    --plus
+    """
+  else
+    """
+    mkdir -p ${params.aMRFinderPlusDb}
+    amrfinder_update -d ${params.aMRFinderPlusDb}
+    amrfinder --nucleotide ${scaffolds} \
+    -o aMRFinderPlus_${params.sample_ID}.txt \
+    -d ${params.aMRFinderPlusDb}/latest \
+    -o aMRFinderPlus_${params.sample_ID}.tsv \
+    --threads ${task.cpus} \
+    --nucleotide_output "IDedRegions_${params.sample_ID}.fa" \
+    --report_all_equal \
+    --coverage_min 0.9 \
+    --ident_min 0.9 \
+    --plus
+    """
+}
+
 
 process mlst_lookup{
   label 'max_allocation'
@@ -628,6 +674,7 @@ process build_report{
   file (bibliography) from bibliography
   file (phenotypes) from resfinder_phenotypes
   file (ref_style) from ref_style
+  file (aMRFinderPlus) from aMRFinderPlus
   
   output:
   file("${html_output}")
@@ -642,7 +689,7 @@ process build_report{
     cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
     Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.txt", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
     """
-  else
+    else
     """
     cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
     cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json

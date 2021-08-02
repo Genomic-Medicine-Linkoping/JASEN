@@ -279,6 +279,29 @@ if (dim(k6d)[1] != 0 & dim(k6d)[2] != 0) {
 
 Reference to Resfinder: @Zankari2012
 
+# AMRFinderPlus resistance gene results
+
+```{r echo=FALSE, message=FALSE}
+read_tsv("aMRFinderPlus.tsv") %>%
+    select(-one_of(c("Protein identifier"))) %>%
+    datatable( 
+    rownames = FALSE,
+    extensions = c('FixedColumns','Buttons','KeyTable'),
+    options=list(
+      scrollX=TRUE,
+      dom = 'tBlrpfi',
+      lengthMenu = c(5, 10, 30, 100),
+      buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
+      keys = TRUE,
+      pageLength = 5
+      ), caption = htmltools::tags$caption(
+    style = 'caption-side: bottom; text-align: center;',
+    'Table 6: AMRFinderPlus results. For more information on them, see: ', htmltools::tags$a(href="https://github.com/ncbi/amr/wiki/Interpreting-results", "AMR - Interpreting results"), '.')
+    )
+```
+
+Reference to AMRFinderPlus: @Feldgarden2019
+
 # Quast report
 
 ```{r echo=FALSE}
@@ -296,7 +319,7 @@ t(k7d) %>%
       keys = TRUE
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table 6: Output of genome assembly quality assessment tool. For detailed information on the table headers, see: ', htmltools::tags$a(href="http://quast.sourceforge.net/docs/manual.html#sec3.1.1", "QUAST manual"))
+    'Table 7: Output of genome assembly quality assessment tool. For detailed information on the table headers, see: ', htmltools::tags$a(href="http://quast.sourceforge.net/docs/manual.html#sec3.1.1", "QUAST manual"))
     )
 ```
 
@@ -310,12 +333,11 @@ Reference to Quast: @Gurevich2013.
 # If the dataframe is not empty, present it
 if (dim(k8d)[1] != 0 & dim(k8d)[2] != 0) {
   k8d %>% 
-    dt_alise('Table 7: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+    dt_alise('Table 8: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
 }else{
   # If not found, print out just a plain and simple text
   cat("No found SNPs with mlst: https://github.com/tseemann/mlst")
 }
-
 ```
 
 # MultiQC report
