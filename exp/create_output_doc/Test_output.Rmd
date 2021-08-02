@@ -67,26 +67,6 @@ dt_alise <- function(df, text_before, html_object, text_after) {
 }
 
 
-
-# Handle cases when there was no cgmlst data
-if (params$cgmlst == TRUE){
-  k1 <- fromJSON("cgmlst_stats.json", flatten=TRUE)
-  k2 <- fromJSON("cgmlst_alleles.json", flatten=TRUE)
-  k1d <- do.call(rbind.data.frame, k1)
-  k2d <- do.call(rbind.data.frame, k2)
-}else{
-  # Produce empty df:s
-  k1d <- data.frame(Date=as.Date(character()),
-                 File=character(), 
-                 User=character(), 
-                 stringsAsFactors=FALSE)
-  k2d <- data.frame(Date=as.Date(character()),
-                 File=character(), 
-                 User=character(), 
-                 stringsAsFactors=FALSE) 
-}
-
-
 k3 <- fromJSON("mlst.json", flatten=TRUE)
 k4 <- fromJSON("motif_report_local.json", flatten=TRUE)
 k5 <- fromJSON("motif_report_nonc.json", flatten=TRUE)
@@ -104,9 +84,12 @@ phenos <- read_tsv("phenotypes.tsv")
 ```
 
 
-# Cgmlst Stats
+`r if(params$cgmlst) {"# Cgmlst Stats"}`
 
-```{r echo=FALSE}
+```{r eval=params$cgmlst, echo=FALSE, message=FALSE, warning=FALSE}
+k1 <- fromJSON("cgmlst_stats.json", flatten=TRUE)
+k1d <- do.call(rbind.data.frame, k1)
+
 # If the dataframe is not empty, present it
 if (dim(k1d)[1] != 0 & dim(k1d)[2] != 0) {
   # Remove default column names and ...
@@ -141,9 +124,12 @@ if (dim(k1d)[1] != 0 & dim(k1d)[2] != 0) {
 }
 ```
 
-# Cgmlst Alleles
+`r if(params$cgmlst) {"# Cgmlst Alleles"}`
 
-```{r echo=FALSE, warning=FALSE}
+```{r eval=params$cgmlst, echo=FALSE, message=FALSE, warning=FALSE}
+k2 <- fromJSON("cgmlst_alleles.json", flatten=TRUE)
+k2d <- do.call(rbind.data.frame, k2)
+
 # If the dataframe is not empty, present it
 if (dim(k2d)[1] != 0 & dim(k2d)[2] != 0) {
   # Move first row to be the column names
@@ -177,7 +163,7 @@ if (dim(k2d)[1] != 0 & dim(k2d)[2] != 0) {
 }
 ```
 
-Reference to chewBBACA: @Silva2018
+`r if(params$cgmlst) {"Reference to chewBBACA: @Silva2018"}`
 
 # Contig files scan results against PubMLST typing schemes 
 
