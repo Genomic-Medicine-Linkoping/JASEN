@@ -3,21 +3,24 @@
 log.info """\
  J A S E N - P I P E L I N E
  ===================================
- krakendb_url:          ${params.krakendb_url}
- chewbbaca_db_download: ${params.chewbbaca_db_download}
- local_ariba_db_dir:    ${params.local_ariba_db_dir}
- chewbbacadb_url:       ${params.chewbbacadb_url}
- prodigal_file:         ${params.prodigal_file}
- prodigal_filepath:     ${params.prodigal_filepath}
- sample_ID:             ${params.sample_ID}
- species:               ${params.species}
- genome_name:           ${params.genome_name}
- input:                 ${params.input}
- outdir:                ${params.outdir}
- reference:             ${params.reference}
- bwa:                   ${params.bwa}
- ariba_mlst:            ${params.ariba_mlst}
- ariba_pubmlst_name:    ${params.ariba_pubmlst_name}
+ krakendb_url:            ${params.krakendb_url}
+ chewbbaca_db_download:   ${params.chewbbaca_db_download}
+ local_ariba_db_dir:      ${params.local_ariba_db_dir}
+ chewbbacadb_url:         ${params.chewbbacadb_url}
+ prodigal_file:           ${params.prodigal_file}
+ prodigal_filepath:       ${params.prodigal_filepath}
+ sample_ID:               ${params.sample_ID}
+ species:                 ${params.species}
+ genome_name:             ${params.genome_name}
+ input:                   ${params.input}
+ outdir:                  ${params.outdir}
+ reference:               ${params.reference}
+ bwa:                     ${params.bwa}
+ ariba_mlst:              ${params.ariba_mlst}
+ ariba_pubmlst_name:      ${params.ariba_pubmlst_name}
+ aMRFinderPlus_organism:  ${params.aMRFinderPlus_organism}
+ aMRFinderPlus_org_name:  ${params.aMRFinderPlus_org_name}
+ aMRFinderPlusDb:         ${params.aMRFinderPlusDb}
  """
 
 if (!(params.pkm && params.location)) {
@@ -319,7 +322,7 @@ process aMRFinderPlus{
 
   output:
   file "aMRFinderPlus.tsv" into aMRFinderPlus
-  file "IDedRegions.fa" 
+  file "IDedRegions.fa"
 
   script:
   if ( params.aMRFinderPlus_organism )
