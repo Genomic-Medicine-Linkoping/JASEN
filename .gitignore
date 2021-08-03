@@ -178,6 +178,8 @@ exp/post_process_results/*
 !exp/post_process_results/join_res_et_validation.py
 !exp/post_process_results/compare_mlst.py
 !exp/post_process_results/compare_resistence.py
+!exp/post_process_results/join_tables.py
+!exp/post_process_results/spaTypes_joined.tsv
 
 exp/test_mlst-typing/*
 !exp/test_mlst-typing/README.md
