@@ -1,1 +1,0 @@
-/home/rada/Documents/CGL/JASEN/bin/gather_files.py
