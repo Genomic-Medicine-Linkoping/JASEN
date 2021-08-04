@@ -163,32 +163,34 @@ if (dim(k2d)[1] != 0 & dim(k2d)[2] != 0) {
 
 `r if(params$cgmlst) {"Reference to chewBBACA: @Silva2018"}`
 
-# Contig files scan results against PubMLST typing schemes 
+# AMRFinderPlus resistance gene results
 
-```{r echo=FALSE}
-k3 %>%
+```{r echo=FALSE, message=FALSE}
+read_tsv("aMRFinderPlus.tsv") %>%
+    select(-one_of(c("Protein identifier"))) %>%
   datatable(
     rownames = FALSE,
     extensions = c('FixedColumns','Buttons','KeyTable'),
     options=list(
       scrollX=TRUE,
-      dom = 'tBr',
-      ordering=FALSE,
+      dom = 'tBlrpfi',
+      lengthMenu = c(5, 10, 30, 100),
       buttons = c('copy', 'csv', 'excel', 'pdf', 'print'),
-      keys = TRUE
+      keys = TRUE,
+      pageLength = 5
       ), caption = htmltools::tags$caption(
     style = 'caption-side: bottom; text-align: center;',
-    'Table 3: For detailed information on the target genes, see: ', htmltools::tags$a(href="https://www.cgmlst.org/ncs/schema/", "cgMLST.org Nomenclature Server"))
+    'Table 3: AMRFinderPlus results. For more information on them, see: ', htmltools::tags$a(href="https://github.com/ncbi/amr/wiki/Interpreting-results", "AMR - Interpreting results"), '.')
     )
 ```
 
-Reference information: These results made use of the [PubMLST website](https://pubmlst.org/) developed by Keith Jolley [@Jolley2010] and sited at the University of Oxford. The development of that website was funded by the Wellcome Trust. The typing information was obtained using: Seemann T, [mlst](https://github.com/tseemann/mlst).
+Reference to AMRFinderPlus: @Feldgarden2019
 
 # Ariba 
 
 ## Local database motif report
 
-This table includes both coding and non-coding sequences denoted by 1 and 0 in gene column respectively.   The determination of which were which was performed with [`ariba prepareref`](https://github.com/sanger-pathogens/ariba/wiki/Task:-prepareref) command.
+This table includes both coding and non-coding sequences denoted by 1 and 0 in gene column respectively. The determination of which were which was performed with [`ariba prepareref`](https://github.com/sanger-pathogens/ariba/wiki/Task:-prepareref) command.
 
 ```{r echo=FALSE}
 handle_empties <- function(df1, df2){
