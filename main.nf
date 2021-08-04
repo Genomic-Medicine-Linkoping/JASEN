@@ -366,6 +366,7 @@ process mlst_lookup{
 
   output:
   file 'mlst.json' into mlst_json_output
+  file 'mlst_report.tsv' into ariba_mlst
 
   script:
   if ( params.ariba_mlst )
@@ -674,6 +675,7 @@ process build_report{
   file (phenotypes) from resfinder_phenotypes
   file (ref_style) from ref_style
   file (aMRFinderPlus) from aMRFinderPlus
+  file (ariba_mlst_report) from ariba_mlst
   
   output:
   file("${html_output}")
