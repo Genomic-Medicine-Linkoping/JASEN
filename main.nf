@@ -355,6 +355,7 @@ process aMRFinderPlus{
 }
 
 
+// TODO: Now same pubmlst db will be created for each run separately but it should be for each new species only
 process mlst_lookup{
   label 'max_allocation'
 
@@ -677,7 +678,7 @@ process build_report{
   file (ref_style) from ref_style
   file (aMRFinderPlus) from aMRFinderPlus
   file (ariba_mlst_report) from ariba_mlst
-  
+
   output:
   file("${html_output}")
 
