@@ -42,9 +42,10 @@ UPSTR_NAME = origin
 UPSTR_BRANCH = main
 CURR_BRANCH = ro-implementation
 
-
+## all: Run by default one sample
 all: run
 
+## clean: Remove all downloaded genome files, prodigal training files and checksum file
 clean:
 	@echo ""
 	@echo "Remove all downloaded genome files, prodigal training files and checksum file"
@@ -53,17 +54,20 @@ clean:
 	rm -f $(RG)/md5sums.txt
 	@echo ""
 
+## preprocess: Download, uncompress and create prodigal training files of genomes and create md5sum:s
 preprocess: clean
 	cp bin/preprocess_genomes.sh assets/genome_data.tsv . && \
 	bash preprocess_genomes.sh $(CONT_NAME) && \
 	rm -f preprocess_genomes.sh genome_data.tsv
 
+## run: Run one sample with $(SPECIES) and $(SAMPLE_ID) located in assets/sequencing_data
 run:
 	@mkdir -p work
 	rm -rf assets/references
 	$(CONDA_ACTIVATE) ; \
 	$(RUN)
 
+## update_subm: Update assets/var-genes-ro submodule and push it to ro-implementation remote branch
 update_subm:
 	cd assets/var-genes-ro ; \
 	# /usr/bin/git submodule update --remote --merge ; \
@@ -75,8 +79,13 @@ update_subm:
 	/usr/bin/git commit -m "Update submodule" ; \
 	/usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
 
+## run_samples: Run pipeline with a set of samples in: assets/sequencing_data
 run_samples:
 	cp bin/run_samples.sh . && \
 	$(CONDA_ACTIVATE) ; \
 	bash run_samples.sh && \
 	rm -f run_samples.sh
+
+## help: show this message.
+help:
+	@grep '^##' ./Makefile
