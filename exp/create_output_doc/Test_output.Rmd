@@ -9,8 +9,6 @@ biblio-style: "alpha" #https://www.overleaf.com/learn/latex/Bibtex_bibliography_
 subject: "This is a report over JASEN results"
 params:
     sample: "[ID info missing]"
-    multiqc: "[Link missing to multiqc report]"
-    quast: "[Link missing to quast report]"
     cgmlst: TRUE
     spa_exist: TRUE
     spa_path: ""
@@ -309,7 +307,7 @@ t(k7d) %>%
     )
 ```
 
-Quast html report can be found [here](`r params$quast`). 
+Quast html report can be found [here](quast/report.html). 
 
 Reference to Quast: @Gurevich2013.
 
@@ -328,7 +326,7 @@ if (dim(k8d)[1] != 0 & dim(k8d)[2] != 0) {
 
 # MultiQC report
 
-MultiQC report can be found [here](`r params$multiqc`). Reference to MultiQC: @Ewels2016.
+MultiQC report can be found [here](multiqc/multiqc_report.html). Reference to MultiQC: @Ewels2016.
 
 `r if(params$spa_exist) {"# Spa type"}`
 

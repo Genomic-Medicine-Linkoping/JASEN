@@ -690,22 +690,22 @@ process build_report{
     """
     cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
     cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.txt", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.tsv"), output_file = "${html_output}")'
     """
     else
     """
     cp ${params.chewbbacadb}/res/cgmlst_alleles.json cgmlst_alleles.json
     cp ${params.chewbbacadb}/res/cgmlst_stats.json cgmlst_stats.json
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = FALSE, spa_path = "", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = TRUE, spa_exist = FALSE, spa_path = ""), output_file = "${html_output}")'
     """
   else
     if ( params.spa_exist )
     """
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.txt", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, spa_exist = TRUE, spa_path = "${params.outdir}/spaTyper/spa_${params.sample_ID}.tsv"), output_file = "${html_output}")'
     """
     else
     """
-    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, spa_exist = FALSE, spa_path = "", quast = "quast/report.html", multiqc = "multiqc/multiqc_report.html"), output_file = "${html_output}")'
+    Rscript -e 'rmarkdown::render(input = "${report}", params = list(sample  = "${params.sample_ID}", cgmlst = FALSE, spa_exist = FALSE, spa_path = ""), output_file = "${html_output}")'
     """
 }
 
