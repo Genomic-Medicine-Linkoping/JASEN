@@ -8,7 +8,7 @@ MAKEFLAGS += --no-builtin-rules
 
 .PHONY: all, \
 run, \
-clear_files, \
+clean, \
 run_samples, \
 update_subm, \
 preprocess_genomes
@@ -45,7 +45,7 @@ CURR_BRANCH = ro-implementation
 
 all: run
 
-clear_files:
+clean:
 	@echo ""
 	@echo "Remove all downloaded genome files, prodigal training files and checksum file"
 	@echo ""
@@ -53,7 +53,7 @@ clear_files:
 	rm -f $(RG)/md5sums.txt
 	@echo ""
 
-preprocess: clear_files
+preprocess: clean
 	cp bin/preprocess_genomes.sh assets/genome_data.tsv . && \
 	bash preprocess_genomes.sh $(CONT_NAME) && \
 	rm -f preprocess_genomes.sh genome_data.tsv
