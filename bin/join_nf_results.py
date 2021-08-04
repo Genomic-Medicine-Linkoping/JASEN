@@ -7,41 +7,7 @@ import pandas as pd
 import re
 from collections import namedtuple
 
-# Create the parser
-parser = argparse.ArgumentParser(prog='join_nf_results.py',
-				 allow_abbrev=False,
-				 usage='%(prog)s [options] <mlst_dir> <resistance_dir> <outfile>',
-				 description='',
-				 epilog='---')
-
-parser.add_argument('mlst_dir',
-		    type=str,
-		    help='Place where all the results tsv:s are spread around')
-
-parser.add_argument('resistance_dir',
-		    type=str,
-		    help='Place where all the results tsv:s are spread around')
-
-parser.add_argument('outfile', 
-		    type=str,
-		    help='Place where we want our joined jsons be saved as one tsv file')
-
-parser.add_argument('--json-pattern',
-		    '-j',
-		    type=str,
-		    default='*_mlst.json',
-		    help='Globbing pattern to search files with')
-
-parser.add_argument('--res-pattern',
-		    '-p',
-		    type=str,
-		    default='*.tsv',
-		    help='Globbing pattern to search files with')
-
-# Execute the parse_args() method
-args = parser.parse_args()
-
-
+def main(args):
 mlst_dir = Path(args.mlst_dir)
 resistance_dir = Path(args.resistance_dir)
 tsv = Path(args.outfile)
@@ -95,4 +61,60 @@ with open(tsv, 'w') as f:
 		if (mlst_type=='-'):
 			f.write(f'{id}\t{species}\t{genes_str}\t\n')
 		else:
-			f.write(f'{id}\t{species}\t{genes_str}\tST{mlst_type}\n')
+
+
+if __name__ == '__main__':
+	# Create the parser
+	parser = argparse.ArgumentParser(prog='join_nf_results.py',
+									 allow_abbrev=False,
+									 usage='%(prog)s [options] <mlst_dir> <resistance_dir> <outfile>',
+									 description='',
+									 epilog='---')
+
+	parser.add_argument('mlst_dir',
+			type=str,
+			help='Place where all the mlst typing results are')
+
+	parser.add_argument('resistance_dir',
+			type=str,
+			help='Place where all the ariba resistance gene search results are')
+
+	parser.add_argument('spa_dir',
+			type=str,
+			help='Place where all the spaTyper results are')
+	
+	parser.add_argument('ariba_mlst_dir',
+			type=str,
+			help='Place where all the ariba mlst results are')
+
+	parser.add_argument('outfile', 
+			type=str,
+			help='Place where we want our joined jsons be saved as one tsv file')
+
+	parser.add_argument('--json-pattern',
+			'-j',
+			type=str,
+			default='*_mlst.json',
+			help='Globbing pattern to search mlst json files with')
+
+	parser.add_argument('--res-pattern',
+			'-p',
+			type=str,
+			default='*.tsv',
+			help='Globbing pattern to search ariba tsv files with')
+
+	parser.add_argument('--spa-typer-pattern',
+			'-s',
+			type=str,
+			default='spa_*.tsv',
+			help='Globbing pattern to search spaTyper tsv files with')
+
+	parser.add_argument('--ariba-mlst-pattern',
+			'-a',
+			type=str,
+			default='*_mlst_report.tsv',
+			help='Globbing pattern to search ariba mlst tsv files with')
+
+	# Execute the parse_args() method
+	args = parser.parse_args()
+	main(args)
