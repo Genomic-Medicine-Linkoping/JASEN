@@ -28,6 +28,10 @@ def main(args):
 	make_dir(gathered_tsvs)
 	# Find spread out results files and gather them to one output dir
 	for path in sorted(all_results.rglob(args.pattern)):
+		id = Path()
+		if (args.ariba_mlst == "y"):
+			id = path.resolve().parent.parent.parent.name
+		else:
 		id = path.resolve().parent.parent.name
 		current_file_path = path.resolve()
 		stem = path.stem
@@ -68,6 +72,13 @@ if __name__ == '__main__':
 			    type=str,
 			    default='no',
 			    help='Whether to include ID part in the file name or not')
+
+	parser.add_argument('--ariba-mlst',
+			    '-a',
+			    type=str,
+				choices=['y','n'],
+			    default="n", # Use 'y' with ariba mlst tsv files
+			    help='Are you searching for ariba mlst files from JASEN pipeline results output dir?')
 
 
 	# Execute the parse_args() method
