@@ -371,11 +371,12 @@ process mlst_lookup{
   script:
   if ( params.ariba_mlst )
     """
-    ariba pubmlstget --verbose '${params.ariba_pubmlst_name}' ${params.sample_ID}_mlst
-    ariba run --threads ${task.cpus} ${params.sample_ID}_mlst/ref_db $forward $reverse ${params.sample_ID}_out
+    ariba pubmlstget --verbose '${params.ariba_pubmlst_name}' ${params.ariba_pubmlst_db}
+    #mkdir -p ${params.outdir}/mlst/ariba
+    ariba run --threads ${task.cpus} ${params.ariba_pubmlst_db}/ref_db $forward $reverse ${params.outdir}/mlst/ariba
+    cp ${params.outdir}/mlst/ariba/mlst_report.tsv mlst_report.tsv
+    
     mlst $contig --threads ${task.cpus} --json mlst.json --novel novel_mlst.fasta --minid 99.5 --mincov 95
-    mkdir -p ${params.outdir}/mlst
-    cp -r ${params.sample_ID}_mlst ${params.sample_ID}_out ${params.outdir}/mlst
     """
   else
     """
