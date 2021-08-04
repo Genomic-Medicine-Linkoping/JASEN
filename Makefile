@@ -29,10 +29,10 @@ WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 # Name of the species profile
-SPECIES = Staphylococcus_saprophyticus
+SPECIES = Staphylococcus_aureus
 # This is the name of the input directory (with the fastq files) in assets/sequencing_data
 # and also the name of the output directory in results/
-SAMPLE_ID = Staphylococcus_saprophyticus_Stam-121
+SAMPLE_ID = Staphylococcus_aureus_HY170610
 
 # Command for running one sample
 RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) $(ARGS)
