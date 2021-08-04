@@ -11,7 +11,7 @@ run, \
 clean, \
 run_samples, \
 update_subm, \
-preprocess_genomes
+preprocess
 
 # Commands necessary for using conda env:s
 CURRENT_CONDA_ENV_NAME = nf
