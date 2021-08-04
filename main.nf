@@ -346,9 +346,9 @@ process aMRFinderPlus{
     amrfinder_update -d ${params.aMRFinderPlusDb}
     amrfinder --nucleotide ${scaffolds} \
     -d ${params.aMRFinderPlusDb}/latest \
-    -o aMRFinderPlus_${params.sample_ID}.tsv \
+    -o aMRFinderPlus.tsv \
     --threads ${task.cpus} \
-    --nucleotide_output "IDedRegions_${params.sample_ID}.fa" \
+    --nucleotide_output "IDedRegions.fa" \
     --report_all_equal \
     --coverage_min 0.9 \
     --ident_min 0.9 \
