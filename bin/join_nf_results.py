@@ -11,6 +11,8 @@ from collections import namedtuple
 def main(args):
 mlst_dir = Path(args.mlst_dir)
 resistance_dir = Path(args.resistance_dir)
+	spa_dir = Path(args.spa_dir)
+	ariba_mlst_dir = Path(args.ariba_mlst_dir)
 tsv = Path(args.outfile)
 json_pat = args.json_pattern
 
@@ -44,10 +46,26 @@ for path in sorted(resistance_dir.glob(args.res_pattern)):
 	else:
 		# If the NamedTuple with specific species_id doesn't exist in the list yet,
 		# add it to the list with genes inside a set
-		species_id_res_genes_list.append(Resistance_genes(species_id, set(genes)))
-	# break
 
+	spa_types = {}
 
+	for path in sorted(spa_dir.glob(args.spa_typer_pattern)):
+		df = pd.read_csv(path, sep='\t')
+		# Extract species_id data from file name, e.g. Staphylococcus_aureus_SASPA17S-03
+		species_id = re.sub(r'spa_(.+)', r'\1', str(path.stem)) 
+		# Extract spa-type, e.g. t1339
+		spa_type = df.iloc[0,2]
+		spa_types[species_id] = spa_type
+
+	ariba_mlst = {}
+
+	for path in sorted(ariba_mlst_dir.glob(args.ariba_mlst_pattern)):
+		df = pd.read_csv(path, sep='\t')
+		# Extract species_id data from file name, e.g. Staphylococcus_aureus_SASPA17S-03
+		species_id = re.sub('(.+)_mlst_report', r'\1', str(path.stem)) 
+		# Extract ariba mlst-type, e.g. t1339
+		ariba_mlst_type = df.iloc[0,0]
+		ariba_mlst[species_id] = ariba_mlst_type
 
 with open(tsv, 'w') as f:
 	# Write tsv header
@@ -57,11 +75,25 @@ with open(tsv, 'w') as f:
 		si = current_si.species_id.split('_')
 		species = si[0][0] + '. ' + si[1]
 		id = si[2:][0]
-		genes_str = ', '.join(current_si.genes)
+			# Extract spa-type if it exists
+			spa_type = spa_types.get(current_si_nt.species_id)
+			# Extract ariba mlst-type
+			ariba_mlst_type = ariba_mlst.get(current_si_nt.species_id)
+			
 		# Write nothing if MLST type is missing
 		if (mlst_type=='-'):
-			f.write(f'{id}\t{species}\t{genes_str}\t\n')
+				# Do we write spa-type or not when MLST type is missing
+				if (not spa_type):
+					f.write(f'{id}\t{species}\t{genes_str}\taST{ariba_mlst_type}\n')
 		else:
+					f.write(f'{id}\t{species}\t{genes_str}\taST{ariba_mlst_type}, {spa_type}\n')
+			else:
+				# Do we write spa-type or not when MLST type is found
+				if (not spa_type):
+					f.write(f'{id}\t{species}\t{genes_str}\taST{ariba_mlst_type}, ST{mlst_type}\n')
+				else:
+					f.write(f'{id}\t{species}\t{genes_str}\taST{ariba_mlst_type}, ST{mlst_type}, {spa_type}\n')
+
 
 
 if __name__ == '__main__':
