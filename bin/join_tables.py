@@ -12,18 +12,20 @@ def main(args):
 	all_tables = Path(args.indir)
 	# Path where we want our joined table to end up
 	outfile = Path(args.outfile)
+
 	tables_list = []
 	# Loop through the table files
 	for path in sorted(all_tables.glob(args.pattern)):
-		tbl = pd.read_csv(path, sep=args.separator)
 		
+		tbl = pd.read_csv(path, sep=args.separator)
 		# Parse out species and sample names
 		fn_parts = str(path.stem).split('_')
-		tbl['Sample'] = fn_parts[3]
-		tbl['Species'] = fn_parts[1] + ' ' + fn_parts[2]
+		tbl['Sample'] = fn_parts[args.sample_id]
+		tbl['Species'] = fn_parts[args.genus] + ' ' + fn_parts[args.species]
 		cols = tbl.columns.tolist()
-		# Move last two elements to first
+		# Move last two elements (Sample and Species) to first in the table
 		cols = cols[-2:] + cols[:-2]
+		if (args.rearrange == "y"):
 		# Move last element to third place
 		last = cols[-1]
 		cols.insert(2, last)
@@ -53,14 +55,30 @@ if __name__ == '__main__':
 			    default='\t',
 			    help='Delimiter in the tables')	
 
-	parser.add_argument('indir',
-			    type=str,
-			    help='Place where all the results tsv:s are')
+	parser.add_argument('--genus',
+			    '-g',
+			    type=int,
+			    default=0, # This default works with AMRFinderPlus output tsv files
+			    help='Where in the "_"-delimited file name is the genus?')
 
-	parser.add_argument('outfile',
-			    type=str,
-			    help='Where the joined table should be copied.')
+	parser.add_argument('--species',
+			    '-e',
+			    type=int,
+			    default=1, # This default works with AMRFinderPlus output tsv files
+			    help='Where in the "_"-delimited file name is the species?')	
 
+	parser.add_argument('--sample-id',
+			    '-a',
+			    type=int,
+			    default=2, # This default works with AMRFinderPlus output tsv files
+			    help='Where in the "_"-delimited file name is the sample ID?')	
+
+	parser.add_argument('--rearrange',
+			    '-r',
+			    type=str,
+				choices=['y','n'],
+			    default="n", # Use 'y' with spa-types tsv files
+			    help='Should the columns be rearranged?')
 
 	# Execute the parse_args() method
 	args = parser.parse_args()
