@@ -1,0 +1,89 @@
+Prov-nummer	Art	Känd MLST eller Spa-typ (validering)	Känd MLST eller Spa-typ (resultat)
+EC3693	E. coli	ST69	ST69
+EC3712	E. coli	ST131	ST131
+EC3717	E. coli	ST131	ST131
+EC3718	E. coli	ST617	ST617
+EC3721	E. coli	ST38	ST38
+EC3738	E. coli	ST405	ST405
+EC3767	E. coli	ST448	
+EC3789	E. coli	ST167	ST167
+EC3899	E. coli	ST88	ST88
+EC3913	E. coli	ST349	ST349
+K1011	K. pneumoniae	ST15	ST15
+K923	K. pneumoniae	ST15	ST15
+K927	K. pneumoniae	ST11	
+K962	K. pneumoniae	ST273	ST273
+K967-1	K. pneumoniae	ST530	ST530
+K978	K. pneumoniae	ST258	ST258
+K986	K. pneumoniae	ST437	ST437
+K988	K. pneumoniae	ST307	ST307
+K993	K. pneumoniae	ST147	ST147
+K999	K. pneumoniae	ST35	ST35
+MRR160063	K. pneumoniae		ST14
+MRR160064	K. pneumoniae		ST392
+MRR160065	K. pneumoniae		ST29
+MRR160066	K. pneumoniae		ST258
+MRR160067	E. coli		ST404
+MRR160068	P. aeroginosa		ST621
+MRR160069	E. cloacae		ST141
+MRR160070	P. vulgaris		
+MR160644B	E. coli		ST5954
+MRR160054	E. coli		ST46
+MRR160072	E. coli		ST405
+UO1639842	E. coli		ST778
+AB164094	K. pneumoniae		ST258
+MRR160058	K. pneumoniae		ST17
+PK161096A	K. pneumoniae		
+MRR160074	P. mirabilis		
+PD164637B	P. mirabilis		
+PY153330	P. aeroginosa		ST235
+PY1604185	E. cloacae		
+MR130386-1	A. baumanni	ST2	ST2
+MR130386-2	A. baumanni	ST2	ST2
+NL160346	A. baumanni	ST10	ST10
+PY1604385	A. baumanni	ST10	ST10
+CDO160115	C. difficile		ST33
+CDO160117	C. difficile		ST55
+CDO160118	C. difficile		ST49
+CDO160123	C. difficile		ST49
+CDO160127	C. difficile		ST49
+HY175294	S. aureus		ST247
+HY175295	S. aureus		ST45
+HY175296	S. aureus		ST1
+HY175297	S. aureus		ST45
+HY175298	S. aureus		ST254
+HY175299	S. aureus		ST5
+HY175300	S. aureus		ST45
+HY175301	S. aureus		ST228
+HY175302	S. aureus		ST5
+SASPA17S-01	S. aureus	t008	ST8
+SASPA17S-02	S. aureus	t003	ST225
+SASPA17S-03	S. aureus	t108	ST398
+SASPA17S-04	S. aureus	t011	ST398
+SASPA17S-05	S. aureus	t002	ST5
+SASPA17S-06	S. aureus	t032	ST22
+PU117379	S. aureus		ST130
+PY1704281	S. aureus	t843	ST130
+PY1705269	S. aureus	t16761	ST130
+HY170610	S. aureus	t386	ST1
+HY170908	S. aureus	t386	ST1
+HY170910	S. aureus	t386	ST1
+HY171014	S. aureus	t386	ST1
+HY171211	S. aureus	t386	ST1
+HY171212	S. aureus	t386	ST1
+HY170721	S. aureus	t386	ST1
+HY161669	S. aureus	t1339	ST88
+HY176242	S. aureus	t088	ST5
+HY176190	S. aureus	t1339	ST88
+HY176435	S. aureus	t1171	ST8
+PY1704946	S. aureus	t437	
+HY176898	S. aureus	t1028	ST80
+HY177532	S. aureus	t3527	ST59
+PY1706490	S. aureus	t127	ST1
+PY1707502	S. aureus	t044	ST80
+PY1707767	S. aureus	t019	ST30
+PD171964	S. aureus	t1171	
+Stam-126	S. aureus		
+Stam-146	S. aureus		ST30
+Stam-121	S.saprophyticus		
+VR170213	E. faecium		ST203
