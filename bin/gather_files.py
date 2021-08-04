@@ -8,10 +8,12 @@ from shutil import copy
 
 def filenamer(id, stem, suffix, includeID):
 	"""Form a filename string from id (if includeID == yes) stem and suffix"""
-	if(includeID == 'yes'):
+	if(includeID == 'y'):
 		return id + "_" + stem + suffix
-	else:
+	elif(includeID == 'n'):
 		return stem + suffix
+	else:
+		assert False, "Alternatives are only 'y' or 'n'."
 
 def make_dir(dir):
 	"""Create a directory if it doesn't yet exist"""
@@ -32,7 +34,7 @@ def main(args):
 		if (args.ariba_mlst == "y"):
 			id = path.resolve().parent.parent.parent.name
 		else:
-		id = path.resolve().parent.parent.name
+			id = path.resolve().parent.parent.name
 		current_file_path = path.resolve()
 		stem = path.stem
 		new_filename = filenamer(id, stem, args.suffix, args.includeID)
@@ -70,7 +72,8 @@ if __name__ == '__main__':
 	parser.add_argument('--includeID',
 			    '-i',
 			    type=str,
-			    default='no',
+				choices=['y','n'],
+			    default='n', # When searching ariba mlst results, use yes
 			    help='Whether to include ID part in the file name or not')
 
 	parser.add_argument('--ariba-mlst',
