@@ -642,7 +642,7 @@ process spa_gene_extraction {
     file(repeat_order) from repeat_order
 
 	output:
-    file "spa_${params.sample_ID}.txt"
+    file "spa_${params.sample_ID}.tsv"
 
 	when:
 		params.spa_exist
@@ -652,7 +652,7 @@ process spa_gene_extraction {
   -f ${scaffolds} \
   -o ${repeat_order} \
   -r ${repeats} \
-  --output spa_${params.sample_ID}.txt
+  --output spa_${params.sample_ID}.tsv
 	"""
 }
 
