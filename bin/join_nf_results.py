@@ -35,9 +35,7 @@ for path in sorted(resistance_dir.glob(args.res_pattern)):
 	df = pd.read_csv(path, sep='\t')
 	# Extract species and ID data from file name
 	species_id = re.sub(r'_motif_report.*\.tsv', '', str(path.name))
-	# Convert all genes in the current dataframe to a list
-	genes = df["ref_name"].to_list()
-	# Check if the list contains already the current species_id inside a namedtuple
+		genes = set(df["ref_name"].to_list())
 	if (any(nt.species_id==species_id for nt in species_id_res_genes_list)):
 		# Obtain already in list stored NamedTuple instance
 		current_nt = [nt for nt in species_id_res_genes_list if nt.species_id==species_id][0]
@@ -46,6 +44,7 @@ for path in sorted(resistance_dir.glob(args.res_pattern)):
 	else:
 		# If the NamedTuple with specific species_id doesn't exist in the list yet,
 		# add it to the list with genes inside a set
+			species_id_res_genes_list.append(Resistance_genes(species_id, genes))
 
 	spa_types = {}
 
