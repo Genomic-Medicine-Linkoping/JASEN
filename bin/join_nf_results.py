@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""This script joins separate tab separated files in various directories into one tsv file."""
 
 import argparse
 from pathlib import Path
