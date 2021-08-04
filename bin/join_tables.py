@@ -25,10 +25,10 @@ def main(args):
 		# Move last two elements (Sample and Species) to first in the table
 		cols = cols[-2:] + cols[:-2]
 		if (args.rearrange == "y"):
-		# Move last element to third place
-		last = cols[-1]
-		cols.insert(2, last)
-		cols = cols[:-1]
+			# Move last element to third place
+			last = cols[-1]
+			cols.insert(2, last)
+			cols = cols[:-1]
 		tbl = tbl[cols]
 		# Add table to the list
 		tables_list.append(tbl)
@@ -42,6 +42,14 @@ if __name__ == '__main__':
 					 description=__doc__,
 					 epilog='---')
 
+	parser.add_argument('indir',
+			    type=str,
+			    help='Place where all the results tsv:s are')
+
+	parser.add_argument('outfile',
+			    type=str,
+			    help='Where the joined table should be copied.')
+
 	parser.add_argument('--pattern',
 			    '-p',
 			    type=str,
@@ -52,7 +60,7 @@ if __name__ == '__main__':
 			    '-s',
 			    type=str,
 			    default='\t',
-			    help='Delimiter in the tables')	
+			    help='Delimiter in the tables')
 
 	parser.add_argument('--genus',
 			    '-g',
