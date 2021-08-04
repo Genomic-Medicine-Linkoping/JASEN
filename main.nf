@@ -131,7 +131,6 @@ process ariba_prepare_localdb{
   """
 }
 
-
 samples = Channel.fromPath("${params.input}/*.{fastq.gz,fsa.gz,fa.gz,fastq,fsa,fa}")
 
 process fastqc_readqc{
@@ -279,7 +278,6 @@ process ariba_stats{
   """
 }
 
-
 process kraken2_decontamination{
   label 'max_allocation'
 
@@ -367,7 +365,7 @@ process mlst_lookup{
   file contig from assembled_sample_1
 
   output:
-  file 'mlst.json' into (mlst_output_1, mlst_output_2)
+  file 'mlst.json' into mlst_json_output
 
   script:
   if ( params.ariba_mlst )
@@ -562,7 +560,6 @@ process snp_translation{
   gatk VariantsToTable -V vcftools.recode.vcf -F CHROM -F POS -F ID -F REF -F ALT -F QUAL -F FILTER -F DP -F I16 -F QS -F MQ0F -GF PL -O snp_report.tsv
   python3 $baseDir/bin/tsv_to_json.py snp_report.tsv snp_report.json
   """
-
 }
 
 
@@ -666,7 +663,7 @@ process build_report{
 
   input:
   file (report) from report_Rmd
-  file (mlstjson) from mlst_output_2
+  file (mlstjson) from mlst_json_output
   file (multiqcjson) from multiqc_json_2
   file (motif_report) from ariba_summary_output_2a
   file (motif_report_local) from ariba_summary_output_2b
