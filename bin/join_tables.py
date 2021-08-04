@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""This script gathers tsv files from indir and joins them and outputs them to outdir."""
+"""This script gathers tsv files from indir and joins them and outputs them to a outfile."""
 
 import argparse
 from pathlib import Path
-from shutil import copy
 import pandas as pd
 
 def main(args):
