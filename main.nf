@@ -345,7 +345,6 @@ process aMRFinderPlus{
     mkdir -p ${params.aMRFinderPlusDb}
     amrfinder_update -d ${params.aMRFinderPlusDb}
     amrfinder --nucleotide ${scaffolds} \
-    -o aMRFinderPlus_${params.sample_ID}.txt \
     -d ${params.aMRFinderPlusDb}/latest \
     -o aMRFinderPlus_${params.sample_ID}.tsv \
     --threads ${task.cpus} \
