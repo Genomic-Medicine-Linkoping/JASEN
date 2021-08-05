@@ -76,6 +76,26 @@ INDIR="assets/sequencing_data/Escherichia_coli_p1/"
 cp -r "$PROJ_ROOT"/"$INFILES" "$PROJ_ROOT"/"$INDIR"
 ```
 
+Here below is an example input file directory for running `make run_samples` command, could be the following:
+
+```
+├── sequencing_data
+│   ├── Acinetobacter_baumannii_MR130386-1
+│   │   ├── MR130386-1_S19_L001_R1_001.fastq.gz
+│   │   └── MR130386-1_S19_L001_R2_001.fastq.gz
+│   ├── Acinetobacter_baumannii_MR130386-2
+│   │   ├── MR130386-2_S20_L001_R1_001.fastq.gz
+│   │   └── MR130386-2_S20_L001_R2_001.fastq.gz
+│   ├── Acinetobacter_baumannii_NL160346
+│   │   ├── NL160346_S17_L001_R1_001.fastq.gz
+│   │   └── NL160346_S17_L001_R2_001.fastq.gz
+│   ├── Acinetobacter_baumannii_PY1604385
+│   │   ├── PY1604385_S18_L001_R1_001.fastq.gz
+│   │   └── PY1604385_S18_L001_R2_001.fastq.gz
+```
+
+Note 1: All the subdirectories, e.g. `Acinetobacter_baumannii_PY1604385` should be the `sample_ID`s. 
+
 ### Move adapter sequences to `assets/adapters`
 
 With the *Escherichia coli* test data we should use *Nextera PE* adapters.
