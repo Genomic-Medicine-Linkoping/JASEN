@@ -46,7 +46,7 @@ if __name__ == '__main__':
 	parser = argparse.ArgumentParser(prog='gather_files.py',
 					allow_abbrev=False,
 					usage='%(prog)s [options] <indir> <outdir>',
-					description='Gather files of interest from <indir> to <outdir> using "pattern" and saving with "suffix"',
+					description=__doc__,
 					epilog='---')
 
 	parser.add_argument('--pattern',
