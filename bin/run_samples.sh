@@ -45,6 +45,6 @@ for i in "${!input_files_array[@]}"; do
   end_time=$(date +"%c")
   echo "End time: $end_time" | tee -a nf_logs.log
   # Move results to a place with more space
-  mv "/home/rada/Documents/CGL/JASEN/results/$INPUT_DIR" "/data/CGL/JASEN/results/$INPUT_DIR"
+  mv -f "/home/rada/Documents/CGL/JASEN/results/$INPUT_DIR" "/data/CGL/JASEN/results/$INPUT_DIR"
   #break
 done
