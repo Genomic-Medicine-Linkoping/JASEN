@@ -121,12 +121,12 @@ process ariba_prepare_localdb{
   file 'database_non_coding.rdy' into ariba_init_nonc
 
   """
-  ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/coding.fa --threads ${task.cpus} ${params.aribadb_local}
-  cp ${params.local_ariba_db_dir}/coding.fa ${params.aribadb_local}
+  ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/final/coding.fa --threads ${task.cpus} ${params.aribadb_local}
+  cp ${params.local_ariba_db_dir}/final/coding.fa ${params.aribadb_local}
   touch database_local.rdy
 
-  ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
-  cp ${params.local_ariba_db_dir}/non-coding.fa ${params.aribadb_nonc}
+  ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding no -f ${params.local_ariba_db_dir}/final/non-coding.fa --threads ${task.cpus} ${params.aribadb_nonc}
+  cp ${params.local_ariba_db_dir}/final/non-coding.fa ${params.aribadb_nonc}
   touch database_non_coding.rdy
   """
 }
