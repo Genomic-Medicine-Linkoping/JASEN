@@ -336,7 +336,7 @@ Reference to Quast: @Gurevich2013.
 # If the dataframe is not empty, present it
 if (dim(k8d)[1] != 0 & dim(k8d)[2] != 0) {
   k8d %>% 
-    dt_alise('Table 8: Ariba run output for resistance genes from Resfinder. For detailed information on the table headers, see: ', htmltools::tags$a(href="https://github.com/sanger-pathogens/ariba/wiki/Task:-run#report-file", "ariba run subcommand output description"))
+    dt_alise('Table 9: SNP analysis: ', htmltools::tags$a(href="", ""))
 }else{
   # If not found, print out just a plain and simple text
   cat("No found SNPs with mlst: https://github.com/tseemann/mlst")
@@ -362,7 +362,7 @@ read_tsv(params$spa_path) %>%
       keys = TRUE
     ), caption = htmltools::tags$caption(
   style = 'caption-side: bottom; text-align: center;',
-  'Table 9: Output of spaTyper tool: ', htmltools::tags$a(href="https://github.com/HCGB-IGTP/spaTyper", "https://github.com/HCGB-IGTP/spaTyper"))
+  'Table 10: Output of spaTyper tool: ', htmltools::tags$a(href="https://github.com/HCGB-IGTP/spaTyper", "https://github.com/HCGB-IGTP/spaTyper"))
 )
 ```
 
