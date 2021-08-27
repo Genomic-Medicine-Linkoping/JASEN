@@ -629,8 +629,8 @@ process multiqc_report{
   """
 }
 
-repeats = Channel.fromPath("${params.spa_primers}/sparepeats.fasta")
-repeat_order = Channel.fromPath("${params.spa_primers}/spatypes.txt")
+repeats = Channel.fromPath("${params.spa_db}/sparepeats.fasta")
+repeat_order = Channel.fromPath("${params.spa_db}/spatypes.txt")
 
 process spa_gene_extraction {
   label 'min_allocation'
