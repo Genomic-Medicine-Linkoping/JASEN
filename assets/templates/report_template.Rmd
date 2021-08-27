@@ -339,7 +339,7 @@ if (dim(k8d)[1] != 0 & dim(k8d)[2] != 0) {
     dt_alise('Table 9: SNP analysis: ', htmltools::tags$a(href="", ""))
 }else{
   # If not found, print out just a plain and simple text
-  cat("No found SNPs with mlst: https://github.com/tseemann/mlst")
+  cat("No found SNPs")
 }
 ```
 
