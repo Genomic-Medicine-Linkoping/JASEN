@@ -1,0 +1,1 @@
+/home/rada/Documents/CGL/JASEN/assets/templates/report_template.Rmd

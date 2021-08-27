@@ -152,7 +152,7 @@ assets/adapters/*
 assets/test_data/adapters/giaseq_adapters.fa
 
 exp/create_output_doc/*
-!exp/create_output_doc/Test_output.Rmd
+!exp/create_output_doc/report_template.Rmd
 !exp/create_output_doc/renv.lock
 !exp/create_output_doc/README.md
 !exp/create_output_doc/create_output_doc.Rproj
