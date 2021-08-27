@@ -138,7 +138,7 @@ dmypy.json
 .pyre/
 
 # The used singularity image
-container/jasen_*.sif
+container/main.sif
 .singularity
 
 # Input files
