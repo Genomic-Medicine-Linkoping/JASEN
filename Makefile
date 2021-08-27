@@ -11,7 +11,8 @@ run, \
 clean, \
 run_samples, \
 update_subm, \
-preprocess
+preprocess, \
+download_latest_spa_db
 
 # Commands necessary for using conda env:s
 CURRENT_CONDA_ENV_NAME = nf
@@ -28,11 +29,13 @@ PROJECT_ROOT = $(PWD)
 WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
+SPA_DB = assets/spa-typing
+
 # Name of the species profile
 SPECIES = Staphylococcus_aureus
 # This is the name of the input directory (with the fastq files) in assets/sequencing_data
 # and also the name of the output directory in results/
-SAMPLE_ID = Staphylococcus_aureus_HY170610
+SAMPLE_ID = Staphylococcus_aureus_Kontroll-126
 
 # Command for running one sample
 RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) $(ARGS)
@@ -55,7 +58,7 @@ clean:
 	@echo ""
 
 ## preprocess: Download, uncompress and create prodigal training files of genomes and create md5sum:s
-preprocess: clean
+preprocess: clean download_latest_spa_db
 	cp bin/preprocess_genomes.sh assets/genome_data.tsv . && \
 	bash preprocess_genomes.sh $(CONT_NAME) && \
 	rm -f preprocess_genomes.sh genome_data.tsv
@@ -85,6 +88,11 @@ run_samples:
 	$(CONDA_ACTIVATE) ; \
 	bash run_samples.sh && \
 	rm -f run_samples.sh
+
+## download_latest_spa_db: Download the newest sparepeats.fasta and spatypes.txt files to assets/spa-typing
+download_latest_spa_db:
+	curl -o $(SPA_DB)/sparepeats.fasta https://spa.ridom.de/dynamic/sparepeats.fasta && \
+	curl -o $(SPA_DB)/spatypes.txt https://spa.ridom.de/dynamic/spatypes.txt
 
 ## help: show this message.
 help:
