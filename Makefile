@@ -94,6 +94,6 @@ download_latest_spa_db:
 	curl -o $(SPA_DB)/sparepeats.fasta https://spa.ridom.de/dynamic/sparepeats.fasta && \
 	curl -o $(SPA_DB)/spatypes.txt https://spa.ridom.de/dynamic/spatypes.txt
 
-## help: show this message.
+## help: Show this message
 help:
 	@grep '^##' ./Makefile
