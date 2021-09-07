@@ -26,6 +26,5 @@ dependencies:
   # https://forum.biobakery.org/t/workflow-conda-install-bowtie-2-issue-bowtie2-align-s-error-while-loading-shared-libraries-libtbb-so-2/1831
   - tbb = 2020.2
   - multiqc = 1.11
-  #- exonerate = 2.4.0
   - spatyper = 0.3.3
   - ncbi-amrfinderplus = 3.10.14
