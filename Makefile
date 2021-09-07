@@ -94,6 +94,12 @@ download_latest_spa_db:
 	curl -o $(SPA_DB)/sparepeats.fasta https://spa.ridom.de/dynamic/sparepeats.fasta && \
 	curl -o $(SPA_DB)/spatypes.txt https://spa.ridom.de/dynamic/spatypes.txt
 
+## build_main_singularity: (Re)build singularity image
+build_main_singularity:
+	cd container ; \
+	rm -f main.sif && \
+	sudo singularity build main.sif Singularity
+
 ## help: Show this message
 help:
 	@grep '^##' ./Makefile
