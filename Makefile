@@ -100,6 +100,13 @@ build_main_singularity:
 	rm -f main.sif && \
 	sudo singularity build main.sif Singularity
 
+## push_to_cloud: Sign and push built image to Sylabs cloud
+## NB: Remember to rename on the cloud existing image to something else than 'latest' before running this
+push_to_cloud:
+	cd container ; \
+	singularity sign main.sif && \
+	singularity push main.sif library://ljmesi/jasen/main.sif:latest
+
 ## help: Show this message
 help:
 	@grep '^##' ./Makefile
