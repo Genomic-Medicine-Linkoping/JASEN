@@ -294,6 +294,28 @@ process kraken2_decontamination{
   kraken2 --db ${params.krakendb} --threads ${task.cpus} --output kraken_out.tsv --report kraken_report.tsv --paired ${forward} ${reverse}
   """
 }
+
+// Make kaiju DB contents visible for NF
+nodes = Channel.fromPath("${params.kaiju_db}/**")
+
+process kaiju_taxonomy{
+  label 'max_allocation'
+
+  publishDir "${params.outdir}/kaiju", mode: 'copy', overwrite: true
+
+  input:
+  tuple forward, reverse, unpaired from trimmed_sample_8
+  path x from nodes
+
+  output:
+  tuple "kaiju.out", "kaiju_summary.tsv" into (kaiju_output, kaiju_output2)
+
+  """
+  kaiju -z ${task.cpus} -t ${params.kaiju_db}/nodes.dmp -f ${params.kaiju_db}/nr_euk/kaiju_db_nr_euk.fmi -i ${forward} -j ${reverse} -o kaiju.out
+  kaiju2table -t ${params.kaiju_db}/nodes.dmp -n ${params.kaiju_db}/names.dmp -r species -o kaiju_summary.tsv kaiju.out -v
+  """
+}
+
 process spades_assembly{
   label 'max_allocation'
 
