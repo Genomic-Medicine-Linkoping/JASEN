@@ -251,6 +251,10 @@ process ariba_stats{
   """
 }
 
+// Make kraken2 DB contents visible for NF
+taxok2d = Channel.fromPath("${params.krakendb}/taxo.k2d")
+taxodir = Channel.fromPath("${params.krakendb}/**")
+
 process kraken2_decontamination{
   label 'max_allocation'
 
@@ -258,7 +262,8 @@ process kraken2_decontamination{
 
   input:
   tuple forward, reverse, unpaired from trimmed_sample_3
-  file(db_initialized) from kraken2_init
+  path x from taxok2d
+  path y from taxodir
 
   output:
   tuple "kraken_out.tsv", "kraken_report.tsv" into kraken2_output
