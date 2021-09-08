@@ -8,6 +8,7 @@ MAKEFLAGS += --no-builtin-rules
 
 .PHONY: all, \
 run, \
+run_tax_analysis, \
 clean, \
 run_samples, \
 update_subm, \
@@ -64,10 +65,17 @@ preprocess: clean download_latest_spa_db
 	bash preprocess_genomes.sh $(CONT_NAME) && \
 	rm -f preprocess_genomes.sh genome_data.tsv
 
-## run: Run one sample with $(SPECIES) and $(SAMPLE_ID) located in assets/sequencing_data
-run:
+## run_tax_analysis: Run a main pipeline preceding taxonomic analysis of the sample fastq files
+run_tax_analysis:
+	rm -rf work
 	@mkdir -p work
 	rm -rf assets/references
+	$(CONDA_ACTIVATE) ; \
+	nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) --run_tax_analysis true $(ARGS)
+
+## run: Run one sample with $(SPECIES) and $(SAMPLE_ID) located in assets/sequencing_data
+run: run_tax_analysis
+	@mkdir -p work
 	$(CONDA_ACTIVATE) ; \
 	$(RUN)
 
