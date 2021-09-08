@@ -3,7 +3,6 @@
 log.info """\
  J A S E N - P I P E L I N E
  ===================================
- krakendb_url:            ${params.krakendb_url}
  chewbbaca_db_download:   ${params.chewbbaca_db_download}
  local_ariba_db_dir:      ${params.local_ariba_db_dir}
  chewbbacadb_url:         ${params.chewbbacadb_url}
@@ -62,32 +61,6 @@ process cgmlst_db_init{
       touch database.rdy
     fi
     """
-}
-
-process kraken2_db_download{
-  label 'min_allocation'
-
-  output:
-  file 'database.rdy' into kraken2_init
-  file 'krakendb.tgz' into kraken2_source
-
-  """
-  if ${params.kraken_db_download} ; then
-    export PATH=\$PATH:$baseDir/bin/
-    mkdir -p ${params.krakendb}
-    wget -c ${params.krakendb_url} -O krakendb.tgz
-    # dlsuf=`tar -tf krakendb.tgz | head -n 1 | tail -c 2`
-    if [ -f "${params.bwa}/${params.genome_name}.fna.sa" ]; then
-      tar -xvzf krakendb.tgz -C ${params.krakendb} --strip 1
-    else
-      tar -xvzf krakendb.tgz -C ${params.krakendb}
-    fi
-    # rm krakendb.tgz
-    touch database.rdy
-  else
-    touch database.rdy
-  fi
-  """
 }
 
 process ariba_db_download{
