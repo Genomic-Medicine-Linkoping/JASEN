@@ -30,6 +30,7 @@ WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 SPA_DB = assets/spa-typing
+KAIJU_DB = /data/CGL/JASEN/kaiju-db
 
 # Name of the species profile
 SPECIES = Staphylococcus_aureus
@@ -99,6 +100,12 @@ build_main_singularity:
 	cd container ; \
 	rm -f main.sif && \
 	sudo singularity build main.sif Singularity
+
+## create_kaijudb: Create database that kaiju uses in its taxonomic assignments
+create_kaijudb:
+	$(CONDA_ACTIVATE) ; \
+	cd $(KAIJU_DB) && \
+	kaiju-makedb -t 50 -s nr_euk
 
 ## push_to_cloud: Sign and push built image to Sylabs cloud
 ## NB: Remember to rename on the cloud existing image to something else than 'latest' before running this
