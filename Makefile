@@ -74,7 +74,9 @@ run_tax_analysis:
 	$(RUN) --run_tax_analysis true $(ARGS)
 
 ## run: Run one sample with $(SPECIES) and $(SAMPLE_ID) located in assets/sequencing_data
-run: run_tax_analysis
+## NB: Remember to run make run_tax_analysis before running this
+##
+run:
 	@mkdir -p work
 	$(CONDA_ACTIVATE) ; \
 	$(RUN)
