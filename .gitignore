@@ -185,3 +185,9 @@ exp/test_mlst-typing/*
 !exp/test_mlst-typing/README.md
 !exp/test_mlst-typing/k_pneu_out
 !exp/test_mlst-typing/e_coli1_out
+
+# Testing of taxonomic analysis tools
+exp/test-kraken/*
+exp/test-kaiju/*
+!exp/test-kaiju/env.yml
+!exp/test-kaiju/use_kaiju.sh
