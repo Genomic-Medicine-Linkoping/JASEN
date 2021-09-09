@@ -79,6 +79,13 @@ run: run_tax_analysis
 	$(CONDA_ACTIVATE) ; \
 	$(RUN)
 
+## run_samples: Run pipeline with a set of samples in: assets/sequencing_data
+run_samples:
+	cp bin/run_samples.sh . && \
+	$(CONDA_ACTIVATE) ; \
+	bash run_samples.sh && \
+	rm -f run_samples.sh
+
 ## update_subm: Update assets/var-genes-ro submodule and push it to ro-implementation remote branch
 update_subm:
 	cd assets/var-genes-ro ; \
@@ -90,13 +97,6 @@ update_subm:
 	/usr/bin/git add var-genes-ro ; \
 	/usr/bin/git commit -m "Update submodule" ; \
 	/usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
-
-## run_samples: Run pipeline with a set of samples in: assets/sequencing_data
-run_samples:
-	cp bin/run_samples.sh . && \
-	$(CONDA_ACTIVATE) ; \
-	bash run_samples.sh && \
-	rm -f run_samples.sh
 
 ## download_latest_spa_db: Download the newest sparepeats.fasta and spatypes.txt files to assets/spa-typing
 download_latest_spa_db:
