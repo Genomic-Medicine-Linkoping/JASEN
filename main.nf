@@ -583,14 +583,29 @@ process vcftools_snpcalling{
   !params.run_tax_analysis
 
   """
-  vcffilter="--minQ 30 --thin 50 --minDP 3 --min-meanDP 20"
   bcffilter="GL[0]<-500 & GL[1]=0 & QR/RO>30 & QA/AO>30 & QUAL>5000 & ODDS>1100 & GQ>140 & DP>100 & MQM>59 & SAP<15 & PAIRED>0.9 & EPP>3"
+  vcffilter="--minQ 30 --thin 50 --minDP 3 --min-meanDP 20"
 
   freebayes -= --pvar 0.7 -j -J --standard-filters -C 6 --min-coverage 30 --ploidy 1 -f ${params.reference} -b ${samhits} -v freebayes.vcf
-  bcftools view freebayes.vcf -o unfiltered_bcftools.bcf.gz -O b --exclude-uncalled --types snps
+  
+  bcftools view freebayes.vcf \
+  --output unfiltered_bcftools.bcf.gz \
+  --output-type b \
+  --exclude-uncalled \
+  --types snps
+  
   bcftools index unfiltered_bcftools.bcf.gz
-  bcftools view unfiltered_bcftools.bcf.gz -i \${bcffilter} -o bcftools.bcf.gz -O b
-  vcftools --bcf bcftools.bcf.gz \${vcffilter} --remove-filtered-all --recode-INFO-all --recode-bcf --out vcftools
+  
+  bcftools view unfiltered_bcftools.bcf.gz \
+  --include \${bcffilter} \
+  --output bcftools.bcf.gz \
+  --output-type b
+
+  vcftools --bcf bcftools.bcf.gz \${vcffilter} \
+  --remove-filtered-all \
+  --recode-INFO-all \
+  --recode-bcf \
+  --out vcftools
   """
 }
 
