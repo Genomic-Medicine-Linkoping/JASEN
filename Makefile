@@ -27,7 +27,6 @@ PT = assets/prodigal_training_files
 CONT_NAME = library://ljmesi/jasen/main.sif
 PROJECT_ROOT = $(PWD)
 
-WORKDIR = $(PROJECT_ROOT)/work
 IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 SPA_DB = assets/spa-typing
