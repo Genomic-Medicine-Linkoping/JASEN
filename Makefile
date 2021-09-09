@@ -36,10 +36,11 @@ KAIJU_DB = /data/CGL/JASEN/kaiju-db
 SPECIES = Staphylococcus_aureus
 # This is the name of the input directory (with the fastq files) in assets/sequencing_data
 # and also the name of the output directory in results/
-SAMPLE_ID = Staphylococcus_aureus_Kontroll-126
+
+RESULTS_DIR = $(PROJECT_ROOT)/results/$(SAMPLE_ID)
 
 # Command for running one sample
-RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) $(ARGS)
+RUN = nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) -with-report $(RESULTS_DIR)/report.html -with-timeline $(RESULTS_DIR)/timeline.html -with-dag $(RESULTS_DIR)/dag.html $(ARGS)
 
 # Git branches
 UPSTR_NAME = origin
