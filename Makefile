@@ -71,7 +71,7 @@ run_tax_analysis:
 	@mkdir -p work
 	rm -rf assets/references
 	$(CONDA_ACTIVATE) ; \
-	nextflow run main.nf -profile local,singularity,$(SPECIES) -resume --sample_ID $(SAMPLE_ID) --run_tax_analysis true $(ARGS)
+	$(RUN) --run_tax_analysis true $(ARGS)
 
 ## run: Run one sample with $(SPECIES) and $(SAMPLE_ID) located in assets/sequencing_data
 run: run_tax_analysis
