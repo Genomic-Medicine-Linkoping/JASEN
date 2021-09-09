@@ -284,7 +284,7 @@ process kraken2_decontamination{
   path y from taxodir
 
   output:
-  tuple "kraken_out.tsv", "kraken_report.tsv" into kraken2_output
+  tuple "kraken_out.tsv", "kraken_report.tsv" into (kraken2_output, kraken2_output2)
 
   """
   kraken2 --db ${params.krakendb} --threads ${task.cpus} --output kraken_out.tsv --report kraken_report.tsv --paired ${forward} ${reverse}
@@ -663,6 +663,24 @@ process samtools_deduplicated_stats{
   """
 }
 
+process multiqc_report_taxonomy{
+  label 'min_allocation'
+
+  publishDir "${params.outdir}/multiqc_taxonomy", mode: 'copy', overwrite: true
+
+  //More inputs as tracks are added
+  input:
+    tuple kraken_output, kraken_report from kraken2_output2
+    tuple kaiju_raw, kaiju_summary from kaiju_output2
+
+  output:
+    file 'multiqc_report.html' into multiqc_output2
+
+  """
+  multiqc ${params.outdir} -f -k json -o \$(pwd)
+  """
+}
+
 process multiqc_report{
   label 'min_allocation'
 
@@ -675,12 +693,14 @@ process multiqc_report{
     tuple snp_vcf, snp_tsv from snp_translated_output
     tuple picard_stats, picard_insert_stats from picard_output
     tuple kraken_output, kraken_report from kraken2_output
+    tuple kaiju_raw, kaiju_summary from kaiju_output
     tuple samtools_map, samtools_raw from samtools_duplicated_results
     file(bcftools_stats) from bcftools_stats
     file(trimmomatic_log) from trimmommatic_out
     tuple idxstats, cov_dist, stats from samtools_deduplicated_output
 
   output:
+    file 'multiqc_report.html' into multiqc_output1
 
   when:
   !params.run_tax_analysis
@@ -729,7 +749,6 @@ process build_report{
   input:
   file (report) from report_Rmd
   file (mlstjson) from mlst_json_output
-  file (multiqcjson) from multiqc_json_2
   file (motif_report) from ariba_summary_output_2a
   file (motif_report_local) from ariba_summary_output_2b
   file (motif_report_nonc) from ariba_summary_output_2c
