@@ -50,7 +50,7 @@ process cgmlst_db_init{
   file 'chewiedb.zip' into chewie_source
 
   when:
-  params.chewbbaca_db_download
+  params.chewbbaca_db_download && !params.run_tax_analysis
 
   script:
     """
@@ -69,6 +69,9 @@ process ariba_db_download{
   output:
   file 'database.rdy' into ariba_init
   file 'phenotypes.tsv' into resfinder_phenotypes
+
+  when:
+  !params.run_tax_analysis
 
   """
   if ${params.ariba_db_download} ; then
@@ -92,6 +95,9 @@ process ariba_prepare_localdb{
   output:
   file 'database_local.rdy' into ariba_init_local
   file 'database_non_coding.rdy' into ariba_init_nonc
+
+  when:
+  !params.run_tax_analysis
 
   """
   ariba prepareref --cdhit_max_memory 0 --force --verbose --all_coding yes -f ${params.local_ariba_db_dir}/final/coding.fa --threads ${task.cpus} ${params.aribadb_local}
@@ -154,7 +160,7 @@ process trimmomatic_trimming{
   tuple forward, reverse from lane_concat
 
   output:
-  tuple "trim_front_pair.fastq.gz", "trim_rev_pair.fastq.gz", "trim_unpair.fastq.gz" into (trimmed_sample_1, trimmed_sample_2, trimmed_sample_3, trimmed_sample_4, trimmed_sample_5, trimmed_sample_6, trimmed_sample_7)
+  tuple "trim_front_pair.fastq.gz", "trim_rev_pair.fastq.gz", "trim_unpair.fastq.gz" into (trimmed_sample_1, trimmed_sample_2, trimmed_sample_3, trimmed_sample_4, trimmed_sample_5, trimmed_sample_6, trimmed_sample_7, trimmed_sample_8)
   file 'trim_out.log' into trimmommatic_out
 
   """
@@ -174,6 +180,9 @@ process ariba_resistancefind{
   output:
   file 'motif_report.tsv' into ariba_output
 
+  when:
+  !params.run_tax_analysis
+
   """
   ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 500 --verbose --force --threads ${task.cpus} ${params.aribadb} ${forward} ${reverse} outdir
   cp outdir/report.tsv motif_report.tsv
@@ -191,6 +200,9 @@ process ariba_resistancefind_local{
   output:
   file 'motif_report_local.tsv' into ariba_output_local
 
+  when:
+  !params.run_tax_analysis
+
   """
   ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 500 --verbose --force --threads ${task.cpus} ${params.aribadb_local} ${forward} ${reverse} outdir
   cp outdir/report.tsv motif_report_local.tsv
@@ -207,6 +219,9 @@ process ariba_resistancefind_nonc{
 
   output:
   file 'motif_report_nonc.tsv' into ariba_output_nonc
+
+  when:
+  !params.run_tax_analysis
 
   """
   ariba run --spades_options careful --gene_nt_extend 50 --assembly_cov 500 --verbose --force --threads ${task.cpus} ${params.aribadb_nonc} ${forward} ${reverse} outdir
@@ -230,6 +245,9 @@ process ariba_stats{
   file 'motif_report.json' into ariba_summary_output_2a
   file 'motif_report_local.json' into ariba_summary_output_2b
   file 'motif_report_nonc.json' into ariba_summary_output_2c
+
+  when:
+  !params.run_tax_analysis
 
   """
   # If any of the files has some contents (more than the tsv header); run ariba summary
@@ -305,6 +323,9 @@ process spades_assembly{
   output:
   file 'scaffolds.fasta' into (assembled_sample_1, assembled_sample_2, assembled_sample_3, assembled_sample_4, assembled_sample_5)
 
+  when:
+  !params.run_tax_analysis
+
   script:
   """
   spades.py --threads ${task.cpus} --careful -o . -1 ${reads[0]} -2 ${reads[1]} -s ${reads[2]}
@@ -321,6 +342,9 @@ process aMRFinderPlus{
   output:
   file "aMRFinderPlus.tsv" into aMRFinderPlus
   file "IDedRegions.fa"
+
+  when:
+  !params.run_tax_analysis
 
   script:
   if ( params.aMRFinderPlus_organism )
@@ -369,6 +393,9 @@ process mlst_lookup{
   file 'mlst.json' into mlst_json_output
   file 'mlst_report.tsv' into ariba_mlst
 
+  when:
+  !params.run_tax_analysis
+
   script:
   if ( params.ariba_mlst )
     """
@@ -401,6 +428,9 @@ process chewbbaca_cgmlst{
   file 'cgmlst_alleles.json' into cgmlst_results_a
   file 'cgmlst_stats.json' into cgmlst_results_b
 
+  when:
+  !params.run_tax_analysis
+
   """
   yes | chewBBACA.py AlleleCall --fr -i \${PWD} -g ${params.chewbbacadb}schema --json --cpu ${task.cpus} -o \${PWD} --ptf ${params.prodigal_filepath}
   mv results_*/* .
@@ -423,6 +453,9 @@ process quast_assembly_qc{
   output:
   file 'report.tsv' into quast_result, quast_result_2
 
+  when:
+  !params.run_tax_analysis
+
   """
   quast.py $contig -o . -r ${params.reference} -t ${task.cpus}
   mkdir -p ${params.outdir}/quast/icarus_viewers/
@@ -443,6 +476,9 @@ process quast_json_conversion{
   output:
   file 'quast_report.json' into quast_result_json
 
+  when:
+  !params.run_tax_analysis
+
   """
   python3 $baseDir/bin/quast_to_json.py $quastreport quast_report.json
   """
@@ -459,6 +495,9 @@ process bwa_read_mapping{
 
   output:
   file 'alignment_sorted.bam' into sorted_sample_1, sorted_sample_2
+
+  when:
+  !params.run_tax_analysis
 
   """
   bwa mem -M -t ${task.cpus} ${params.bwa}/${params.genome_name}.fna ${trimmed[0]} ${trimmed[1]} > alignment.sam
@@ -479,6 +518,9 @@ process samtools_duplicates_stats{
   output:
   tuple 'samtools_flagstats.txt', 'samtools_total_reads.txt' into samtools_duplicated_results
 
+  when:
+  !params.run_tax_analysis
+
   """
   samtools flagstat ${align_sorted} &> samtools_flagstats.txt
   samtools view -c ${align_sorted} &> samtools_total_reads.txt
@@ -498,6 +540,9 @@ process picard_markduplicates{
   file 'alignment_sorted_rmdup.bam' into deduplicated_sample, deduplicated_sample_2, deduplicated_sample_3
   file 'picard_duplication_stats.txt' into picard_histogram_output
 
+  when:
+  !params.run_tax_analysis
+
   """
   picard MarkDuplicates I=${align_sorted} O=alignment_sorted_rmdup.bam M=picard_duplication_stats.txt REMOVE_DUPLICATES=true
   """
@@ -513,6 +558,9 @@ process samtools_calling{
 
   output:
   file 'samtools_calls.bam' into called_sample
+
+  when:
+  !params.run_tax_analysis
 
   """
   samtools view -@ ${task.cpus} -h -q 1 -F 4 -F 256 ${align_sorted_rmdup} | grep -v XA:Z | grep -v SA:Z| samtools view -b - > samtools_calls.bam
@@ -530,6 +578,9 @@ process vcftools_snpcalling{
 
   output:
   file 'vcftools.recode.bcf' into snpcalling_output
+
+  when:
+  !params.run_tax_analysis
 
   """
   vcffilter="--minQ 30 --thin 50 --minDP 3 --min-meanDP 20"
@@ -556,6 +607,9 @@ process snp_translation{
   file 'snp_report.json' into snp_json_output
   file 'bcftools_stats.txt' into bcftools_stats
 
+  when:
+  !params.run_tax_analysis
+
   script:
   """
   bcftools view ${bcf_file} > vcftools.recode.vcf
@@ -578,6 +632,9 @@ process picard_qcstats{
   output:
   tuple 'picard_stats.txt', 'picard_insert_distribution.pdf' into picard_output
 
+  when:
+  !params.run_tax_analysis
+
   """
   picard CollectInsertSizeMetrics I=${alignment_sorted_rmdup} O=picard_stats.txt H=picard_insert_distribution.pdf
 
@@ -594,6 +651,9 @@ process samtools_deduplicated_stats{
 
   output:
   tuple 'samtools_idxstats.tsv', 'samtools_coverage_distribution.tsv', 'samtools_stats.txt' into samtools_deduplicated_output
+
+  when:
+  !params.run_tax_analysis
 
   """
   samtools index ${alignment_sorted_rmdup}
@@ -621,8 +681,9 @@ process multiqc_report{
     tuple idxstats, cov_dist, stats from samtools_deduplicated_output
 
   output:
-    file 'multiqc_report.html' into multiqc_output
-    file 'multiqc_data/multiqc_data.json' into (multiqc_json_1, multiqc_json_2)
+
+  when:
+  !params.run_tax_analysis
 
   """
   multiqc ${params.outdir} -f -k json -x ${params.outdir}/mlst/*_out -o \$(pwd)
@@ -645,7 +706,7 @@ process spa_gene_extraction {
     file "spa_${params.sample_ID}.tsv"
 
 	when:
-		params.spa_exist
+	params.spa_exist && !params.run_tax_analysis
 
 	"""
   spaTyper \
@@ -682,6 +743,9 @@ process build_report{
 
   output:
   file("${html_output}")
+
+  when:
+  !params.run_tax_analysis
 
   script:
   html_output = "${params.sample_ID}.html"
