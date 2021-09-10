@@ -31,6 +31,8 @@ IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 SPA_DB = assets/spa-typing
 KAIJU_DB = /data/CGL/JASEN/kaiju-db
+KRAKEN_DB_DIR = /data/CGL/JASEN
+KRAKEN_DB_NAME = K2DB
 
 # Name of the species profile
 SPECIES = Staphylococcus_aureus
@@ -50,21 +52,35 @@ CURR_BRANCH = ro-implementation
 ## all: Run by default one sample
 all: run
 
-## clean: Remove all downloaded genome files, prodigal training files and checksum file
-clean:
-	@echo ""
-	@echo "Remove all downloaded genome files, prodigal training files and checksum file"
-	@echo ""
-	rm -f $(RG)/*.gz $(RG)/*.fna $(PT)/*.trn && \
-	rm -f $(RG)/md5sums.txt
-	@echo ""
-
+## PREPARING/UPDATING THE PIPELINE
 ## preprocess: Download, uncompress and create prodigal training files of genomes and create md5sum:s
 preprocess: clean download_latest_spa_db
 	cp bin/preprocess_genomes.sh assets/genome_data.tsv . && \
 	bash preprocess_genomes.sh $(CONT_NAME) && \
 	rm -f preprocess_genomes.sh genome_data.tsv
 
+## create_kaijudb: Create database that kaiju uses in its taxonomic assignments
+create_kaijudb:
+	$(CONDA_ACTIVATE) ; \
+	mkdir -p $(KAIJU_DB) && \
+	cd $(KAIJU_DB) && \
+	kaiju-makedb -t 50 -s nr_euk
+
+## create_kraken2db: Create kraken2 standard DB with: NCBI taxonomic information, the complete genomes in RefSeq for 
+## the bacterial, archaeal, and viral domains, along with the human genome and a collection of known vectors (UniVec_Core)
+##
+create_kraken2db:
+	$(CONDA_ACTIVATE) ; \
+	mkdir -p $(KRAKEN_DB_DIR) && \
+	cd $(KRAKEN_DB_DIR) && \
+	kraken2-build --standard --threads 50 --use-ftp --db $(KRAKEN_DB_NAME)
+
+## download_latest_spa_db: Download the newest sparepeats.fasta and spatypes.txt files to assets/spa-typing
+download_latest_spa_db:
+	curl -o $(SPA_DB)/sparepeats.fasta https://spa.ridom.de/dynamic/sparepeats.fasta && \
+	curl -o $(SPA_DB)/spatypes.txt https://spa.ridom.de/dynamic/spatypes.txt
+
+## RUNNING THE PIPELINE
 ## run_tax_analysis: Run a main pipeline preceding taxonomic analysis of the sample fastq files
 run_tax_analysis:
 	rm -rf work
@@ -88,6 +104,7 @@ run_samples:
 	bash run_samples.sh && \
 	rm -f run_samples.sh
 
+## UTILITIES
 ## update_subm: Update assets/var-genes-ro submodule and push it to ro-implementation remote branch
 update_subm:
 	cd assets/var-genes-ro ; \
@@ -100,29 +117,28 @@ update_subm:
 	/usr/bin/git commit -m "Update submodule" ; \
 	/usr/bin/git push $(UPSTR_NAME) $(CURR_BRANCH)
 
-## download_latest_spa_db: Download the newest sparepeats.fasta and spatypes.txt files to assets/spa-typing
-download_latest_spa_db:
-	curl -o $(SPA_DB)/sparepeats.fasta https://spa.ridom.de/dynamic/sparepeats.fasta && \
-	curl -o $(SPA_DB)/spatypes.txt https://spa.ridom.de/dynamic/spatypes.txt
-
 ## build_main_singularity: (Re)build singularity image
 build_main_singularity:
 	cd container ; \
 	rm -f main.sif && \
 	sudo singularity build main.sif Singularity
 
-## create_kaijudb: Create database that kaiju uses in its taxonomic assignments
-create_kaijudb:
-	$(CONDA_ACTIVATE) ; \
-	cd $(KAIJU_DB) && \
-	kaiju-makedb -t 50 -s nr_euk
-
 ## push_to_cloud: Sign and push built image to Sylabs cloud
 ## NB: Remember to rename on the cloud existing image to something else than 'latest' before running this
+##
 push_to_cloud:
 	cd container ; \
 	singularity sign main.sif && \
 	singularity push main.sif library://ljmesi/jasen/main.sif:latest
+
+## clean: Remove all downloaded genome files, prodigal training files and checksum file
+clean:
+	@echo ""
+	@echo "Remove all downloaded genome files, prodigal training files and checksum file"
+	@echo ""
+	rm -f $(RG)/*.gz $(RG)/*.fna $(PT)/*.trn && \
+	rm -f $(RG)/md5sums.txt
+	@echo ""
 
 ## help: Show this message
 help:

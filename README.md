@@ -48,7 +48,7 @@ If you wish to run the pipeline with *Escherichia coli* test data (the fastq inp
 
 ```bash
 CONT="library://ljmesi/jasen/main.sif"
-make clear_files
+make clean
 cp -r assets/test_data/ref_genomes assets/
 cp -r assets/test_data/prodigal_training_files assets/
 rm -f assets/prodigal_training_files/Escherichia_coli.trn
@@ -61,7 +61,7 @@ otherwise run this command:
 make preprocess
 ```
 
-`make preprocess` removes all downloaded genome files, prodigal training files and checksum file for downloaded genomes (if they previously existed) and then creates them again.
+`make preprocess` removes all downloaded genome files, prodigal training files and checksum file for downloaded genomes (if they previously existed) and then downloads and creates them again. It downloads also the latest spa-typing data from https://spa.ridom.de/
 
 ### Move Fastq.gz files `assets/sequencing_data`
 
@@ -117,6 +117,19 @@ mamba env create -f nf-env.yml
 
 This conda environment contains only the latest version of Nextflow. When the pipeline is run with the `Makefile`, the command preceding the running of the pipeline, is activating this environment.  
 
+### Create Kaiju and Kraken2 databases
+
+The databases can be downloaded with and built with commands:
+```bash
+KAI_DB=[Absolute-path-to-db]
+KRA_DB=[Absolute-path-to-dir-where-the-db-dir-named-KRA_DB_NAME-will-be-created]
+KRA_DB_NAME=K2DB
+make create_kaijudb KAIJU_DB="$KAI_DB"
+make create_kraken2db \
+KRAKEN_DB_DIR="$KRA_DB" \
+KRAKEN_DB_NAME="$KRA_DB_NAME"
+```
+
 ## Usage
 
 ### Optional: Change amount of resources Nextflow is allowed to use
@@ -125,6 +138,14 @@ Use the following command for finding which lines to modify in order to adjust (
 
 ```bash
 grep -nA 16 -P "^process\s\{" nextflow.config
+```
+
+### Optional: Run preceding taxonomic analysis
+
+In order to determine what species the sample contains, a preceding taxonomic analysis with [Kraken2](https://github.com/DerrickWood/kraken2) and [Kaiju](https://github.com/bioinformatics-centre/kaiju) can be run. A make rule named `run_tax_analysis` executes this task.
+
+```bash
+make run_tax_analysis
 ```
 
 ### Run the pipeline
@@ -153,7 +174,7 @@ Note 3: `prodigal_file` is the just the basename (i.e. without `.trn`) and shoul
 
 ### Finding results
 
-The results can be found in json format in `results/[input-fastq-dir-name]` directory. 
+The results can be found in `results/[SAMPLE_ID]` directory.
 
 ## Notes
 
