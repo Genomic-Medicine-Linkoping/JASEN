@@ -31,6 +31,8 @@ IMAGE = $(PROJECT_ROOT)/container/$(CONT_NAME)
 
 SPA_DB = assets/spa-typing
 KAIJU_DB = /data/CGL/JASEN/kaiju-db
+KRAKEN_DB_DIR = /data/CGL/JASEN
+KRAKEN_DB_NAME = K2DB
 
 # Name of the species profile
 SPECIES = Staphylococcus_aureus
@@ -117,8 +119,18 @@ create_kaijudb:
 	cd $(KAIJU_DB) && \
 	kaiju-makedb -t 50 -s nr_euk
 
+## create_kraken2db: Create kraken2 standard DB with: NCBI taxonomic information, the complete genomes in RefSeq for 
+## the bacterial, archaeal, and viral domains, along with the human genome and a collection of known vectors (UniVec_Core)
+##
+create_kraken2db:
+	$(CONDA_ACTIVATE) ; \
+	mkdir -p $(KRAKEN_DB_DIR) && \
+	cd $(KRAKEN_DB_DIR) && \
+	kraken2-build --standard --threads 50 --use-ftp --db $(KRAKEN_DB_NAME)
+
 ## push_to_cloud: Sign and push built image to Sylabs cloud
 ## NB: Remember to rename on the cloud existing image to something else than 'latest' before running this
+##
 push_to_cloud:
 	cd container ; \
 	singularity sign main.sif && \
