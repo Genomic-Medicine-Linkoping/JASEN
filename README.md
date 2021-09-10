@@ -48,7 +48,7 @@ If you wish to run the pipeline with *Escherichia coli* test data (the fastq inp
 
 ```bash
 CONT="library://ljmesi/jasen/main.sif"
-make clear_files
+make clean
 cp -r assets/test_data/ref_genomes assets/
 cp -r assets/test_data/prodigal_training_files assets/
 rm -f assets/prodigal_training_files/Escherichia_coli.trn
