@@ -167,6 +167,7 @@ temp
 results/*
 
 assets/fastq-temp
+assets/fastq-run
 
 
 exp/post_process_results/*

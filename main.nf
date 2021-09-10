@@ -595,7 +595,7 @@ process vcftools_snpcalling{
   --types snps
   
   bcftools index unfiltered_bcftools.bcf.gz
-  
+
   bcftools view unfiltered_bcftools.bcf.gz \
   --include \${bcffilter} \
   --output bcftools.bcf.gz \
