@@ -62,6 +62,7 @@ preprocess: clean download_latest_spa_db
 ## create_kaijudb: Create database that kaiju uses in its taxonomic assignments
 create_kaijudb:
 	$(CONDA_ACTIVATE) ; \
+	mkdir -p $(KAIJU_DB) && \
 	cd $(KAIJU_DB) && \
 	kaiju-makedb -t 50 -s nr_euk
 
