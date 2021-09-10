@@ -140,6 +140,14 @@ Use the following command for finding which lines to modify in order to adjust (
 grep -nA 16 -P "^process\s\{" nextflow.config
 ```
 
+### Optional: Run preceding taxonomic analysis
+
+In order to determine what species the sample contains, a preceding taxonomic analysis with [Kraken2](https://github.com/DerrickWood/kraken2) and [Kaiju](https://github.com/bioinformatics-centre/kaiju) can be run. A make rule named `run_tax_analysis` executes this task.
+
+```bash
+make run_tax_analysis
+```
+
 ### Run the pipeline
 
 The pipeline can be run with the following command (after having performed the steps in [Installation](#installation)).
@@ -166,7 +174,7 @@ Note 3: `prodigal_file` is the just the basename (i.e. without `.trn`) and shoul
 
 ### Finding results
 
-The results can be found in json format in `results/[input-fastq-dir-name]` directory. 
+The results can be found in `results/[SAMPLE_ID]` directory.
 
 ## Notes
 
