@@ -61,7 +61,7 @@ otherwise run this command:
 make preprocess
 ```
 
-`make preprocess` removes all downloaded genome files, prodigal training files and checksum file for downloaded genomes (if they previously existed) and then creates them again.
+`make preprocess` removes all downloaded genome files, prodigal training files and checksum file for downloaded genomes (if they previously existed) and then downloads and creates them again. It downloads also the latest spa-typing data from https://spa.ridom.de/
 
 ### Move Fastq.gz files `assets/sequencing_data`
 
@@ -116,6 +116,19 @@ mamba env create -f nf-env.yml
 ```
 
 This conda environment contains only the latest version of Nextflow. When the pipeline is run with the `Makefile`, the command preceding the running of the pipeline, is activating this environment.  
+
+### Create Kaiju and Kraken2 databases
+
+The databases can be downloaded with and built with commands:
+```bash
+KAI_DB=[Absolute-path-to-db]
+KRA_DB=[Absolute-path-to-dir-where-the-db-dir-named-KRA_DB_NAME-will-be-created]
+KRA_DB_NAME=K2DB
+make create_kaijudb KAIJU_DB="$KAI_DB"
+make create_kraken2db \
+KRAKEN_DB_DIR="$KRA_DB" \
+KRAKEN_DB_NAME="$KRA_DB_NAME"
+```
 
 ## Usage
 
