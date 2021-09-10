@@ -563,7 +563,7 @@ process samtools_calling{
   !params.run_tax_analysis
 
   """
-  samtools view -@ ${task.cpus} -h -q 1 -F 4 -F 256 ${align_sorted_rmdup} | grep -v XA:Z | grep -v SA:Z| samtools view -b - > samtools_calls.bam
+  samtools view -@ ${task.cpus} -h -q 1 -F 4 -F 256 ${align_sorted_rmdup} | grep -v XA:Z | grep -v SA:Z | samtools view -b - > samtools_calls.bam
   """
 }
 
