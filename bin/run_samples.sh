@@ -35,19 +35,25 @@ for i in "${!input_files_array[@]}"; do
   FULL_PATH_INPUT_DIR="$SEQ_DATA"/"$INPUT_DIR"
   # Clear reference files before running next workflow run
   rm -rf assets/references
+
+  # Start taking time
   start_time=$(date +"%c")
   echo "Start time: $start_time" | tee -a nf_logs.log
   start=$(date +%s)
+
+  # Run the pipeline
   nextflow run main.nf -profile local,singularity,"$SPECIES" --sample_ID "$INPUT_DIR" | tee -a nf_logs.log
   
   # Remove cache directory after the run since we don't use it in anyways
   rm -rf work
 
+  # End time taking
   end=$(date +%s)
   runtime=$((end-start))
   echo "The run took: $runtime s." | tee -a nf_logs.log
   end_time=$(date +"%c")
   echo "End time: $end_time" | tee -a nf_logs.log
+
   # Move results to a place with more space
   mv -f "/home/rada/Documents/CGL/JASEN/results/$INPUT_DIR" "/data/CGL/JASEN/results/$INPUT_DIR"
   #break
