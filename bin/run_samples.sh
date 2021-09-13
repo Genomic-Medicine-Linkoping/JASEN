@@ -39,6 +39,10 @@ for i in "${!input_files_array[@]}"; do
   echo "Start time: $start_time" | tee -a nf_logs.log
   start=$(date +%s)
   nextflow run main.nf -profile local,singularity,"$SPECIES" --sample_ID "$INPUT_DIR" | tee -a nf_logs.log
+  
+  # Remove cache directory after the run since we don't use it in anyways
+  rm -rf work
+
   end=$(date +%s)
   runtime=$((end-start))
   echo "The run took: $runtime s." | tee -a nf_logs.log
