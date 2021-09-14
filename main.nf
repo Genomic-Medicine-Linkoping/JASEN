@@ -410,8 +410,11 @@ process mlst_lookup{
   else
     """
     mlst $contig --threads ${task.cpus} --json mlst.json --novel novel_mlst.fasta --minid 99.5 --mincov 95
+    touch mlst_report.tsv
     """
 }
+
+
 
 process chewbbaca_cgmlst{
   label 'max_allocation'
