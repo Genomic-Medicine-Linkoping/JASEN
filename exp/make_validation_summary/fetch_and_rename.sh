@@ -1,0 +1,1 @@
+/home/rada/Documents/CGL/JASEN/bin/fetch_and_rename.sh
