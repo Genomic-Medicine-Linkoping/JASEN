@@ -192,3 +192,9 @@ exp/test-kraken/*
 exp/test-kaiju/*
 !exp/test-kaiju/env.yml
 !exp/test-kaiju/use_kaiju.sh
+
+exp/make_validation_summary/*
+!exp/make_validation_summary/Makefile
+!exp/make_validation_summary/json_to_tsv.py
+!exp/make_validation_summary/fetch_and_rename.sh
+!exp/make_validation_summary/prepend_sample_species_cols.awk
