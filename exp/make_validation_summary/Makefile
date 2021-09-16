@@ -43,7 +43,7 @@ spaTyper_out_dir = spaTyper
 
 .PHONY: clean, gather_files, all
 
-all: clean gather_files 
+all: clean gather_files convert_json_to_tsv add_sample_species_columns
 
 # Note find "-L"
 gather_files:
