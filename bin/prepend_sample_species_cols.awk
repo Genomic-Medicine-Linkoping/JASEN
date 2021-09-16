@@ -12,7 +12,7 @@ BEGIN{
 {
     if (NR <= header) { 
 		print header_prepends, $0;
+		next;
 	}
-
 	print sample_name, species, $0
 }
