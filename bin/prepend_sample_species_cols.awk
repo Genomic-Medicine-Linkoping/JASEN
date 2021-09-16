@@ -1,7 +1,10 @@
 #!/usr/bin/awk -f
 BEGIN{
     OFS="\t";
-	split(ARGV[1],fn, "_");
+	# Remove */ from input, e.g mlst/
+	split(ARGV[1],file,"/");
+	# Parse out sample name and species
+	split(file[2],fn, "_");
 	species = fn[1]" "fn[2];
 	sample_name = fn[3];
 	# Number of header lines
