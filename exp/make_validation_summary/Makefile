@@ -59,7 +59,7 @@ gather_files:
 
 convert_json_to_tsv:
 	$(CONDA_ACTIVATE) ; \
-	find $(mlst_out_dir) -name "*.json" -type f | parallel -j50 'python json_to_tsv.py {} {.}.tsv'
+	find $(mlst_out_dir) -name "*.json" -type f | parallel -j+0 'python json_to_tsv.py {} {.}.tsv'
 
 add_sample_species_columns:
 	$(CONDA_ACTIVATE) ; \
