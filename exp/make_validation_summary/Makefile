@@ -54,7 +54,8 @@ gather_files:
 	./fetch_and_rename.sh $(results_file_root) $(ariba_mlst_find_pattern) 10 $(mlst_out_dir) $(ariba_mlst_find_pattern)
 	./fetch_and_rename.sh $(results_file_root) $(tseemann_mlst_find_pattern) 10 $(mlst_out_dir) $(tseemann_mlst_find_pattern)
 	mkdir -p $(spaTyper_out_dir) && \
-	find -L $(results_file_root) -name "spa_*.tsv" -type f | parallel -j+0 cp {} $(spaTyper_out_dir)/
+	find -L $(results_file_root) -name "spa_*.tsv" -type f | parallel -j+0 "cp {} $(spaTyper_out_dir)/"
+	find $(spaTyper_out_dir)/ -name "spa_*.tsv" -type f | parallel -j+0 "mv {} {= s:spa_:: =}"
 
 convert_json_to_tsv:
 	$(CONDA_ACTIVATE) ; \
