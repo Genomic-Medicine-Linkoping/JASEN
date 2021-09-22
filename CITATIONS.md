@@ -61,6 +61,9 @@
 * [ncbi-amrfinderplus](https://github.com/ncbi/amr)
     > Feldgarden, M., Brover, V., Gonzalez-Escalona, N., Frye, J. G., Haendiges, J., Hoffmann, M., Pettengill, J. B., Prasad, A. B., Tillman, G. E., Tyson, G. H., & Klimke, W. (2021). AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence. doi: 10.1038/s41598-021-91456-0
 
+* [GNU parallel](https://www.gnu.org/software/parallel/parallel.html)
+    > O. Tange (2011): GNU Parallel - The Command-Line Power Tool, ;login: The USENIX Magazine, February 2011:42-47.
+
 ## Software packaging/containerisation tools
 
 * [Anaconda](https://anaconda.com)
