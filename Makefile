@@ -13,7 +13,8 @@ clean, \
 run_samples, \
 update_subm, \
 preprocess, \
-download_latest_spa_db
+download_latest_spa_db, \
+help
 
 # Commands necessary for using conda env:s
 CURRENT_CONDA_ENV_NAME = nf
