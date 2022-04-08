@@ -1,14 +1,15 @@
 <p align="center">
   <a href="https://github.com/genomic-medicine-sweden/JASEN">
-    <img src="artwork/logo.png"/>
-  </a>
-</p>
+
+## Setup
+* `git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git`
+* Edit `JASEN/nextflow.config`
+* _`Optionally run: bash JASEN/container/safety_exports.sh USER PREFIX`_
 
 _Json producing Assembly driven microbial Sequence analysis pipeline to support Epitypification and Normalize classification decisions_
 
 JASEN produces results for epidemiological and surveillance purposes. 
 JASEN has been tested using MRSA, but should work well with any bacteria with a stable cgMLST scheme.
-
 ## Requirements
 
 * Install nextFlow ( `curl -s https://get.nextflow.io | bash` )
