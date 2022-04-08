@@ -1,27 +1,34 @@
 <p align="center">
   <a href="https://github.com/genomic-medicine-sweden/JASEN">
-
-## Setup
-* `git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git`
-* Edit `JASEN/nextflow.config`
-* _`Optionally run: bash JASEN/container/safety_exports.sh USER PREFIX`_
+    <img src="artwork/logo.png"/>
+  </a>
+</p>
 
 _Json producing Assembly driven microbial Sequence analysis pipeline to support Epitypification and Normalize classification decisions_
 
 JASEN produces results for epidemiological and surveillance purposes. 
 JASEN has been tested using MRSA, but should work well with any bacteria with a stable cgMLST scheme.
+
 ## Requirements
 
-* Install nextFlow ( `curl -s https://get.nextflow.io | bash` )
+* Singularity
+* Nextflow
+* (Optional): Conda
 
-## Setup
+## Conda deployment (self-contained)
 * `git clone --recurse-submodules --single-branch --branch master  https://github.com/genomic-medicine-sweden/JASEN.git`
-* Install the database components required by the pipeline.
+* `cd JASEN`
+* `curl -s https://get.nextflow.io | bash`
+* `bash deploy/deploy_conda/setup.sh`
+* `bash deploy/deploy_references.sh` 
+* `singularity remote login`
+* `bash container/build_container.sh`
 
 ## Usage
 
+### Simple self-test
 ``` bash
-./ nextflow run main.nf -entry bacterial_default -profile staphylococcus_aureus -config configs/nextflow.base.config --csv=assets/test_data/samplelist.csv
+./nextflow run main.nf -entry bacterial_default -profile staphylococcus_aureus -config configs/nextflow.base.config --csv=assets/test_data/samplelist.csv
 ```
 
 Start a new analysis with samples defined in `assets/test_data/samplelist.csv` using the staphylococcus_aureus profile.
